@@ -1,14 +1,11 @@
-以下示例展示如何在 `docker-compose.yml` 中通过 build args 为 Docker 镜像构建时设置 npm 国内镜像源（如淘宝镜像），并在各自的 `Dockerfile` 中使用该参数。
-
-```yaml
-version: '3.8'
+version: "3.8"
 services:
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
       args:
-        - NPM_REGISTRY=https://registry.npmmirror.com/
+        NPM_REGISTRY: "https://registry.npmmirror.com/"
     volumes:
       - ./frontend:/app
       - /app/node_modules
@@ -17,8 +14,8 @@ services:
     depends_on:
       - backend
     environment:
-      - NODE_ENV=development
-      - API_URL=http://backend:3000/api
+      NODE_ENV: development
+      API_URL: http://backend:3000/api
 
   backend:
     build:
@@ -26,7 +23,7 @@ services:
       dockerfile: Dockerfile
       target: development
       args:
-        - NPM_REGISTRY=https://registry.npmmirror.com/
+        NPM_REGISTRY: "https://registry.npmmirror.com/"
     volumes:
       - ./backend:/usr/src/app
       - /usr/src/app/node_modules
@@ -35,15 +32,15 @@ services:
     depends_on:
       - postgres
     environment:
-      - NODE_ENV=development
-      - PORT=3000
-      - DB_HOST=postgres
-      - DB_PORT=5432
-      - DB_USERNAME=postgres
-      - DB_PASSWORD=postgres
-      - DB_DATABASE=soundsphere
-      - JWT_SECRET=soundsphere_jwt_secret_key
-      - JWT_EXPIRES_IN=7d
+      NODE_ENV: development
+      PORT: 3000
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USERNAME: postgres
+      DB_PASSWORD: postgres
+      DB_DATABASE: soundsphere
+      JWT_SECRET: soundsphere_jwt_secret_key
+      JWT_EXPIRES_IN: 7d
     command: npm run start:dev
 
   postgres:
@@ -51,29 +48,11 @@ services:
     ports:
       - "5432:5432"
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=soundsphere
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: soundsphere
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
 volumes:
   postgres_data:
-```
-
-并在 `frontend/Dockerfile` 和 `backend/Dockerfile` 中添加如下内容：
-
-```dockerfile
-# 声明 build args
-ARG NPM_REGISTRY
-# 设置默认工作目录
-WORKDIR /app
-# 使用国内镜像源
-RUN npm config set registry $NPM_REGISTRY
-# 安装依赖
-COPY package*.json ./
-RUN npm install
-# 复制代码
-COPY . .
-# 默认启动命令
-CMD ["npm", "run", "start:dev"]
