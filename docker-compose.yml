@@ -7,15 +7,15 @@ services:
       args:
         NPM_REGISTRY: "https://registry.npmmirror.com/"
     volumes:
-      - ./frontend:/app
-      - /app/node_modules
+      - "./frontend:/app"
+      - "/app/node_modules"
     ports:
       - "8080:80"
     depends_on:
       - backend
     environment:
-      NODE_ENV: development
-      API_URL: http://backend:3000/api
+      NODE_ENV: "development"
+      API_URL: "http://backend:3000/api"
 
   backend:
     build:
@@ -25,64 +25,35 @@ services:
       args:
         NPM_REGISTRY: "https://registry.npmmirror.com/"
     volumes:
-      - ./backend:/usr/src/app
-      - /usr/src/app/node_modules
-    working_dir: /usr/src/app
+      - "./backend:/usr/src/app"
+      - "/usr/src/app/node_modules"
+    working_dir: "/usr/src/app"
     ports:
       - "3000:3000"
     depends_on:
       - postgres
     environment:
-      NODE_ENV: development
-      PORT: 3000
-      DB_HOST: postgres
-      DB_PORT: 5432
-      DB_USERNAME: postgres
-      DB_PASSWORD: postgres
-      DB_DATABASE: soundsphere
-      JWT_SECRET: soundsphere_jwt_secret_key
-      JWT_EXPIRES_IN: 7d
-    command: npm run start:dev
+      NODE_ENV: "development"
+      PORT: "3000"
+      DB_HOST: "postgres"
+      DB_PORT: "5432"
+      DB_USERNAME: "postgres"
+      DB_PASSWORD: "postgres"
+      DB_DATABASE: "soundsphere"
+      JWT_SECRET: "soundsphere_jwt_secret_key"
+      JWT_EXPIRES_IN: "7d"
+    command: "npm run start:dev"
 
   postgres:
-    image: postgres:13-alpine
+    image: "postgres:13-alpine"
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: soundsphere
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "soundsphere"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - "postgres_data:/var/lib/postgresql/data"
 
 volumes:
-  postgres_data:
-```
-
-同时，请确保 `backend/Dockerfile` 中包含以下关键步骤，以复制 TypeScript 配置文件并生成：
-
-```dockerfile
-# backend/Dockerfile
-ARG NPM_REGISTRY
-FROM node:18-alpine AS dependencies
-WORKDIR /usr/src/app
-# 设置国内镜像源
-RUN npm config set registry $NPM_REGISTRY
-# 先拷贝 package.json 和 tsconfig 配置
-COPY package*.json ./
-COPY tsconfig*.json ./
-# 安装依赖
-RUN npm install
-
-# 构建阶段
-FROM dependencies AS build
-COPY . .
-RUN npm run build
-
-# 运行时镜像
-FROM node:18-alpine AS development
-WORKDIR /usr/src/app
-COPY --from=dependencies /usr/src/app/node_modules ./node_modules
-COPY --from=build /usr/src/app/dist ./dist
-COPY package*.json ./
-CMD ["node", "dist/main.js"]
+  postgres_data: {}
