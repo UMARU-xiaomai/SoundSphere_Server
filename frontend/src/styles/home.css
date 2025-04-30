@@ -1,0 +1,519 @@
+/* 首页专用样式 */
+
+/* 英雄区块 */
+.hero {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+    color: var(--text-on-primary);
+    padding: var(--spacing-xxl) 0;
+    overflow: hidden;
+}
+
+.hero .container {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+}
+
+.hero-content {
+    max-width: 600px;
+}
+
+.hero-content h1 {
+    font-size: clamp(var(--font-size-xxl), 5vw, var(--font-size-xxxl));
+    margin-bottom: var(--spacing-md);
+    color: var(--text-on-primary);
+}
+
+.hero-content p {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-xl);
+    opacity: 0.9;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    flex-wrap: wrap;
+}
+
+.hero-image img {
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--box-shadow-lg);
+    max-width: 100%;
+}
+
+/* 特点区块 */
+.features {
+    background-color: var(--surface-color);
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    gap: var(--spacing-lg);
+}
+
+.feature-card {
+    padding: var(--spacing-lg);
+    background-color: var(--surface-color);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--box-shadow-sm);
+    text-align: center;
+    transition: transform var(--transition-medium) ease, box-shadow var(--transition-medium) ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--box-shadow-md);
+}
+
+.feature-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto var(--spacing-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(var(--primary-color-rgb), 0.1);
+    border-radius: var(--border-radius-circle);
+}
+
+.feature-icon img {
+    width: 40px;
+    height: 40px;
+    margin: 0 auto;
+}
+
+.feature-card h3 {
+    margin-bottom: var(--spacing-sm);
+    font-size: var(--font-size-lg);
+}
+
+.feature-card p {
+    color: var(--text-secondary);
+}
+
+/* 浏览音乐区块 */
+.browse-music {
+    background-color: var(--background-color);
+}
+
+.category-filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-xl);
+}
+
+.filter-btn {
+    padding: var(--spacing-xs) var(--spacing-md);
+    background-color: transparent;
+    border: 1px solid var(--primary-color);
+    border-radius: var(--border-radius-sm);
+    color: var(--primary-color);
+    cursor: pointer;
+    transition: background-color var(--transition-fast) ease, color var(--transition-fast) ease;
+}
+
+.filter-btn:hover, .filter-btn.active {
+    background-color: var(--primary-color);
+    color: var(--text-on-primary);
+}
+
+.music-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.music-card {
+    background-color: var(--surface-color);
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+    box-shadow: var(--box-shadow-sm);
+    transition: transform var(--transition-medium) ease, box-shadow var(--transition-medium) ease;
+}
+
+.music-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--box-shadow-md);
+}
+
+.music-cover {
+    position: relative;
+    padding-top: 100%; /* 1:1 宽高比 */
+    background-color: #f0f0f0;
+    overflow: hidden;
+}
+
+.music-cover img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-medium) ease;
+}
+
+.music-card:hover .music-cover img {
+    transform: scale(1.05);
+}
+
+.music-play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    width: 60px;
+    height: 60px;
+    background-color: var(--primary-color);
+    border-radius: var(--border-radius-circle);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity var(--transition-medium) ease, transform var(--transition-medium) ease;
+    cursor: pointer;
+}
+
+.music-card:hover .music-play-btn {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.music-play-btn::after {
+    content: '▶';
+    color: var(--text-on-primary);
+    font-size: 24px;
+}
+
+.music-info {
+    padding: var(--spacing-md);
+}
+
+.music-info h3 {
+    font-size: var(--font-size-md);
+    margin-bottom: var(--spacing-xs);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.music-info p {
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-xs);
+}
+
+.music-stats {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    font-size: var(--font-size-xs);
+    color: var(--text-secondary);
+}
+
+.music-stat {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* 协作区块 */
+.collaboration {
+    background-color: var(--surface-color);
+}
+
+.collaboration-demo {
+    position: relative;
+    margin-bottom: var(--spacing-xl);
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+    box-shadow: var(--box-shadow-md);
+}
+
+.collaboration-demo img {
+    width: 100%;
+    display: block;
+}
+
+.demo-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity var(--transition-medium) ease;
+}
+
+.collaboration-demo:hover .demo-overlay {
+    opacity: 1;
+}
+
+.room-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--spacing-md);
+}
+
+.room-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: var(--spacing-md);
+    background-color: var(--surface-color);
+    border-radius: var(--border-radius-md);
+    box-shadow: var(--box-shadow-sm);
+    transition: transform var(--transition-medium) ease, box-shadow var(--transition-medium) ease;
+}
+
+.room-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--box-shadow-md);
+}
+
+.room-info h3 {
+    font-size: var(--font-size-md);
+    margin-bottom: var(--spacing-xs);
+}
+
+.room-info p {
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+}
+
+/* 知识库区块 */
+.knowledge-base {
+    background-color: var(--background-color);
+}
+
+.knowledge-categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: var(--spacing-xl);
+    margin-bottom: var(--spacing-xl);
+}
+
+.knowledge-category {
+    background-color: var(--surface-color);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-lg);
+    box-shadow: var(--box-shadow-sm);
+}
+
+.knowledge-category h3 {
+    font-size: var(--font-size-lg);
+    margin-bottom: var(--spacing-md);
+    position: relative;
+    padding-bottom: var(--spacing-xs);
+}
+
+.knowledge-category h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background-color: var(--primary-color);
+}
+
+.knowledge-category ul {
+    list-style: none;
+}
+
+.knowledge-category ul li {
+    margin-bottom: var(--spacing-xs);
+}
+
+.knowledge-category ul li a {
+    display: flex;
+    align-items: center;
+    color: var(--text-primary);
+    transition: color var(--transition-fast) ease;
+}
+
+.knowledge-category ul li a::before {
+    content: '•';
+    color: var(--primary-color);
+    margin-right: var(--spacing-xs);
+}
+
+.knowledge-category ul li a:hover {
+    color: var(--primary-color);
+}
+
+/* 商城区块 */
+.marketplace {
+    background-color: var(--surface-color);
+}
+
+.product-categories {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-sm);
+    margin-bottom: var(--spacing-xl);
+}
+
+.category-btn {
+    padding: var(--spacing-xs) var(--spacing-md);
+    background-color: transparent;
+    border: 1px solid var(--secondary-color);
+    border-radius: var(--border-radius-sm);
+    color: var(--secondary-color);
+    cursor: pointer;
+    transition: background-color var(--transition-fast) ease, color var(--transition-fast) ease;
+}
+
+.category-btn:hover, .category-btn.active {
+    background-color: var(--secondary-color);
+    color: var(--text-on-secondary);
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: var(--spacing-lg);
+    margin-bottom: var(--spacing-xl);
+}
+
+.product-card {
+    background-color: var(--surface-color);
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+    box-shadow: var(--box-shadow-sm);
+    transition: transform var(--transition-medium) ease, box-shadow var(--transition-medium) ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--box-shadow-md);
+}
+
+.product-image {
+    position: relative;
+    padding-top: 75%; /* 4:3 宽高比 */
+    background-color: #f0f0f0;
+    overflow: hidden;
+}
+
+.product-image img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-medium) ease;
+}
+
+.product-card:hover .product-image img {
+    transform: scale(1.05);
+}
+
+.product-price {
+    position: absolute;
+    bottom: var(--spacing-md);
+    right: var(--spacing-md);
+    background-color: var(--primary-color);
+    color: var(--text-on-primary);
+    padding: var(--spacing-xs) var(--spacing-sm);
+    border-radius: var(--border-radius-sm);
+    font-weight: 500;
+}
+
+.product-info {
+    padding: var(--spacing-md);
+}
+
+.product-info h3 {
+    font-size: var(--font-size-md);
+    margin-bottom: var(--spacing-xs);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.product-info p {
+    color: var(--text-secondary);
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-xs);
+}
+
+.product-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--text-secondary);
+    font-size: var(--font-size-xs);
+}
+
+.product-rating {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.product-rating::before {
+    content: '★';
+    color: #ffb400;
+}
+
+/* 行动召唤区块 */
+.cta {
+    background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
+    color: var(--text-on-secondary);
+    text-align: center;
+}
+
+.cta-content {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.cta-content h2 {
+    color: var(--text-on-secondary);
+    margin-bottom: var(--spacing-md);
+    font-size: var(--font-size-xxl);
+}
+
+.cta-content p {
+    margin-bottom: var(--spacing-xl);
+    font-size: var(--font-size-lg);
+    opacity: 0.9;
+}
+
+/* 响应式调整 */
+@media (min-width: 768px) {
+    .hero .container {
+        flex-direction: row;
+        align-items: center;
+    }
+
+    .hero-content {
+        flex: 1;
+    }
+
+    .hero-image {
+        flex: 1;
+    }
+
+    .features-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 992px) {
+    .features-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+} 

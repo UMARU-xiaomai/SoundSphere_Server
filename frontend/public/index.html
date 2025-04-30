@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoundSphere - 音乐创作与分享平台</title>
+    <link rel="stylesheet" href="./src/styles/main.css">
+    <link rel="stylesheet" href="./src/styles/home.css">
+    <link rel="icon" type="image/png" href="./src/assets/favicon.png">
+    <meta name="description" content="SoundSphere - 基于Web2.0的在线音乐创作与分享平台，让音乐爱好者、制作人和播客主能够上传分享、协作创作和变现音乐作品">
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="./src/assets/logo.png" alt="SoundSphere Logo">
+                    <span>SoundSphere</span>
+                </a>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#browse" class="nav-link">浏览音乐</a></li>
+                    <li><a href="#collaborate" class="nav-link">创作室</a></li>
+                    <li><a href="#learn" class="nav-link">知识库</a></li>
+                    <li><a href="#marketplace" class="nav-link">音乐商城</a></li>
+                </ul>
+            </nav>
+            <div class="user-actions">
+                <button class="btn btn-secondary" id="login-btn">登录</button>
+                <button class="btn btn-primary" id="signup-btn">注册</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>创作、协作、分享你的音乐</h1>
+                    <p>SoundSphere 是一个让音乐创作变得简单且充满乐趣的平台，无论你是音乐爱好者还是专业制作人。</p>
+                    <div class="cta-buttons">
+                        <button class="btn btn-primary btn-large" id="get-started-btn">开始创作</button>
+                        <button class="btn btn-secondary btn-large" id="explore-btn">探索社区</button>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="./src/assets/hero-image.png" alt="SoundSphere 创作界面">
+                </div>
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="container">
+                <h2 class="section-title">为什么选择 SoundSphere?</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="./src/assets/icons/upload.svg" alt="上传与分享">
+                        </div>
+                        <h3>上传与分享</h3>
+                        <p>上传原创乐曲、伴奏、采样包，以及音乐相关的教程、播客。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="./src/assets/icons/edit.svg" alt="可读可写">
+                        </div>
+                        <h3>可读可写</h3>
+                        <p>社区维基化的"创作笔记"与"制作流程"文档，任何人都可编辑、补充与改进。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="./src/assets/icons/collaborate.svg" alt="多人协作">
+                        </div>
+                        <h3>多人协作</h3>
+                        <p>基于 WebRTC 的实时多人录音与混音房间，也支持 P2P 方式进行大文件（多声道音轨）传输。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <img src="./src/assets/icons/marketplace.svg" alt="社交与电商">
+                        </div>
+                        <h3>社交与电商</h3>
+                        <p>在平台内建立关注体系、评论、打赏机制，还可将作品上架为付费授权，平台抽取一定佣金。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="browse-music" id="browse">
+            <div class="container">
+                <h2 class="section-title">发现音乐</h2>
+                <div class="category-filters">
+                    <button class="filter-btn active" data-filter="all">全部</button>
+                    <button class="filter-btn" data-filter="tracks">乐曲</button>
+                    <button class="filter-btn" data-filter="beats">伴奏</button>
+                    <button class="filter-btn" data-filter="samples">采样</button>
+                    <button class="filter-btn" data-filter="podcasts">播客</button>
+                </div>
+                <div class="music-grid" id="music-grid">
+                    <!-- 音乐卡片将通过 JavaScript 动态插入 -->
+                </div>
+                <button class="btn btn-secondary btn-large" id="load-more-btn">加载更多</button>
+            </div>
+        </section>
+
+        <section class="collaboration" id="collaborate">
+            <div class="container">
+                <h2 class="section-title">实时协作</h2>
+                <p class="section-subtitle">与世界各地的音乐人一起创作，共同打造精彩作品。</p>
+                <div class="collaboration-demo">
+                    <img src="./src/assets/collaboration-demo.png" alt="协作界面演示">
+                    <div class="demo-overlay">
+                        <button class="btn btn-primary btn-large" id="try-collaboration-btn">尝试协作</button>
+                    </div>
+                </div>
+                <div class="room-cards">
+                    <div class="room-card">
+                        <div class="room-info">
+                            <h3>电子舞曲协作室</h3>
+                            <p>3人在线 · 进行中</p>
+                        </div>
+                        <button class="btn btn-secondary">加入</button>
+                    </div>
+                    <div class="room-card">
+                        <div class="room-info">
+                            <h3>流行歌曲混音</h3>
+                            <p>2人在线 · 进行中</p>
+                        </div>
+                        <button class="btn btn-secondary">加入</button>
+                    </div>
+                    <div class="room-card">
+                        <div class="room-info">
+                            <h3>说唱制作室</h3>
+                            <p>5人在线 · 进行中</p>
+                        </div>
+                        <button class="btn btn-secondary">加入</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="knowledge-base" id="learn">
+            <div class="container">
+                <h2 class="section-title">知识库</h2>
+                <p class="section-subtitle">探索社区维护的音乐制作知识与教程</p>
+                <div class="knowledge-categories">
+                    <div class="knowledge-category">
+                        <h3>音乐理论</h3>
+                        <ul>
+                            <li><a href="#">和声学基础</a></li>
+                            <li><a href="#">节奏与拍号</a></li>
+                            <li><a href="#">旋律写作技巧</a></li>
+                        </ul>
+                    </div>
+                    <div class="knowledge-category">
+                        <h3>制作技巧</h3>
+                        <ul>
+                            <li><a href="#">混音基础</a></li>
+                            <li><a href="#">EQ与压缩</a></li>
+                            <li><a href="#">空间效果应用</a></li>
+                        </ul>
+                    </div>
+                    <div class="knowledge-category">
+                        <h3>软件教程</h3>
+                        <ul>
+                            <li><a href="#">FL Studio 入门</a></li>
+                            <li><a href="#">Ableton Live 技巧</a></li>
+                            <li><a href="#">常用VST插件指南</a></li>
+                        </ul>
+                    </div>
+                    <div class="knowledge-category">
+                        <h3>创作分享</h3>
+                        <ul>
+                            <li><a href="#">作曲灵感来源</a></li>
+                            <li><a href="#">制作流程分享</a></li>
+                            <li><a href="#">音乐人访谈</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <a href="#" class="btn btn-secondary btn-large">浏览更多知识</a>
+            </div>
+        </section>
+
+        <section class="marketplace" id="marketplace">
+            <div class="container">
+                <h2 class="section-title">音乐商城</h2>
+                <p class="section-subtitle">发现优质音乐资源，支持创作者</p>
+                <div class="product-categories">
+                    <button class="category-btn active" data-category="all">全部</button>
+                    <button class="category-btn" data-category="beats">伴奏</button>
+                    <button class="category-btn" data-category="samples">采样包</button>
+                    <button class="category-btn" data-category="tutorials">教程</button>
+                    <button class="category-btn" data-category="presets">预设</button>
+                </div>
+                <div class="products-grid" id="products-grid">
+                    <!-- 产品卡片将通过 JavaScript 动态插入 -->
+                </div>
+                <a href="#" class="btn btn-secondary btn-large">浏览商城</a>
+            </div>
+        </section>
+
+        <section class="cta">
+            <div class="container">
+                <div class="cta-content">
+                    <h2>准备好开始你的音乐之旅了吗？</h2>
+                    <p>加入 SoundSphere 社区，与音乐爱好者一起创作、学习和分享。</p>
+                    <button class="btn btn-primary btn-large" id="cta-signup-btn">免费注册</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="./src/assets/logo.png" alt="SoundSphere Logo">
+                    <p>SoundSphere - 音乐创作与分享平台</p>
+                </div>
+                <div class="footer-links">
+                    <div class="link-group">
+                        <h4>关于</h4>
+                        <ul>
+                            <li><a href="#">关于我们</a></li>
+                            <li><a href="#">使用条款</a></li>
+                            <li><a href="#">隐私政策</a></li>
+                            <li><a href="#">版权信息</a></li>
+                        </ul>
+                    </div>
+                    <div class="link-group">
+                        <h4>功能</h4>
+                        <ul>
+                            <li><a href="#">音乐上传</a></li>
+                            <li><a href="#">实时协作</a></li>
+                            <li><a href="#">知识库</a></li>
+                            <li><a href="#">商城</a></li>
+                        </ul>
+                    </div>
+                    <div class="link-group">
+                        <h4>支持</h4>
+                        <ul>
+                            <li><a href="#">帮助中心</a></li>
+                            <li><a href="#">常见问题</a></li>
+                            <li><a href="#">联系我们</a></li>
+                            <li><a href="#">反馈建议</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-newsletter">
+                    <h4>订阅最新动态</h4>
+                    <p>获取最新的音乐资讯与平台更新</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="输入你的邮箱" required>
+                        <button type="submit" class="btn btn-primary">订阅</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 SoundSphere. 保留所有权利。</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><img src="./src/assets/icons/facebook.svg" alt="Facebook"></a>
+                    <a href="#" class="social-link"><img src="./src/assets/icons/twitter.svg" alt="Twitter"></a>
+                    <a href="#" class="social-link"><img src="./src/assets/icons/instagram.svg" alt="Instagram"></a>
+                    <a href="#" class="social-link"><img src="./src/assets/icons/youtube.svg" alt="YouTube"></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 登录模态框 -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>登录到 SoundSphere</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-email">邮箱</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">密码</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary btn-full">登录</button>
+                    </div>
+                </form>
+                <div class="modal-footer">
+                    <p>还没有账号？<a href="#" id="show-signup">注册</a></p>
+                    <p><a href="#" id="forgot-password">忘记密码？</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 注册模态框 -->
+    <div class="modal" id="signup-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>注册 SoundSphere</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="signup-form">
+                    <div class="form-group">
+                        <label for="signup-username">用户名</label>
+                        <input type="text" id="signup-username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">邮箱</label>
+                        <input type="email" id="signup-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">密码</label>
+                        <input type="password" id="signup-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-confirm-password">确认密码</label>
+                        <input type="password" id="signup-confirm-password" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary btn-full">注册</button>
+                    </div>
+                </form>
+                <div class="modal-footer">
+                    <p>已有账号？<a href="#" id="show-login">登录</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./src/utils/api.js"></script>
+    <script src="./src/utils/auth.js"></script>
+    <script src="./src/utils/ui.js"></script>
+    <script src="./src/pages/home.js"></script>
+</body>
+</html> 

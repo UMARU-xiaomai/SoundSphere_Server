@@ -1,0 +1,58 @@
+# 依赖包
+node_modules/
+npm-debug.log
+yarn-error.log
+yarn-debug.log
+package-lock.json
+yarn.lock
+
+# 编译输出
+dist/
+build/
+out/
+.next/
+
+# 环境变量
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# 编辑器配置
+.idea/
+.vscode/
+*.swp
+*.swo
+*.sublime-workspace
+
+# 操作系统文件
+.DS_Store
+Thumbs.db
+
+# 测试覆盖率
+coverage/
+
+# 日志
+logs/
+*.log
+
+# 临时文件
+tmp/
+temp/
+
+# 数据库文件
+*.sqlite
+*.db
+
+# 音频文件
+*.mp3
+*.wav
+*.ogg
+*.flac
+
+# 前端构建文件
+frontend/dist/
+
+# 后端构建文件
+backend/dist/ 

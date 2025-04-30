@@ -1,0 +1,18 @@
+{
+  "name": "soundsphere-frontend",
+  "version": "0.1.0",
+  "description": "SoundSphere - 音乐创作与分享平台前端",
+  "private": true,
+  "scripts": {
+    "start": "http-server ./public -p 8080",
+    "build": "mkdir -p dist && cp -R public/* dist/ && cp -R src/* dist/"
+  },
+  "dependencies": {
+    "http-server": "^14.1.0"
+  },
+  "devDependencies": {
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+} 
