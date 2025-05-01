@@ -7,8 +7,8 @@ services:
       args:
         NPM_REGISTRY: "https://registry.npmmirror.com/"
     volumes:
-      - "./frontend:/app"
-      - "/app/node_modules"
+      - "./frontend/src:/usr/share/nginx/html/src"
+      - "./frontend/public:/usr/share/nginx/html"
     ports:
       - "8080:80"
     depends_on:
@@ -16,6 +16,8 @@ services:
     environment:
       NODE_ENV: "development"
       API_URL: "http://backend:3000/api"
+      DEV_MODE: "1"
+    restart: unless-stopped
 
   backend:
     build:
@@ -27,6 +29,7 @@ services:
     volumes:
       - "./backend:/usr/src/app"
       - "/usr/src/app/node_modules"
+      - "./uploads:/usr/src/app/uploads"
     working_dir: "/usr/src/app"
     ports:
       - "3000:3000"
@@ -42,7 +45,9 @@ services:
       DB_DATABASE: "soundsphere"
       JWT_SECRET: "soundsphere_jwt_secret_key"
       JWT_EXPIRES_IN: "7d"
+      UPLOAD_DIR: "/usr/src/app/uploads"
     command: "npm run start:dev"
+    restart: unless-stopped
 
   postgres:
     image: "postgres:13-alpine"
@@ -54,6 +59,7 @@ services:
       POSTGRES_DB: "soundsphere"
     volumes:
       - "postgres_data:/var/lib/postgresql/data"
+    restart: unless-stopped
 
 volumes:
   postgres_data: {}
