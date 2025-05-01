@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "start": "http-server ./public -p 8080",
-    "build": "mkdir -p dist && cp -R public/* dist/ && cp -R src/* dist/"
+    "build": "mkdir -p dist && cp -R public/* dist/ && cp -R src dist/"
   },
   "dependencies": {
     "http-server": "^14.1.0"
