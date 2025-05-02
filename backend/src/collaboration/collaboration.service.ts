@@ -38,9 +38,12 @@ export class CollaborationService {
       ownerId: userId
     });
     
-    // 保存房间对象并明确指定返回类型为CollaborationRoom
-    // TypeORM在某些情况下会返回数组，所以我们使用as确保类型正确
-    const savedRoom = await this.roomRepository.save(newRoom) as CollaborationRoom;
+    // 保存房间对象，使用双重类型断言确保类型安全
+    // 先转为unknown，再转为CollaborationRoom
+    const result = await this.roomRepository.save(newRoom);
+    
+    // TypeORM可能返回单个对象或数组，我们需要处理这两种情况
+    const savedRoom = Array.isArray(result) ? result[0] : result;
     
     // 创建者自动加入房间
     await this.joinRoom(savedRoom.id, userId);
