@@ -32,19 +32,18 @@ export class CollaborationService {
   }
 
   async createRoom(createRoomDto: any, userId: string) {
+    // 创建房间对象
     const newRoom = this.roomRepository.create({
       ...createRoomDto,
       ownerId: userId
     });
     
-    // 保存并获取单个房间实体
-    const savedRoom = await this.roomRepository.save(newRoom);
-    
-    // 确保获取到的是单个房间对象
-    const roomId = savedRoom.id;
+    // 保存房间对象并明确指定返回类型为CollaborationRoom
+    // TypeORM在某些情况下会返回数组，所以我们使用as确保类型正确
+    const savedRoom = await this.roomRepository.save(newRoom) as CollaborationRoom;
     
     // 创建者自动加入房间
-    await this.joinRoom(roomId, userId);
+    await this.joinRoom(savedRoom.id, userId);
     
     return savedRoom;
   }
