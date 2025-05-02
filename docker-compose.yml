@@ -46,7 +46,8 @@ services:
       JWT_SECRET: "soundsphere_jwt_secret_key"
       JWT_EXPIRES_IN: "7d"
       UPLOAD_DIR: "/usr/src/app/uploads"
-    command: "npm run start:dev"
+    command: >
+      sh -c "npm install --legacy-peer-deps && npm run start:dev"
     restart: unless-stopped
 
   postgres:

@@ -45,8 +45,14 @@ COPY . .
 
 COPY --from=development /usr/src/app/dist ./dist
 
-# 创建上传目录
-RUN mkdir -p /usr/src/app/uploads && chmod 777 /usr/src/app/uploads
+# 创建上传目录及子目录
+RUN mkdir -p /usr/src/app/uploads/music \
+    /usr/src/app/uploads/covers \
+    /usr/src/app/uploads/products \
+    /usr/src/app/uploads/previews \
+    /usr/src/app/uploads/product-covers \
+    /usr/src/app/uploads/article-covers \
+    && chmod -R 777 /usr/src/app/uploads
 
 EXPOSE 3000
 
