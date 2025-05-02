@@ -32,16 +32,21 @@ export class CollaborationService {
   }
 
   async createRoom(createRoomDto: any, userId: string) {
-    const room = this.roomRepository.create({
+    const newRoom = this.roomRepository.create({
       ...createRoomDto,
       ownerId: userId
     });
-    await this.roomRepository.save(room);
+    
+    // 保存并获取单个房间实体
+    const savedRoom = await this.roomRepository.save(newRoom);
+    
+    // 确保获取到的是单个房间对象
+    const roomId = savedRoom.id;
     
     // 创建者自动加入房间
-    await this.joinRoom(room.id, userId);
+    await this.joinRoom(roomId, userId);
     
-    return room;
+    return savedRoom;
   }
 
   async findOneRoom(id: string) {
