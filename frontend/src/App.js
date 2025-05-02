@@ -8,23 +8,36 @@ import MusicPage from './pages/music';
 import MarketplacePage from './pages/marketplace';
 import KnowledgePage from './pages/knowledge';
 import CollaborationPage from './pages/collaboration';
+import LoginPage from './pages/login';
+import RegisterPage from './pages/register';
+
+// 导入认证上下文
+import { AuthProvider, useAuth } from './contexts/AuthContext';
 
 const App = () => {
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
+  );
+};
 
-  // 检查登录状态
-  React.useEffect(() => {
-    const token = localStorage.getItem('token');
-    setIsLoggedIn(!!token);
-  }, []);
+const AppContent = () => {
+  const { currentUser, logout, loading } = useAuth();
 
   // 处理登出
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('userId');
-    setIsLoggedIn(false);
+  const handleLogout = async () => {
+    await logout();
     window.location.href = '/';
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="spinner"></div>
+      </div>
+    );
+  }
 
   return (
     <Router>
@@ -53,11 +66,11 @@ const App = () => {
                   <span className="hidden md:inline">协作</span>
                 </Link>
                 
-                {isLoggedIn ? (
+                {currentUser ? (
                   <div className="relative group">
                     <button className="px-2 py-1 rounded hover:bg-purple-600 flex items-center">
                       <FaUserCircle className="mr-1" />
-                      <span className="hidden md:inline">个人中心</span>
+                      <span className="hidden md:inline">{currentUser.username || '个人中心'}</span>
                     </button>
                     <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg overflow-hidden z-20 hidden group-hover:block">
                       <div className="py-2">
@@ -90,6 +103,8 @@ const App = () => {
             <Route path="/marketplace" element={<MarketplacePage />} />
             <Route path="/knowledge" element={<KnowledgePage />} />
             <Route path="/collaboration" element={<CollaborationPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
             {/* 可以添加更多路由 */}
           </Routes>
         </div>
