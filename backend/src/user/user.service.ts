@@ -23,6 +23,11 @@ export class UserService {
     return this.usersRepository.findOne({ where: { id } });
   }
 
+  async create(userData: Partial<User>): Promise<User> {
+    const user = this.usersRepository.create(userData);
+    return this.usersRepository.save(user);
+  }
+
   async hashPassword(password: string): Promise<string> {
     const salt = await bcrypt.genSalt();
     return bcrypt.hash(password, salt);
