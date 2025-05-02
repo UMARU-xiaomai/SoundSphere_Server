@@ -8,6 +8,7 @@ import { KnowledgeService } from './knowledge.service';
 import { CreateArticleDto } from './dto/create-article.dto';
 import { UpdateArticleDto } from './dto/update-article.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { Public } from '../auth/decorators/public.decorator';
 
 @ApiTags('知识库')
 @Controller('knowledge')
@@ -44,6 +45,7 @@ export class KnowledgeController {
   }
 
   @Get('articles')
+  @Public()
   @ApiOperation({ summary: '获取所有文章' })
   findAllArticles(
     @Query('page') page: number = 1, 
@@ -67,6 +69,7 @@ export class KnowledgeController {
   }
 
   @Get('articles/:id')
+  @Public()
   @ApiOperation({ summary: '获取文章详情' })
   findOneArticle(@Param('id') id: string) {
     return this.knowledgeService.findOneArticle(id);
@@ -101,12 +104,14 @@ export class KnowledgeController {
   }
 
   @Post('articles/:id/view')
+  @Public()
   @ApiOperation({ summary: '记录文章查看次数' })
   viewArticle(@Param('id') id: string) {
     return this.knowledgeService.viewArticle(id);
   }
 
   @Get('tags')
+  @Public()
   @ApiOperation({ summary: '获取所有标签' })
   findAllTags() {
     return this.knowledgeService.findAllTags();

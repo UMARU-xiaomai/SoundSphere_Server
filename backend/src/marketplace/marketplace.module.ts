@@ -8,6 +8,8 @@ import { MarketplaceController } from './marketplace.controller';
 import { MarketplaceService } from './marketplace.service';
 import { Product } from './entities/product.entity';
 import { Order } from './entities/order.entity';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 // 确保上传目录存在
 const uploadsDir = path.join(process.cwd(), 'uploads');
@@ -42,7 +44,13 @@ if (!fs.existsSync(productCoversDir)) {
     }),
   ],
   controllers: [MarketplaceController],
-  providers: [MarketplaceService],
+  providers: [
+    MarketplaceService,
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    }
+  ],
   exports: [MarketplaceService],
 })
 export class MarketplaceModule {} 

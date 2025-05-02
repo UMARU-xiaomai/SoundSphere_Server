@@ -8,6 +8,7 @@ import { MusicService } from './music.service';
 import { CreateMusicDto } from './dto/create-music.dto';
 import { UpdateMusicDto } from './dto/update-music.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { Public } from '../auth/decorators/public.decorator';
 
 @ApiTags('音乐')
 @Controller('music')
@@ -15,9 +16,8 @@ export class MusicController {
   constructor(private readonly musicService: MusicService) {}
 
   @Post()
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
-  @ApiOperation({ summary: '上传新音乐' })
+  @ApiOperation({ summary: '创建音乐' })
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({
@@ -35,10 +35,9 @@ export class MusicController {
     return this.musicService.create(createMusicDto, file, req.user.id);
   }
 
-  @Post('upload-cover/:id')
-  @UseGuards(JwtAuthGuard)
+  @Post(':id/cover')
   @ApiBearerAuth()
-  @ApiOperation({ summary: '上传音乐封面' })
+  @ApiOperation({ summary: '上传封面图片' })
   @UseInterceptors(
     FileInterceptor('file', {
       storage: diskStorage({
@@ -57,13 +56,13 @@ export class MusicController {
   }
 
   @Get()
-  @ApiOperation({ summary: '获取所有公开音乐' })
-  findAll(@Query('page') page: number = 1, @Query('limit') limit: number = 10) {
-    return this.musicService.findAll(page, limit);
+  @Public()
+  @ApiOperation({ summary: '获取音乐列表' })
+  findAll(@Query('page') page: number = 1, @Query('limit') limit: number = 10, @Query('search') search?: string) {
+    return this.musicService.findAll(page, limit, search);
   }
 
   @Get('my')
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: '获取我的音乐' })
   findMyMusic(@Request() req, @Query('page') page: number = 1, @Query('limit') limit: number = 10) {
@@ -71,13 +70,13 @@ export class MusicController {
   }
 
   @Get(':id')
+  @Public()
   @ApiOperation({ summary: '获取音乐详情' })
   findOne(@Param('id') id: string) {
     return this.musicService.findOne(id);
   }
 
   @Patch(':id')
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: '更新音乐信息' })
   update(@Param('id') id: string, @Body() updateMusicDto: UpdateMusicDto, @Request() req) {
@@ -85,24 +84,30 @@ export class MusicController {
   }
 
   @Delete(':id')
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: '删除音乐' })
   remove(@Param('id') id: string, @Request() req) {
     return this.musicService.remove(id, req.user.id);
   }
 
-  @Post(':id/like')
-  @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth()
-  @ApiOperation({ summary: '点赞音乐' })
-  like(@Param('id') id: string, @Request() req) {
-    return this.musicService.like(id, req.user.id);
+  @Post(':id/play')
+  @Public()
+  @ApiOperation({ summary: '增加播放次数' })
+  playMusic(@Param('id') id: string) {
+    return this.musicService.play(id);
   }
 
-  @Post(':id/play')
-  @ApiOperation({ summary: '记录播放次数' })
-  play(@Param('id') id: string) {
-    return this.musicService.play(id);
+  @Post(':id/comments')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: '添加评论' })
+  addComment(@Param('id') id: string, @Body('content') content: string, @Request() req) {
+    return this.musicService.addComment(id, content, req.user.id);
+  }
+
+  @Get(':id/comments')
+  @Public()
+  @ApiOperation({ summary: '获取评论列表' })
+  getComments(@Param('id') id: string, @Query('page') page: number = 1, @Query('limit') limit: number = 10) {
+    return this.musicService.getComments(id, page, limit);
   }
 } 

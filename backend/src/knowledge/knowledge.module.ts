@@ -7,6 +7,8 @@ import * as fs from 'fs';
 import { KnowledgeController } from './knowledge.controller';
 import { KnowledgeService } from './knowledge.service';
 import { Article } from './entities/article.entity';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 // 确保上传目录存在
 const uploadsDir = path.join(process.cwd(), 'uploads');
@@ -33,7 +35,13 @@ if (!fs.existsSync(articleCoversDir)) {
     }),
   ],
   controllers: [KnowledgeController],
-  providers: [KnowledgeService],
+  providers: [
+    KnowledgeService,
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    }
+  ],
   exports: [KnowledgeService],
 })
 export class KnowledgeModule {} 

@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import helmet from 'helmet';
+import * as cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -11,10 +12,16 @@ async function bootstrap() {
   app.setGlobalPrefix('api');
   
   // 启用 CORS
-  app.enableCors();
+  app.enableCors({
+    origin: true,
+    credentials: true,
+  });
   
   // 使用 Helmet 安全头
   app.use(helmet());
+  
+  // 使用cookie解析中间件
+  app.use(cookieParser());
   
   // 全局验证管道
   app.useGlobalPipes(

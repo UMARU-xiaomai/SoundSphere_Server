@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { UserService } from '../user/user.service';
 import { RegisterDto } from './dto/register.dto';
+import { Response } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -20,10 +21,23 @@ export class AuthService {
     return null;
   }
 
-  async login(user: any) {
+  async login(user: any, response?: Response) {
     const payload = { username: user.username, sub: user.id };
+    const token = this.jwtService.sign(payload);
+    
+    // 如果提供了响应对象，则设置cookie
+    if (response) {
+      const secureCookie = process.env.NODE_ENV === 'production';
+      response.cookie('auth_token', token, {
+        httpOnly: true,
+        secure: secureCookie,
+        sameSite: 'lax',
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7天过期
+      });
+    }
+    
     return {
-      access_token: this.jwtService.sign(payload),
+      access_token: token,
       user,
     };
   }
@@ -58,5 +72,11 @@ export class AuthService {
     } catch (error) {
       throw new BadRequestException('注册失败，请稍后再试');
     }
+  }
+  
+  // 添加退出登录方法
+  logout(response: Response) {
+    response.clearCookie('auth_token');
+    return { message: '退出登录成功' };
   }
 }

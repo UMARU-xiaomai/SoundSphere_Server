@@ -14,6 +14,7 @@ RUN npm config set registry $NPM_REGISTRY
 
 COPY package*.json ./
 
+# 安装所有依赖，包括开发依赖
 RUN npm install --legacy-peer-deps
 
 COPY . .
@@ -39,7 +40,8 @@ RUN npm config set registry $NPM_REGISTRY
 
 COPY package*.json ./
 
-RUN npm install --only=production --legacy-peer-deps
+# 使用--production标志代替旧的--only=production
+RUN npm install --production --legacy-peer-deps
 
 COPY . .
 
@@ -53,6 +55,12 @@ RUN mkdir -p /usr/src/app/uploads/music \
     /usr/src/app/uploads/product-covers \
     /usr/src/app/uploads/article-covers \
     && chmod -R 777 /usr/src/app/uploads
+
+# 设置生产环境变量
+ENV PORT=3000
+ENV JWT_SECRET=soundsphere_production_secret_key
+ENV JWT_EXPIRES_IN=7d
+ENV NODE_ENV=production
 
 EXPOSE 3000
 

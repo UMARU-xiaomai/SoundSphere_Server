@@ -8,6 +8,7 @@ import { MarketplaceService } from './marketplace.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
+import { Public } from '../auth/decorators/public.decorator';
 import { ProductType, LicenseType } from './entities/product.entity';
 
 @ApiTags('市场')
@@ -16,7 +17,6 @@ export class MarketplaceController {
   constructor(private readonly marketplaceService: MarketplaceService) {}
 
   @Post('products')
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: '创建商品' })
   @UseInterceptors(
@@ -41,7 +41,6 @@ export class MarketplaceController {
   }
 
   @Post('products/:id/preview')
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: '上传产品预览文件' })
   @UseInterceptors(
@@ -62,7 +61,6 @@ export class MarketplaceController {
   }
 
   @Post('products/:id/cover')
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: '上传产品封面' })
   @UseInterceptors(
@@ -83,6 +81,7 @@ export class MarketplaceController {
   }
 
   @Get('products')
+  @Public()
   @ApiOperation({ summary: '获取所有产品' })
   findAllProducts(
     @Query('page') page: number = 1, 
@@ -95,7 +94,6 @@ export class MarketplaceController {
   }
 
   @Get('products/mine')
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: '获取我的产品' })
   findMyProducts(
@@ -107,13 +105,13 @@ export class MarketplaceController {
   }
 
   @Get('products/:id')
+  @Public()
   @ApiOperation({ summary: '获取产品详情' })
   findOneProduct(@Param('id') id: string) {
     return this.marketplaceService.findOneProduct(id);
   }
 
   @Patch('products/:id')
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: '更新产品' })
   updateProduct(
@@ -125,7 +123,6 @@ export class MarketplaceController {
   }
 
   @Delete('products/:id')
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: '删除产品' })
   removeProduct(@Param('id') id: string, @Request() req) {
@@ -133,7 +130,6 @@ export class MarketplaceController {
   }
 
   @Post('orders/:productId')
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: '创建订单' })
   createOrder(@Param('productId') productId: string, @Request() req) {
@@ -141,7 +137,6 @@ export class MarketplaceController {
   }
 
   @Get('orders')
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: '获取我的订单' })
   findMyOrders(
@@ -153,7 +148,6 @@ export class MarketplaceController {
   }
 
   @Get('orders/:id')
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: '获取订单详情' })
   findOneOrder(@Param('id') id: string, @Request() req) {
@@ -161,7 +155,6 @@ export class MarketplaceController {
   }
 
   @Post('orders/:id/pay')
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: '支付订单' })
   payOrder(@Param('id') id: string, @Request() req) {
@@ -170,7 +163,6 @@ export class MarketplaceController {
   }
 
   @Get('orders/:id/download')
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: '下载已购买的产品' })
   downloadProduct(@Param('id') id: string, @Request() req) {
@@ -178,7 +170,6 @@ export class MarketplaceController {
   }
 
   @Get('sales')
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: '获取我的销售统计' })
   getSalesStats(@Request() req) {

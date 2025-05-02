@@ -7,6 +7,8 @@ import * as fs from 'fs';
 import { MusicController } from './music.controller';
 import { MusicService } from './music.service';
 import { Music } from './entities/music.entity';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 // 确保上传目录存在
 const uploadsDir = path.join(process.cwd(), 'uploads');
@@ -37,7 +39,13 @@ if (!fs.existsSync(coversDir)) {
     }),
   ],
   controllers: [MusicController],
-  providers: [MusicService],
+  providers: [
+    MusicService,
+    {
+      provide: APP_GUARD,
+      useClass: JwtAuthGuard,
+    }
+  ],
   exports: [MusicService],
 })
 export class MusicModule {} 

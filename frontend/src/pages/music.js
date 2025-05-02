@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { FaPlay, FaPause, FaHeart, FaRegHeart, FaUpload, FaEdit, FaTrash } from 'react-icons/fa';
+import { FaPlay, FaPause, FaHeart, FaRegHeart, FaUpload, FaEdit, FaTrash, FaSearch } from 'react-icons/fa';
 
 // 音乐播放器组件
 const MusicPlayer = ({ music }) => {
@@ -188,9 +188,41 @@ const UploadForm = ({ onUploadSuccess }) => {
   );
 };
 
-// 音乐列表项组件
+// 增强音乐列表项组件
 const MusicItem = ({ music, isMyMusic, onDelete, onLike }) => {
   const navigate = useNavigate();
+  const [audioProgress, setAudioProgress] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [audio] = useState(new Audio(`http://localhost:3000/uploads/music/${music.filePath}`));
+
+  useEffect(() => {
+    // 添加音频事件监听
+    audio.addEventListener('timeupdate', updateProgress);
+    audio.addEventListener('ended', () => setIsPlaying(false));
+    
+    return () => {
+      audio.pause();
+      audio.removeEventListener('timeupdate', updateProgress);
+      audio.removeEventListener('ended', () => setIsPlaying(false));
+    };
+  }, [audio]);
+
+  const updateProgress = () => {
+    const progress = (audio.currentTime / audio.duration) * 100;
+    setAudioProgress(progress);
+  };
+
+  const togglePlay = (e) => {
+    e.stopPropagation();
+    if (isPlaying) {
+      audio.pause();
+    } else {
+      audio.play();
+      // 记录播放次数
+      axios.post(`http://localhost:3000/api/music/${music.id}/play`);
+    }
+    setIsPlaying(!isPlaying);
+  };
 
   const handleLike = async (e) => {
     e.stopPropagation();
@@ -230,7 +262,7 @@ const MusicItem = ({ music, isMyMusic, onDelete, onLike }) => {
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-md flex items-center justify-between mb-4">
+    <div className="bg-white p-4 rounded-lg shadow-md mb-4 hover:shadow-lg transition">
       <div className="flex items-center">
         <div className="w-16 h-16 bg-gray-200 rounded-md mr-4 overflow-hidden">
           {music.coverPath ? (
@@ -244,39 +276,60 @@ const MusicItem = ({ music, isMyMusic, onDelete, onLike }) => {
           )}
         </div>
         
-        <div>
-          <h3 className="font-bold">{music.title}</h3>
-          <p className="text-sm text-gray-600">{music.genre || '未分类'}</p>
-          <p className="text-xs text-gray-500">播放次数: {music.plays || 0} | 点赞数: {music.likes || 0}</p>
+        <div className="flex-grow">
+          <div className="flex justify-between">
+            <h3 className="font-bold">{music.title}</h3>
+            <div className="flex items-center space-x-2">
+              <button 
+                onClick={handleLike}
+                className="text-gray-600 hover:text-red-500 transition"
+              >
+                {music.hasLiked ? (
+                  <FaHeart className="text-red-500" />
+                ) : (
+                  <FaRegHeart />
+                )}
+              </button>
+              {isMyMusic && (
+                <>
+                  <button 
+                    onClick={handleEdit}
+                    className="text-gray-600 hover:text-blue-500 transition"
+                  >
+                    <FaEdit />
+                  </button>
+                  <button 
+                    onClick={handleDelete}
+                    className="text-gray-600 hover:text-red-500 transition"
+                  >
+                    <FaTrash />
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
+          
+          <p className="text-sm text-gray-600">{music.artist || '未知艺术家'}</p>
+          <p className="text-xs text-gray-500">{music.genre || '未分类'} | 播放次数: {music.plays || 0} | 点赞数: {music.likes || 0}</p>
+          
+          <div className="mt-2 flex items-center">
+            <button 
+              onClick={togglePlay}
+              className="p-2 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition"
+            >
+              {isPlaying ? <FaPause /> : <FaPlay />}
+            </button>
+            
+            <div className="ml-2 flex-grow">
+              <div className="bg-gray-200 h-2 rounded-full w-full">
+                <div 
+                  className="bg-purple-600 h-2 rounded-full" 
+                  style={{ width: `${audioProgress}%` }}
+                ></div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-      
-      <div className="flex items-center space-x-2">
-        <MusicPlayer music={music} />
-        
-        <button 
-          onClick={handleLike}
-          className="p-2 text-red-500"
-        >
-          {music.isLiked ? <FaHeart /> : <FaRegHeart />}
-        </button>
-        
-        {isMyMusic && (
-          <>
-            <button 
-              onClick={handleEdit}
-              className="p-2 text-blue-500"
-            >
-              <FaEdit />
-            </button>
-            <button 
-              onClick={handleDelete}
-              className="p-2 text-red-500"
-            >
-              <FaTrash />
-            </button>
-          </>
-        )}
       </div>
     </div>
   );
@@ -287,25 +340,32 @@ const MusicPage = () => {
   const [activeTab, setActiveTab] = useState('public');
   const [publicMusic, setPublicMusic] = useState([]);
   const [myMusic, setMyMusic] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [page, setPage] = useState(1);
   const [showUploadForm, setShowUploadForm] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  // 检查登录状态
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    setIsLoggedIn(!!token);
-  }, []);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filterGenre, setFilterGenre] = useState('');
+  const isLoggedIn = !!localStorage.getItem('token');
+  const navigate = useNavigate();
 
   // 获取公开音乐
   const fetchPublicMusic = async () => {
     setLoading(true);
+    setError('');
     try {
-      const response = await axios.get(`http://localhost:3000/api/music?page=${page}&limit=10`);
-      setPublicMusic(response.data.items || []);
+      let url = 'http://localhost:3000/api/music/public';
+      
+      // 添加搜索和过滤参数
+      const params = new URLSearchParams();
+      if (searchTerm) params.append('search', searchTerm);
+      if (filterGenre) params.append('genre', filterGenre);
+      if (params.toString()) url += `?${params.toString()}`;
+      
+      const response = await axios.get(url);
+      setPublicMusic(response.data || []);
     } catch (err) {
-      console.error('获取音乐失败', err);
+      setError('加载音乐失败');
+      console.error(err);
     } finally {
       setLoading(false);
     }
@@ -316,69 +376,88 @@ const MusicPage = () => {
     if (!isLoggedIn) return;
     
     setLoading(true);
+    setError('');
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get(`http://localhost:3000/api/music/my?page=${page}&limit=10`, {
+      let url = 'http://localhost:3000/api/music/my';
+      
+      // 添加搜索和过滤参数
+      const params = new URLSearchParams();
+      if (searchTerm) params.append('search', searchTerm);
+      if (filterGenre) params.append('genre', filterGenre);
+      if (params.toString()) url += `?${params.toString()}`;
+      
+      const response = await axios.get(url, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
-      setMyMusic(response.data.items || []);
+      setMyMusic(response.data || []);
     } catch (err) {
-      console.error('获取我的音乐失败', err);
+      setError('加载音乐失败');
+      console.error(err);
     } finally {
       setLoading(false);
     }
   };
 
-  // 处理标签切换
+  // 初始加载
+  useEffect(() => {
+    fetchPublicMusic();
+    if (isLoggedIn) fetchMyMusic();
+  }, [isLoggedIn]);
+
+  // 搜索和过滤时更新
   useEffect(() => {
     if (activeTab === 'public') {
       fetchPublicMusic();
-    } else if (activeTab === 'my') {
+    } else if (activeTab === 'my' && isLoggedIn) {
       fetchMyMusic();
     }
-  }, [activeTab, page, isLoggedIn]);
+  }, [searchTerm, filterGenre, activeTab]);
 
-  // 处理上传成功
   const handleUploadSuccess = () => {
     setShowUploadForm(false);
-    if (activeTab === 'my') {
-      fetchMyMusic();
-    } else {
-      fetchPublicMusic();
-    }
+    fetchMyMusic();
+    setActiveTab('my');
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    // 搜索逻辑已经在useEffect中处理
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-6">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">音乐中心</h1>
+        <h1 className="text-3xl font-bold text-purple-800">音乐库</h1>
         
         {isLoggedIn && (
           <button
             onClick={() => setShowUploadForm(!showUploadForm)}
             className="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-700 flex items-center"
           >
-            <FaUpload className="mr-2" /> 
-            {showUploadForm ? '取消上传' : '上传音乐'}
+            <FaUpload className="mr-2" />
+            {showUploadForm ? '取消' : '上传音乐'}
           </button>
         )}
       </div>
-
+      
+      {error && <p className="text-red-500 mb-4">{error}</p>}
+      
       {showUploadForm && (
         <UploadForm onUploadSuccess={handleUploadSuccess} />
       )}
-
-      <div className="mb-6">
-        <div className="border-b border-gray-200">
-          <nav className="flex -mb-px">
+      
+      <div className="bg-white p-4 rounded-lg shadow-md mb-6">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="flex space-x-4">
             <button
               onClick={() => setActiveTab('public')}
-              className={`mr-8 py-4 px-1 border-b-2 font-medium text-sm ${
-                activeTab === 'public'
-                  ? 'border-purple-500 text-purple-600'
-                  : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+              className={`px-4 py-2 rounded-md ${
+                activeTab === 'public' 
+                  ? 'bg-purple-600 text-white' 
+                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
               }`}
             >
               公开音乐
@@ -387,81 +466,101 @@ const MusicPage = () => {
             {isLoggedIn && (
               <button
                 onClick={() => setActiveTab('my')}
-                className={`mr-8 py-4 px-1 border-b-2 font-medium text-sm ${
-                  activeTab === 'my'
-                    ? 'border-purple-500 text-purple-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                className={`px-4 py-2 rounded-md ${
+                  activeTab === 'my' 
+                    ? 'bg-purple-600 text-white' 
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                 }`}
               >
                 我的音乐
               </button>
             )}
-          </nav>
+          </div>
+          
+          <div className="flex flex-col md:flex-row gap-2 md:items-center w-full md:w-auto">
+            <select
+              value={filterGenre}
+              onChange={(e) => setFilterGenre(e.target.value)}
+              className="px-3 py-2 border rounded-md"
+            >
+              <option value="">所有流派</option>
+              <option value="Pop">流行</option>
+              <option value="Rock">摇滚</option>
+              <option value="Jazz">爵士</option>
+              <option value="Classical">古典</option>
+              <option value="Electronic">电子</option>
+              <option value="HipHop">嘻哈</option>
+              <option value="Other">其他</option>
+            </select>
+            
+            <form onSubmit={handleSearch} className="flex w-full md:w-auto">
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="搜索音乐..."
+                className="px-3 py-2 border rounded-l-md flex-grow"
+              />
+              <button
+                type="submit"
+                className="bg-purple-600 text-white px-4 py-2 rounded-r-md hover:bg-purple-700"
+              >
+                <FaSearch />
+              </button>
+            </form>
+          </div>
         </div>
       </div>
-
+      
       {loading ? (
         <div className="text-center py-10">
+          <div className="spinner"></div>
           <p>加载中...</p>
         </div>
       ) : (
         <div>
           {activeTab === 'public' && (
             <div>
+              <h2 className="text-xl font-semibold mb-4">公开音乐</h2>
               {publicMusic.length > 0 ? (
-                publicMusic.map(music => (
-                  <MusicItem 
-                    key={music.id} 
-                    music={music} 
-                    isMyMusic={false} 
-                    onLike={fetchPublicMusic}
-                  />
-                ))
+                <div className="grid grid-cols-1 gap-4">
+                  {publicMusic.map(music => (
+                    <MusicItem 
+                      key={music.id} 
+                      music={music} 
+                      isMyMusic={false}
+                      onLike={fetchPublicMusic}
+                    />
+                  ))}
+                </div>
               ) : (
-                <p className="text-center py-10 text-gray-500">暂无公开音乐</p>
+                <p className="text-gray-500 text-center py-6">暂无公开音乐</p>
               )}
             </div>
           )}
           
-          {activeTab === 'my' && (
+          {activeTab === 'my' && isLoggedIn && (
             <div>
+              <h2 className="text-xl font-semibold mb-4">我的音乐</h2>
               {myMusic.length > 0 ? (
-                myMusic.map(music => (
-                  <MusicItem 
-                    key={music.id} 
-                    music={music} 
-                    isMyMusic={true} 
-                    onDelete={fetchMyMusic}
-                    onLike={fetchMyMusic}
-                  />
-                ))
+                <div className="grid grid-cols-1 gap-4">
+                  {myMusic.map(music => (
+                    <MusicItem 
+                      key={music.id} 
+                      music={music} 
+                      isMyMusic={true}
+                      onDelete={fetchMyMusic}
+                      onLike={fetchMyMusic}
+                    />
+                  ))}
+                </div>
               ) : (
-                <p className="text-center py-10 text-gray-500">
-                  {isLoggedIn ? '你还没有上传任何音乐' : '请先登录'}
+                <p className="text-gray-500 text-center py-6">
+                  {loading ? '加载中...' : '您还没有上传音乐'}
                 </p>
               )}
             </div>
           )}
-          
-          {/* 分页控制 */}
-          <div className="flex justify-center mt-6">
-            <button
-              onClick={() => setPage(prev => Math.max(prev - 1, 1))}
-              disabled={page === 1}
-              className="px-4 py-2 border rounded-md mr-2 disabled:opacity-50"
-            >
-              上一页
-            </button>
-            <span className="px-4 py-2">第 {page} 页</span>
-            <button
-              onClick={() => setPage(prev => prev + 1)}
-              disabled={(activeTab === 'public' && publicMusic.length < 10) || 
-                       (activeTab === 'my' && myMusic.length < 10)}
-              className="px-4 py-2 border rounded-md ml-2 disabled:opacity-50"
-            >
-              下一页
-            </button>
-          </div>
         </div>
       )}
     </div>
