@@ -11,7 +11,8 @@ RUN npm config set registry $NPM_REGISTRY
 
 COPY package*.json ./
 
-RUN npm install --legacy-peer-deps
+# 清理npm缓存并重新安装依赖
+RUN npm cache clean --force && npm install --legacy-peer-deps
 
 COPY . .
 
