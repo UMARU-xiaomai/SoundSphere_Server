@@ -16,7 +16,6 @@ export class KnowledgeController {
   constructor(private readonly knowledgeService: KnowledgeService) {}
 
   @Post('articles')
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: '创建文章' })
   createArticle(@Body() createArticleDto: CreateArticleDto, @Request() req) {
@@ -24,7 +23,6 @@ export class KnowledgeController {
   }
 
   @Post('articles/:id/cover')
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: '上传文章封面' })
   @UseInterceptors(
@@ -57,7 +55,6 @@ export class KnowledgeController {
   }
 
   @Get('articles/my')
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: '获取我的文章' })
   findMyArticles(
@@ -76,7 +73,6 @@ export class KnowledgeController {
   }
 
   @Patch('articles/:id')
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: '更新文章' })
   updateArticle(
@@ -88,7 +84,6 @@ export class KnowledgeController {
   }
 
   @Delete('articles/:id')
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: '删除文章' })
   removeArticle(@Param('id') id: string, @Request() req) {
@@ -96,7 +91,6 @@ export class KnowledgeController {
   }
 
   @Post('articles/:id/like')
-  @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()
   @ApiOperation({ summary: '点赞文章' })
   likeArticle(@Param('id') id: string, @Request() req) {

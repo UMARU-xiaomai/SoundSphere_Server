@@ -47,7 +47,11 @@ services:
       JWT_EXPIRES_IN: "7d"
       UPLOAD_DIR: "/usr/src/app/uploads"
     command: >
-      sh -c "mkdir -p /usr/src/app/uploads/music /usr/src/app/uploads/covers /usr/src/app/uploads/products /usr/src/app/uploads/previews /usr/src/app/uploads/product-covers /usr/src/app/uploads/article-covers && chmod -R 777 /usr/src/app/uploads && npm install --legacy-peer-deps && npm run start:dev"
+      sh -c "mkdir -p /usr/src/app/uploads/music /usr/src/app/uploads/covers /usr/src/app/uploads/products /usr/src/app/uploads/previews /usr/src/app/uploads/product-covers /usr/src/app/uploads/article-covers && 
+      chmod -R 777 /usr/src/app/uploads && 
+      npm install --legacy-peer-deps && 
+      npm install --no-save cookie-parser @types/cookie-parser && 
+      npm run start:dev"
     restart: unless-stopped
 
   postgres:

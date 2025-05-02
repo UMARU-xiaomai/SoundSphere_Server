@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException, UnauthorizedException, BadRequestException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, Like } from 'typeorm';
 import * as fs from 'fs';
 import { Music } from './entities/music.entity';
 import { CreateMusicDto } from './dto/create-music.dto';
@@ -47,9 +47,19 @@ export class MusicService {
     return this.musicRepository.save(music);
   }
 
-  async findAll(page: number = 1, limit: number = 10) {
+  async findAll(page: number = 1, limit: number = 10, search?: string) {
+    let whereCondition: any = { isPublic: true };
+    
+    // 添加搜索条件
+    if (search) {
+      whereCondition = {
+        ...whereCondition,
+        title: Like(`%${search}%`)
+      };
+    }
+    
     const [items, total] = await this.musicRepository.findAndCount({
-      where: { isPublic: true },
+      where: whereCondition,
       order: { createdAt: 'DESC' },
       skip: (page - 1) * limit,
       take: limit,
@@ -133,5 +143,34 @@ export class MusicService {
     const music = await this.findOne(id);
     music.plays += 1;
     return this.musicRepository.save(music);
+  }
+  
+  // 添加评论方法 - 简化实现，实际应该有评论表
+  async addComment(musicId: string, content: string, userId: string) {
+    const music = await this.findOne(musicId);
+    // 实际应该创建评论记录
+    return { 
+      id: '评论ID', 
+      content,
+      musicId,
+      userId,
+      createdAt: new Date()
+    };
+  }
+  
+  // 获取评论列表 - 简化实现，实际应该查询评论表
+  async getComments(musicId: string, page: number = 1, limit: number = 10) {
+    await this.findOne(musicId); // 确认音乐存在
+    
+    // 模拟评论数据
+    return {
+      items: [],
+      meta: {
+        currentPage: page,
+        itemsPerPage: limit,
+        totalItems: 0,
+        totalPages: 0
+      }
+    };
   }
 } 
