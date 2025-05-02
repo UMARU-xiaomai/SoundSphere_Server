@@ -5,8 +5,8 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 
 WORKDIR /usr/src/app
 
-# 添加构建依赖
-RUN apk add --no-cache python3 make g++ python3-dev
+# 添加构建依赖和运行时依赖
+RUN apk add --no-cache python3 make g++ python3-dev ffmpeg sox
 
 # 接收并设置npm镜像源
 ARG NPM_REGISTRY=https://registry.npmmirror.com/
@@ -30,8 +30,8 @@ RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
 
 WORKDIR /usr/src/app
 
-# 添加构建依赖
-RUN apk add --no-cache python3 make g++
+# 添加构建依赖和运行时依赖
+RUN apk add --no-cache python3 make g++ ffmpeg sox
 
 # 接收并设置npm镜像源
 ARG NPM_REGISTRY=https://registry.npmmirror.com/
@@ -41,12 +41,13 @@ COPY package*.json ./
 
 RUN npm install --only=production --legacy-peer-deps
 
-RUN npm install --save swagger-ui-express
-
 COPY . .
 
 COPY --from=development /usr/src/app/dist ./dist
 
+# 创建上传目录
+RUN mkdir -p /usr/src/app/uploads && chmod 777 /usr/src/app/uploads
+
 EXPOSE 3000
 
-CMD ["node", "dist/main"] 
+CMD ["node", "dist/main"]
