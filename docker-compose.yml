@@ -29,7 +29,7 @@ services:
     volumes:
       - "./backend:/usr/src/app"
       - "/usr/src/app/node_modules"
-      - "./uploads:/usr/src/app/uploads"
+      - "uploads_volume:/usr/src/app/uploads"
     working_dir: "/usr/src/app"
     ports:
       - "3000:3000"
@@ -47,7 +47,7 @@ services:
       JWT_EXPIRES_IN: "7d"
       UPLOAD_DIR: "/usr/src/app/uploads"
     command: >
-      sh -c "npm install --legacy-peer-deps && npm run start:dev"
+      sh -c "mkdir -p /usr/src/app/uploads/music /usr/src/app/uploads/covers /usr/src/app/uploads/products /usr/src/app/uploads/previews /usr/src/app/uploads/product-covers /usr/src/app/uploads/article-covers && chmod -R 777 /usr/src/app/uploads && npm install --legacy-peer-deps && npm run start:dev"
     restart: unless-stopped
 
   postgres:
@@ -64,3 +64,4 @@ services:
 
 volumes:
   postgres_data: {}
+  uploads_volume: {}
