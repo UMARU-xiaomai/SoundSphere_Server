@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>知识库 - SoundSphere</title>
+    <title>音乐知识博客 - SoundSphere</title>
     <link rel="stylesheet" href="/src/styles/main.css">
     <link rel="stylesheet" href="/src/styles/icons.css">
     <link rel="stylesheet" href="/src/styles/placeholders.css">
     <link rel="stylesheet" href="/src/styles/knowledge.css">
     <link rel="icon" type="image/png" href="/src/assets/favicon.png">
-    <meta name="description" content="SoundSphere知识库 - 学习音乐制作、混音、编曲等专业知识，提升音乐创作技能">
+    <meta name="description" content="SoundSphere音乐知识博客 - 学习音乐制作、混音、编曲等专业知识，提升音乐创作技能">
 </head>
 <body>
     <header class="main-header">
@@ -24,7 +24,7 @@
                 <ul>
                     <li><a href="music.html" class="nav-link">浏览音乐</a></li>
                     <li><a href="collaboration.html" class="nav-link">创作室</a></li>
-                    <li><a href="knowledge.html" class="nav-link active">知识库</a></li>
+                    <li><a href="knowledge.html" class="nav-link active">知识博客</a></li>
                     <li><a href="marketplace.html" class="nav-link">市场</a></li>
                 </ul>
             </nav>
@@ -38,251 +38,452 @@
     <main>
         <section class="knowledge-hero">
             <div class="container">
-                <h1>音乐知识库</h1>
-                <p>探索社区维护的音乐制作知识与教程，提升你的创作能力</p>
+                <h1>音乐知识博客</h1>
+                <p>探索音乐制作知识，分享您的经验与见解，成为SoundSphere知识社区的一部分</p>
                 <div class="search-bar">
-                    <input type="text" placeholder="搜索文章、教程或标签...">
-                    <button class="btn btn-primary">搜索</button>
+                    <input type="text" placeholder="搜索文章、教程或标签..." id="search-input">
+                    <button class="btn btn-primary" id="search-btn">搜索</button>
                 </div>
             </div>
         </section>
 
-        <section class="knowledge-categories">
+        <section class="category-navigation">
             <div class="container">
-                <h2 class="section-title">知识分类</h2>
-                <div class="category-grid">
-                    <div class="category-card">
-                        <div class="category-icon">
-                            <img src="/src/assets/icons/theory.svg" alt="音乐理论">
-                        </div>
-                        <h3>音乐理论</h3>
-                        <p>和声学、作曲技巧、调式与调性等基础音乐理论知识</p>
-                        <a href="#" class="category-link">浏览全部</a>
-                    </div>
-                    
-                    <div class="category-card">
-                        <div class="category-icon">
-                            <img src="/src/assets/icons/production.svg" alt="音乐制作">
-                        </div>
-                        <h3>音乐制作</h3>
-                        <p>录音技巧、混音、母带处理等音乐制作相关知识</p>
-                        <a href="#" class="category-link">浏览全部</a>
-                    </div>
-                    
-                    <div class="category-card">
-                        <div class="category-icon">
-                            <img src="/src/assets/icons/software.svg" alt="软件教程">
-                        </div>
-                        <h3>软件教程</h3>
-                        <p>常用DAW软件、插件使用教程和实用技巧分享</p>
-                        <a href="#" class="category-link">浏览全部</a>
-                    </div>
-                    
-                    <div class="category-card">
-                        <div class="category-icon">
-                            <img src="/src/assets/icons/business.svg" alt="音乐商业">
-                        </div>
-                        <h3>音乐商业</h3>
-                        <p>版权知识、音乐发行、推广与变现相关内容</p>
-                        <a href="#" class="category-link">浏览全部</a>
-                    </div>
+                <div class="category-tabs">
+                    <a href="#" class="category-tab active">全部</a>
+                    <a href="#" class="category-tab">音乐理论</a>
+                    <a href="#" class="category-tab">混音技巧</a>
+                    <a href="#" class="category-tab">编曲指南</a>
+                    <a href="#" class="category-tab">乐器演奏</a>
+                    <a href="#" class="category-tab">音频软件</a>
+                    <a href="#" class="category-tab">音乐商业</a>
                 </div>
             </div>
         </section>
 
-        <section class="featured-articles">
+        <section class="knowledge-nav">
             <div class="container">
-                <div class="section-header">
-                    <h2 class="section-title">精选文章</h2>
-                    <div class="section-actions">
-                        <select id="article-filter">
-                            <option value="trending">热门</option>
-                            <option value="latest">最新</option>
-                            <option value="recommended">推荐</option>
-                        </select>
-                    </div>
+                <div class="blog-options">
+                    <button class="tab-btn active" data-tab="all-posts">全部文章</button>
+                    <button class="tab-btn" data-tab="my-posts">我的博客</button>
+                    <button class="tab-btn" data-tab="bookmarks">收藏文章</button>
+                    <button class="tab-btn" data-tab="following">关注作者</button>
                 </div>
-                
-                <div class="article-grid">
-                    <div class="article-card">
-                        <div class="article-image">
-                            <img src="/src/assets/placeholder-article.jpg" alt="文章封面">
-                            <div class="article-category">音乐理论</div>
-                        </div>
-                        <div class="article-content">
-                            <h3>和声学基础：如何构建吸引人的和弦进行</h3>
-                            <p class="article-excerpt">本文将介绍和声学的基本概念，以及如何创建引人入胜的和弦进行，增强你的作曲能力...</p>
-                            <div class="article-meta">
-                                <div class="author">
-                                    <img src="/src/assets/placeholder-avatar.jpg" alt="作者头像">
-                                    <span>李教授</span>
-                                </div>
-                                <div class="stats">
-                                    <span><i class="views-icon"></i> 3.2k</span>
-                                    <span><i class="likes-icon"></i> 156</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="article-card">
-                        <div class="article-image">
-                            <img src="/src/assets/placeholder-article.jpg" alt="文章封面">
-                            <div class="article-category">音乐制作</div>
-                        </div>
-                        <div class="article-content">
-                            <h3>混音中的均衡器（EQ）使用技巧详解</h3>
-                            <p class="article-excerpt">均衡器是混音过程中最重要的工具之一，本文将深入讲解EQ的使用方法和实用技巧...</p>
-                            <div class="article-meta">
-                                <div class="author">
-                                    <img src="/src/assets/placeholder-avatar.jpg" alt="作者头像">
-                                    <span>张工程师</span>
-                                </div>
-                                <div class="stats">
-                                    <span><i class="views-icon"></i> 5.7k</span>
-                                    <span><i class="likes-icon"></i> 215</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="article-card">
-                        <div class="article-image">
-                            <img src="/src/assets/placeholder-article.jpg" alt="文章封面">
-                            <div class="article-category">软件教程</div>
-                        </div>
-                        <div class="article-content">
-                            <h3>FL Studio 完全入门指南</h3>
-                            <p class="article-excerpt">这篇指南将帮助初学者快速掌握FL Studio的基本操作，从界面介绍到简单编曲全面覆盖...</p>
-                            <div class="article-meta">
-                                <div class="author">
-                                    <img src="/src/assets/placeholder-avatar.jpg" alt="作者头像">
-                                    <span>王老师</span>
-                                </div>
-                                <div class="stats">
-                                    <span><i class="views-icon"></i> 8.3k</span>
-                                    <span><i class="likes-icon"></i> 342</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="article-card">
-                        <div class="article-image">
-                            <img src="/src/assets/placeholder-article.jpg" alt="文章封面">
-                            <div class="article-category">音乐商业</div>
-                        </div>
-                        <div class="article-content">
-                            <h3>如何通过流媒体平台有效变现你的音乐</h3>
-                            <p class="article-excerpt">本文讲解如何通过Spotify、网易云音乐等流媒体平台发布和推广你的音乐作品，实现收益最大化...</p>
-                            <div class="article-meta">
-                                <div class="author">
-                                    <img src="/src/assets/placeholder-avatar.jpg" alt="作者头像">
-                                    <span>陈经理</span>
-                                </div>
-                                <div class="stats">
-                                    <span><i class="views-icon"></i> 4.1k</span>
-                                    <span><i class="likes-icon"></i> 189</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div class="user-blog-controls">
+                    <button class="btn btn-primary" id="new-post-btn">
+                        <span class="visually-hidden">创建新文章</span>
+                        <span class="icon-plus"></span>写博客
+                    </button>
                 </div>
-                
-                <button class="btn btn-secondary btn-large" id="load-more-articles">加载更多</button>
             </div>
         </section>
 
-        <section class="latest-tutorials">
-            <div class="container">
-                <h2 class="section-title">最新视频教程</h2>
-                <div class="tutorials-grid">
-                    <div class="tutorial-card">
-                        <div class="tutorial-video">
-                            <img src="/src/assets/placeholder-tutorial.jpg" alt="教程封面">
-                            <div class="play-overlay">
-                                <button class="play-button">
-                                    <img src="/src/assets/icons/play.svg" alt="播放">
-                                </button>
-                            </div>
-                            <span class="tutorial-duration">15:42</span>
+        <div class="blog-main container">
+            <div class="blog-content-area">
+                <section class="blog-posts active" id="all-posts-section">
+                    <div class="filter-bar">
+                        <div class="tag-filters">
+                            <label for="tag-select">筛选标签：</label>
+                            <select id="tag-select">
+                                <option value="">所有标签</option>
+                                <option value="音乐理论">音乐理论</option>
+                                <option value="音乐制作">音乐制作</option>
+                                <option value="混音技巧">混音技巧</option>
+                                <option value="编曲">编曲</option>
+                                <option value="软件教程">软件教程</option>
+                            </select>
                         </div>
-                        <div class="tutorial-content">
-                            <h3>从零开始学习编曲</h3>
-                            <p class="tutorial-description">本系列教程第一集，适合没有任何基础的音乐爱好者</p>
-                            <div class="tutorial-meta">
-                                <div class="tutor">
-                                    <img src="/src/assets/placeholder-avatar.jpg" alt="讲师头像">
-                                    <span>音乐学院</span>
+                        <div class="sort-options">
+                            <label for="sort-select">排序：</label>
+                            <select id="sort-select">
+                                <option value="newest">最新发布</option>
+                                <option value="hottest">热门推荐</option>
+                                <option value="most-viewed">最多浏览</option>
+                                <option value="most-liked">最多点赞</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="post-list" id="featured-posts">
+                        <article class="post-card">
+                            <div class="post-image">
+                                <img src="/src/assets/placeholder-article.jpg" alt="文章封面">
+                                <div class="post-category">音乐理论</div>
+                            </div>
+                            <div class="post-content">
+                                <h3><a href="#" class="post-title">和声学基础：如何构建吸引人的和弦进行</a></h3>
+                                <div class="post-meta">
+                                    <div class="author">
+                                        <img src="/src/assets/placeholder-avatar.jpg" alt="作者头像">
+                                        <span>李教授</span>
+                                    </div>
+                                    <span class="post-date">2023-06-15</span>
                                 </div>
-                                <div class="tutorial-stats">
-                                    <span><i class="views-icon"></i> 12.4k</span>
+                                <p class="post-excerpt">本文将介绍和声学的基本概念，以及如何创建引人入胜的和弦进行，增强你的作曲能力...</p>
+                                <div class="post-tags">
+                                    <span class="tag">和声学</span>
+                                    <span class="tag">作曲</span>
+                                    <span class="tag">音乐理论</span>
                                 </div>
+                                <div class="post-stats">
+                                    <span class="views"><i class="views-icon"></i> 3.2k</span>
+                                    <span class="likes"><i class="likes-icon"></i> 156</span>
+                                    <span class="comments"><i class="comments-icon"></i> 48</span>
+                                </div>
+                            </div>
+                        </article>
+                        
+                        <article class="post-card">
+                            <div class="post-image">
+                                <img src="/src/assets/placeholder-article.jpg" alt="文章封面">
+                                <div class="post-category">音乐制作</div>
+                            </div>
+                            <div class="post-content">
+                                <h3><a href="#" class="post-title">混音中的均衡器（EQ）使用技巧详解</a></h3>
+                                <div class="post-meta">
+                                    <div class="author">
+                                        <img src="/src/assets/placeholder-avatar.jpg" alt="作者头像">
+                                        <span>张工程师</span>
+                                    </div>
+                                    <span class="post-date">2023-06-10</span>
+                                </div>
+                                <p class="post-excerpt">均衡器是混音过程中最重要的工具之一，本文将深入讲解EQ的使用方法和实用技巧...</p>
+                                <div class="post-tags">
+                                    <span class="tag">混音</span>
+                                    <span class="tag">均衡器</span>
+                                    <span class="tag">音频处理</span>
+                                </div>
+                                <div class="post-stats">
+                                    <span class="views"><i class="views-icon"></i> 5.7k</span>
+                                    <span class="likes"><i class="likes-icon"></i> 215</span>
+                                    <span class="comments"><i class="comments-icon"></i> 92</span>
+                                </div>
+                            </div>
+                        </article>
+                        
+                        <article class="post-card">
+                            <div class="post-image">
+                                <img src="/src/assets/placeholder-article.jpg" alt="文章封面">
+                                <div class="post-category">软件教程</div>
+                            </div>
+                            <div class="post-content">
+                                <h3><a href="#" class="post-title">FL Studio 完全入门指南</a></h3>
+                                <div class="post-meta">
+                                    <div class="author">
+                                        <img src="/src/assets/placeholder-avatar.jpg" alt="作者头像">
+                                        <span>王老师</span>
+                                    </div>
+                                    <span class="post-date">2023-06-05</span>
+                                </div>
+                                <p class="post-excerpt">这篇指南将帮助初学者快速掌握FL Studio的基本操作，从界面介绍到简单编曲全面覆盖...</p>
+                                <div class="post-tags">
+                                    <span class="tag">FL Studio</span>
+                                    <span class="tag">DAW</span>
+                                    <span class="tag">软件教程</span>
+                                </div>
+                                <div class="post-stats">
+                                    <span class="views"><i class="views-icon"></i> 8.3k</span>
+                                    <span class="likes"><i class="likes-icon"></i> 342</span>
+                                    <span class="comments"><i class="comments-icon"></i> 127</span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    
+                    <button class="btn btn-secondary btn-large" id="load-more-posts">加载更多</button>
+                </section>
+
+                <section class="blog-posts" id="my-posts-section">
+                    <div class="my-blog-header">
+                        <h2>我的博客文章</h2>
+                        <div class="blog-controls">
+                            <button class="btn btn-outline" id="manage-blog-btn">管理文章</button>
+                        </div>
+                    </div>
+                    <div class="empty-state" id="login-required">
+                        <div class="empty-icon">📝</div>
+                        <h3>请先登录</h3>
+                        <p>登录后查看和管理您的博客文章</p>
+                        <button class="btn btn-primary" id="login-to-blog">登录</button>
+                    </div>
+                    <div class="post-list hidden" id="my-posts">
+                        <!-- 用户发表的文章将动态加载到这里 -->
+                    </div>
+                </section>
+
+                <section class="blog-posts" id="bookmarks-section">
+                    <h2>我的收藏</h2>
+                    <div class="empty-state" id="bookmarks-login-required">
+                        <div class="empty-icon">🔖</div>
+                        <h3>请先登录</h3>
+                        <p>登录后查看您收藏的文章</p>
+                        <button class="btn btn-primary" id="login-to-bookmark">登录</button>
+                    </div>
+                    <div class="post-list hidden" id="bookmarked-posts">
+                        <!-- 收藏的文章将动态加载到这里 -->
+                    </div>
+                </section>
+
+                <section class="blog-posts" id="following-section">
+                    <h2>关注的作者</h2>
+                    <div class="empty-state" id="following-login-required">
+                        <div class="empty-icon">👥</div>
+                        <h3>请先登录</h3>
+                        <p>登录后查看您关注的作者</p>
+                        <button class="btn btn-primary" id="login-to-follow">登录</button>
+                    </div>
+                    <div class="authors-list hidden" id="followed-authors">
+                        <!-- 关注的作者将动态加载到这里 -->
+                    </div>
+                    <div class="post-list hidden" id="followed-posts">
+                        <!-- 关注作者的文章将动态加载到这里 -->
+                    </div>
+                </section>
+
+                <!-- 新增评论系统 -->
+                <section class="blog-comments hidden" id="comments-section">
+                    <div class="comments-header">
+                        <h2>评论 (<span id="comment-count">0</span>)</h2>
+                    </div>
+                    <div class="comment-form" id="comment-form">
+                        <div class="comment-avatar">
+                            <img src="/src/assets/placeholder-avatar.jpg" alt="用户头像" id="comment-user-avatar">
+                        </div>
+                        <div class="comment-input">
+                            <textarea id="comment-content" placeholder="写下你的评论..."></textarea>
+                            <div class="comment-actions">
+                                <button class="btn btn-primary" id="submit-comment">发表评论</button>
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="tutorial-card">
-                        <div class="tutorial-video">
-                            <img src="/src/assets/placeholder-tutorial.jpg" alt="教程封面">
-                            <div class="play-overlay">
-                                <button class="play-button">
-                                    <img src="/src/assets/icons/play.svg" alt="播放">
-                                </button>
-                            </div>
-                            <span class="tutorial-duration">23:17</span>
+                    <div class="comments-list" id="comments-list">
+                        <!-- 评论内容将动态加载 -->
+                    </div>
+                </section>
+
+                <!-- 博客编辑器增强 -->
+                <section class="blog-editor hidden" id="blog-editor">
+                    <div class="editor-header">
+                        <h2>创建新博客文章</h2>
+                        <button class="btn btn-outline" id="cancel-edit">取消</button>
+                    </div>
+                    <form id="blog-form">
+                        <div class="form-group">
+                            <label for="post-title">标题</label>
+                            <input type="text" id="post-title" required placeholder="输入博客标题...">
                         </div>
-                        <div class="tutorial-content">
-                            <h3>高级混音技巧</h3>
-                            <p class="tutorial-description">适合已有基础的制作人，掌握专业混音师的秘密武器</p>
-                            <div class="tutorial-meta">
-                                <div class="tutor">
-                                    <img src="/src/assets/placeholder-avatar.jpg" alt="讲师头像">
-                                    <span>混音大师</span>
-                                </div>
-                                <div class="tutorial-stats">
-                                    <span><i class="views-icon"></i> 8.7k</span>
-                                </div>
+                        <div class="form-group">
+                            <label for="post-category">分类</label>
+                            <select id="post-category" required>
+                                <option value="">选择分类</option>
+                                <option value="音乐理论">音乐理论</option>
+                                <option value="音乐制作">音乐制作</option>
+                                <option value="软件教程">软件教程</option>
+                                <option value="音乐商业">音乐商业</option>
+                                <option value="乐器演奏">乐器演奏</option>
+                                <option value="音乐分析">音乐分析</option>
+                                <option value="混音技巧">混音技巧</option>
+                                <option value="编曲指南">编曲指南</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="post-tags">标签（用逗号分隔）</label>
+                            <input type="text" id="post-tags" placeholder="如：混音, 编曲, 电子音乐...">
+                        </div>
+                        <div class="form-group">
+                            <label for="post-cover">封面图片</label>
+                            <input type="file" id="post-cover" accept="image/*">
+                            <div class="cover-preview hidden">
+                                <img id="cover-preview-img" src="" alt="封面预览">
                             </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="post-summary">文章摘要（不超过200字）</label>
+                            <textarea id="post-summary" rows="3" placeholder="输入文章摘要，将显示在文章列表中..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="post-content">内容（支持Markdown格式）</label>
+                            <div class="editor-toolbar">
+                                <button type="button" class="toolbar-btn" data-format="bold" title="粗体"><strong>B</strong></button>
+                                <button type="button" class="toolbar-btn" data-format="italic" title="斜体"><em>I</em></button>
+                                <button type="button" class="toolbar-btn" data-format="heading" title="标题">H</button>
+                                <button type="button" class="toolbar-btn" data-format="link" title="链接">🔗</button>
+                                <button type="button" class="toolbar-btn" data-format="image" title="图片">🖼️</button>
+                                <button type="button" class="toolbar-btn" data-format="list" title="列表">•</button>
+                                <button type="button" class="toolbar-btn" data-format="code" title="代码">{ }</button>
+                                <button type="button" class="toolbar-btn" data-format="quote" title="引用">❝</button>
+                                <button type="button" class="toolbar-btn" data-format="table" title="表格">▦</button>
+                                <div class="toolbar-divider"></div>
+                                <button type="button" class="toolbar-btn" id="preview-btn" title="预览">👁️</button>
+                            </div>
+                            <textarea id="post-content" rows="12" required placeholder="在这里输入博客内容..."></textarea>
+                            <div id="content-preview" class="content-preview hidden"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="post-visibility">文章可见性</label>
+                            <select id="post-visibility">
+                                <option value="public" selected>公开发布</option>
+                                <option value="private">仅自己可见</option>
+                                <option value="password">密码保护</option>
+                            </select>
+                            <div id="password-protection" class="hidden">
+                                <input type="password" id="post-password" placeholder="输入访问密码">
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="button" class="btn btn-secondary" id="save-draft">保存草稿</button>
+                            <button type="submit" class="btn btn-primary" id="publish-post">发布文章</button>
+                        </div>
+                    </form>
+                </section>
+            </div>
+
+            <aside class="blog-sidebar">
+                <div class="sidebar-section profile-card">
+                    <div class="profile-info">
+                        <div class="profile-avatar">
+                            <img src="/src/assets/placeholder-avatar.jpg" alt="用户头像" id="user-avatar">
+                        </div>
+                        <div class="profile-details">
+                            <h3 id="user-name">未登录</h3>
+                            <p id="user-bio" class="hidden">分享音乐知识和经验</p>
                         </div>
                     </div>
-                    
-                    <div class="tutorial-card">
-                        <div class="tutorial-video">
-                            <img src="/src/assets/placeholder-tutorial.jpg" alt="教程封面">
-                            <div class="play-overlay">
-                                <button class="play-button">
-                                    <img src="/src/assets/icons/play.svg" alt="播放">
-                                </button>
-                            </div>
-                            <span class="tutorial-duration">18:05</span>
+                    <div class="profile-stats hidden" id="profile-stats">
+                        <div class="stat-item">
+                            <span class="stat-value" id="posts-count">0</span>
+                            <span class="stat-label">文章</span>
                         </div>
-                        <div class="tutorial-content">
-                            <h3>电子音乐制作全流程</h3>
-                            <p class="tutorial-description">从构思到完成，全面展示一首电子舞曲的制作过程</p>
-                            <div class="tutorial-meta">
-                                <div class="tutor">
-                                    <img src="/src/assets/placeholder-avatar.jpg" alt="讲师头像">
-                                    <span>电音达人</span>
-                                </div>
-                                <div class="tutorial-stats">
-                                    <span><i class="views-icon"></i> 15.2k</span>
-                                </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="followers-count">0</span>
+                            <span class="stat-label">粉丝</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="following-count">0</span>
+                            <span class="stat-label">关注</span>
+                        </div>
+                    </div>
+                    <div class="login-prompt" id="sidebar-login-prompt">
+                        <p>登录后开始创作和分享</p>
+                        <button class="btn btn-primary btn-sm" id="sidebar-login-btn">登录</button>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>热门标签</h3>
+                    <div class="tag-cloud">
+                        <a href="#" class="tag-item" data-tag="混音">混音</a>
+                        <a href="#" class="tag-item" data-tag="编曲">编曲</a>
+                        <a href="#" class="tag-item" data-tag="和声学">和声学</a>
+                        <a href="#" class="tag-item" data-tag="电子音乐">电子音乐</a>
+                        <a href="#" class="tag-item" data-tag="录音技巧">录音技巧</a>
+                        <a href="#" class="tag-item" data-tag="Ableton Live">Ableton Live</a>
+                        <a href="#" class="tag-item" data-tag="FL Studio">FL Studio</a>
+                        <a href="#" class="tag-item" data-tag="音色设计">音色设计</a>
+                        <a href="#" class="tag-item" data-tag="歌曲写作">歌曲写作</a>
+                        <a href="#" class="tag-item" data-tag="母带处理">母带处理</a>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>推荐作者</h3>
+                    <div class="recommended-authors">
+                        <div class="author-item">
+                            <img src="/src/assets/placeholder-avatar.jpg" alt="作者头像">
+                            <div class="author-info">
+                                <h4>混音大师</h4>
+                                <p>专业混音工程师，10年行业经验</p>
                             </div>
+                            <button class="btn btn-outline btn-sm">关注</button>
+                        </div>
+                        <div class="author-item">
+                            <img src="/src/assets/placeholder-avatar.jpg" alt="作者头像">
+                            <div class="author-info">
+                                <h4>电子音乐制作人</h4>
+                                <p>独立音乐人，电子音乐制作专家</p>
+                            </div>
+                            <button class="btn btn-outline btn-sm">关注</button>
+                        </div>
+                        <div class="author-item">
+                            <img src="/src/assets/placeholder-avatar.jpg" alt="作者头像">
+                            <div class="author-info">
+                                <h4>音乐理论教授</h4>
+                                <p>音乐学院教授，作曲家</p>
+                            </div>
+                            <button class="btn btn-outline btn-sm">关注</button>
                         </div>
                     </div>
                 </div>
+
+                <div class="sidebar-section">
+                    <h3>热门文章</h3>
+                    <div class="popular-posts">
+                        <a href="#" class="popular-post-item">
+                            <span class="post-rank">1</span>
+                            <span class="post-title">音乐创作中的10个常见错误及如何避免</span>
+                        </a>
+                        <a href="#" class="popular-post-item">
+                            <span class="post-rank">2</span>
+                            <span class="post-title">如何制作专业水准的低音部分</span>
+                        </a>
+                        <a href="#" class="popular-post-item">
+                            <span class="post-rank">3</span>
+                            <span class="post-title">音乐人必备的5款免费插件</span>
+                        </a>
+                        <a href="#" class="popular-post-item">
+                            <span class="post-rank">4</span>
+                            <span class="post-title">歌曲结构设计：引人入胜的编排技巧</span>
+                        </a>
+                        <a href="#" class="popular-post-item">
+                            <span class="post-rank">5</span>
+                            <span class="post-title">如何构建动态鼓点图案</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- 增加博客日历 -->
+                <div class="sidebar-section">
+                    <h3>博客日历</h3>
+                    <div class="blog-calendar" id="blog-calendar">
+                        <!-- 日历会通过JavaScript动态生成 -->
+                    </div>
+                </div>
                 
-                <a href="#" class="btn btn-secondary btn-large">查看更多教程</a>
-            </div>
-        </section>
+                <!-- 增加订阅区域 -->
+                <div class="sidebar-section">
+                    <h3>订阅博客</h3>
+                    <p>不错过任何精彩内容，获取最新博客更新</p>
+                    <div class="subscription-options">
+                        <a href="#" class="subscription-option">
+                            <img src="/src/assets/icons/rss.svg" alt="RSS">
+                            <span>RSS订阅</span>
+                        </a>
+                        <a href="#" class="subscription-option">
+                            <img src="/src/assets/icons/email.svg" alt="邮件">
+                            <span>邮件订阅</span>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 新增博客统计 -->
+                <div class="sidebar-section">
+                    <h3>博客统计</h3>
+                    <ul class="blog-stats-list">
+                        <li><span class="stat-label">文章总数：</span><span class="stat-value" id="total-posts">1,234</span></li>
+                        <li><span class="stat-label">评论总数：</span><span class="stat-value" id="total-comments">5,678</span></li>
+                        <li><span class="stat-label">访问总数：</span><span class="stat-value" id="total-views">89,012</span></li>
+                        <li><span class="stat-label">今日更新：</span><span class="stat-value" id="today-posts">12</span></li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
 
         <section class="contribute">
             <div class="container">
                 <div class="contribute-content">
-                    <h2>分享你的知识</h2>
-                    <p>加入我们的知识库贡献者社区，分享你的专业知识和经验，帮助更多音乐创作者成长</p>
-                    <button class="btn btn-primary btn-large">开始撰写</button>
+                    <h2>分享你的音乐知识</h2>
+                    <p>加入我们的博客作者社区，分享你的专业知识和经验，帮助更多音乐创作者成长</p>
+                    <button class="btn btn-primary btn-large" id="start-blogging-btn">开始写博客</button>
                 </div>
             </div>
         </section>
@@ -310,7 +511,7 @@
                         <ul>
                             <li><a href="music.html">音乐上传</a></li>
                             <li><a href="collaboration.html">实时协作</a></li>
-                            <li><a href="knowledge.html">知识库</a></li>
+                            <li><a href="knowledge.html">知识博客</a></li>
                             <li><a href="marketplace.html">商城</a></li>
                         </ul>
                     </div>
@@ -410,9 +611,101 @@
         </div>
     </div>
 
+    <!-- 新增文章详情模态框 -->
+    <div class="modal" id="post-detail-modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3 id="modal-post-title">文章标题</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="post-detail-header">
+                    <div class="author">
+                        <img id="modal-author-avatar" src="/src/assets/placeholder-avatar.jpg" alt="作者头像">
+                        <div class="author-info">
+                            <span id="modal-author-name">作者名称</span>
+                            <span id="modal-post-date">发布日期</span>
+                        </div>
+                    </div>
+                    <div class="post-actions">
+                        <button class="btn btn-outline btn-sm" id="follow-author-btn">关注作者</button>
+                        <button class="btn btn-outline btn-sm" id="bookmark-post-btn">收藏文章</button>
+                        <button class="btn btn-outline btn-sm" id="share-post-btn">分享</button>
+                    </div>
+                </div>
+                <div class="post-detail-content" id="modal-post-content">
+                    <!-- 文章内容将通过JavaScript动态加载 -->
+                </div>
+                <div class="post-detail-tags" id="modal-post-tags">
+                    <!-- 标签将通过JavaScript动态加载 -->
+                </div>
+                <div class="post-detail-stats">
+                    <span class="views"><i class="views-icon"></i> <span id="modal-post-views">0</span> 浏览</span>
+                    <span class="likes"><i class="likes-icon"></i> <span id="modal-post-likes">0</span> 点赞</span>
+                    <span class="comments"><i class="comments-icon"></i> <span id="modal-post-comments">0</span> 评论</span>
+                </div>
+                <div class="post-detail-comments">
+                    <h3>评论</h3>
+                    <div class="comment-form">
+                        <div class="comment-avatar">
+                            <img src="/src/assets/placeholder-avatar.jpg" alt="用户头像" id="modal-comment-avatar">
+                        </div>
+                        <div class="comment-input">
+                            <textarea id="modal-comment-content" placeholder="写下你的评论..."></textarea>
+                            <div class="comment-actions">
+                                <button class="btn btn-primary" id="modal-submit-comment">发表评论</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="comments-list" id="modal-comments-list">
+                        <!-- 评论将通过JavaScript动态加载 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 分享模态框 -->
+    <div class="modal" id="share-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>分享这篇文章</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="share-options">
+                    <a href="#" class="share-option" data-platform="wechat">
+                        <img src="/src/assets/icons/wechat.svg" alt="微信">
+                        <span>微信</span>
+                    </a>
+                    <a href="#" class="share-option" data-platform="weibo">
+                        <img src="/src/assets/icons/weibo.svg" alt="微博">
+                        <span>微博</span>
+                    </a>
+                    <a href="#" class="share-option" data-platform="qq">
+                        <img src="/src/assets/icons/qq.svg" alt="QQ">
+                        <span>QQ</span>
+                    </a>
+                    <a href="#" class="share-option" data-platform="linkedin">
+                        <img src="/src/assets/icons/linkedin.svg" alt="LinkedIn">
+                        <span>LinkedIn</span>
+                    </a>
+                </div>
+                <div class="share-link">
+                    <p>或复制链接分享：</p>
+                    <div class="copy-link-input">
+                        <input type="text" id="share-link-input" readonly>
+                        <button class="btn btn-primary" id="copy-link-btn">复制</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="/src/utils/api.js"></script>
     <script src="/src/utils/auth.js"></script>
     <script src="/src/utils/ui.js"></script>
+    <script src="/src/utils/markdown.js"></script>
     <script src="/src/pages/knowledge.js"></script>
 </body>
 </html> 

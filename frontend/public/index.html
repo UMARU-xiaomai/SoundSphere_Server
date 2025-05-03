@@ -13,14 +13,14 @@
     <header class="main-header">
         <div class="container">
             <div class="logo">
-                <a href="index.html">
+                <a href="index.html" aria-label="SoundSphere首页">
                     <img src="/src/assets/logo.png" alt="SoundSphere Logo">
                     <span>SoundSphere</span>
                 </a>
             </div>
-            <nav class="main-nav">
+            <nav class="main-nav" aria-label="主导航">
                 <ul>
-                    <li><a href="music.html" class="nav-link">浏览音乐</a></li>
+                    <li><a href="music.html" class="nav-link active">浏览音乐</a></li>
                     <li><a href="collaboration.html" class="nav-link">创作室</a></li>
                     <li><a href="knowledge.html" class="nav-link">知识库</a></li>
                     <li><a href="marketplace.html" class="nav-link">市场</a></li>
@@ -29,7 +29,14 @@
             <div class="user-actions">
                 <button class="btn btn-secondary" id="login-btn">登录</button>
                 <button class="btn btn-primary" id="signup-btn">注册</button>
+                
             </div>
+            
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="切换菜单">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </div>
     </header>
 
