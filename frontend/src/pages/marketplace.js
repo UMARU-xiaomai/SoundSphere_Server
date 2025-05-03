@@ -548,6 +548,421 @@ const MarketplacePage = () => {
     setSortBy('newest');
   };
 
+  // 页面加载完成后执行
+  document.addEventListener('DOMContentLoaded', () => {
+    // 初始化模态框
+    initModals();
+    
+    // 初始化商品分类
+    initCategorySlider();
+    
+    // 初始化商品筛选
+    initProductFilters();
+    
+    // 初始化商品交互
+    initProductInteractions();
+    
+    // 初始化加载更多按钮
+    initLoadMore();
+    
+    // 初始化搜索功能
+    initSearch();
+  });
+
+  // 初始化模态框
+  function initModals() {
+    // 登录模态框
+    const loginModal = document.getElementById('login-modal');
+    const loginBtn = document.getElementById('login-btn');
+    
+    // 注册模态框
+    const signupModal = document.getElementById('signup-modal');
+    const signupBtn = document.getElementById('signup-btn');
+    
+    // 商品详情模态框
+    const productDetailModal = document.getElementById('product-detail-modal');
+    
+    // 所有关闭按钮
+    const closeButtons = document.querySelectorAll('.close-btn');
+    
+    // 点击登录按钮打开登录模态框
+    if (loginBtn) {
+        loginBtn.addEventListener('click', () => {
+            openModal(loginModal);
+        });
+    }
+    
+    // 点击注册按钮打开注册模态框
+    if (signupBtn) {
+        signupBtn.addEventListener('click', () => {
+            openModal(signupModal);
+        });
+    }
+    
+    // 关闭按钮事件
+    closeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const modal = button.closest('.modal');
+            closeModal(modal);
+        });
+    });
+    
+    // 点击模态框背景关闭
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('modal')) {
+            closeModal(e.target);
+        }
+    });
+  }
+
+  // 打开模态框
+  function openModal(modal) {
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // 防止背景滚动
+    }
+  }
+
+  // 关闭模态框
+  function closeModal(modal) {
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = ''; // 恢复背景滚动
+    }
+  }
+
+  // 初始化商品分类
+  function initCategorySlider() {
+    const categoryItems = document.querySelectorAll('.category-item');
+    
+    categoryItems.forEach(item => {
+        item.addEventListener('click', () => {
+            // 移除所有分类的active类
+            categoryItems.forEach(cat => cat.classList.remove('active'));
+            // 给当前分类添加active类
+            item.classList.add('active');
+            
+            // 获取分类名称，用于筛选商品
+            const categoryName = item.querySelector('h3').textContent;
+            // 根据分类筛选商品
+            filterProductsByCategory(categoryName);
+        });
+    });
+  }
+
+  // 初始化商品筛选
+  function initProductFilters() {
+    const productFilter = document.getElementById('product-filter');
+    
+    if (productFilter) {
+        productFilter.addEventListener('change', () => {
+            const filterOption = productFilter.value;
+            // 根据选择的选项筛选/排序商品
+            sortProducts(filterOption);
+        });
+    }
+  }
+
+  // 初始化商品交互
+  function initProductInteractions() {
+    // 商品预览按钮
+    const previewButtons = document.querySelectorAll('.preview-btn');
+    
+    // 商品收藏按钮
+    const wishlistButtons = document.querySelectorAll('.wishlist-btn');
+    
+    // 添加到购物车按钮
+    const addToCartButtons = document.querySelectorAll('.btn-full');
+    
+    // 商品预览
+    previewButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.stopPropagation(); // 阻止事件冒泡
+            // 获取商品ID
+            const productCard = button.closest('.product-card');
+            const productId = productCard.getAttribute('data-id');
+            // 预览商品
+            previewProduct(productId);
+        });
+    });
+    
+    // 商品收藏
+    wishlistButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.stopPropagation(); // 阻止事件冒泡
+            // 获取商品ID
+            const productCard = button.closest('.product-card');
+            const productId = productCard.getAttribute('data-id');
+            // 添加/移除收藏
+            toggleWishlist(productId, button);
+        });
+    });
+    
+    // 添加到购物车
+    addToCartButtons.forEach(button => {
+        button.addEventListener('click', (e) => {
+            e.stopPropagation(); // 阻止事件冒泡
+            // 获取商品ID
+            const productCard = button.closest('.product-card');
+            const productId = productCard.getAttribute('data-id');
+            // 添加到购物车
+            addToCart(productId);
+        });
+    });
+    
+    // 商品卡片点击打开详情
+    const productCards = document.querySelectorAll('.product-card');
+    productCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const productId = card.getAttribute('data-id');
+            openProductDetail(productId);
+        });
+    });
+  }
+
+  // 初始化加载更多按钮
+  function initLoadMore() {
+    const loadMoreBtn = document.getElementById('load-more-products');
+    
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', () => {
+            // 加载更多商品
+            loadMoreProducts();
+        });
+    }
+  }
+
+  // 初始化搜索功能
+  function initSearch() {
+    const searchInput = document.querySelector('.search-bar input');
+    const searchBtn = document.querySelector('.search-bar button');
+    
+    if (searchBtn && searchInput) {
+        searchBtn.addEventListener('click', () => {
+            const searchTerm = searchInput.value.trim();
+            if (searchTerm) {
+                // 执行搜索
+                searchProducts(searchTerm);
+            }
+        });
+        
+        // 回车键搜索
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const searchTerm = searchInput.value.trim();
+                if (searchTerm) {
+                    // 执行搜索
+                    searchProducts(searchTerm);
+                }
+            }
+        });
+    }
+  }
+
+  // 模拟API调用：根据分类筛选商品
+  function filterProductsByCategory(category) {
+    console.log(`正在按分类 ${category} 筛选商品...`);
+    // 实际开发中，这里应该调用后端API
+    
+    // 模拟筛选后的视觉效果
+    const productsGrid = document.querySelector('.products-grid');
+    
+    // 模拟加载状态
+    productsGrid.classList.add('loading');
+    
+    // 模拟API请求延迟
+    setTimeout(() => {
+        // 移除加载状态
+        productsGrid.classList.remove('loading');
+        
+        // 显示过滤结果
+        alert(`已显示分类: ${category} 的商品`);
+    }, 500);
+  }
+
+  // 模拟API调用：排序商品
+  function sortProducts(option) {
+    console.log(`正在按 ${option} 排序商品...`);
+    // 实际开发中，这里应该调用后端API
+    
+    // 模拟排序后的视觉效果
+    const productsGrid = document.querySelector('.products-grid');
+    
+    // 模拟加载状态
+    productsGrid.classList.add('loading');
+    
+    // 模拟API请求延迟
+    setTimeout(() => {
+        // 移除加载状态
+        productsGrid.classList.remove('loading');
+        
+        // 显示排序结果
+        let sortMessage = '';
+        switch (option) {
+            case 'trending':
+                sortMessage = '热门商品';
+                break;
+            case 'newest':
+                sortMessage = '最新商品';
+                break;
+            case 'price-low':
+                sortMessage = '价格从低到高';
+                break;
+            case 'price-high':
+                sortMessage = '价格从高到低';
+                break;
+            case 'rating':
+                sortMessage = '评分最高';
+                break;
+            default:
+                sortMessage = option;
+        }
+        
+        alert(`已按 ${sortMessage} 排序`);
+    }, 500);
+  }
+
+  // 模拟API调用：预览商品
+  function previewProduct(productId) {
+    console.log(`正在预览商品 ID: ${productId}`);
+    // 实际开发中，这里应该打开音频播放器或弹出预览窗口
+    
+    alert(`正在播放商品预览`);
+  }
+
+  // 模拟API调用：添加/移除收藏
+  function toggleWishlist(productId, button) {
+    console.log(`正在切换商品 ID: ${productId} 的收藏状态`);
+    // 实际开发中，这里应该调用后端API
+    
+    // 模拟收藏状态切换
+    if (button.classList.contains('wishlist-active')) {
+        button.classList.remove('wishlist-active');
+        alert(`已从收藏中移除`);
+    } else {
+        button.classList.add('wishlist-active');
+        alert(`已添加到收藏`);
+    }
+  }
+
+  // 模拟API调用：添加到购物车
+  function addToCart(productId) {
+    console.log(`正在将商品 ID: ${productId} 添加到购物车`);
+    // 实际开发中，这里应该调用后端API
+    
+    alert(`已添加到购物车`);
+  }
+
+  // 模拟API调用：打开商品详情
+  function openProductDetail(productId) {
+    console.log(`正在打开商品 ID: ${productId} 的详情`);
+    // 实际开发中，这里应该加载商品详情并打开模态框
+    
+    const productDetailModal = document.getElementById('product-detail-modal');
+    if (productDetailModal) {
+        openModal(productDetailModal);
+    } else {
+        alert(`正在查看商品详情`);
+    }
+  }
+
+  // 模拟API调用：加载更多商品
+  function loadMoreProducts() {
+    console.log('正在加载更多商品...');
+    // 实际开发中，这里应该调用后端API
+    
+    // 获取商品列表容器
+    const productsGrid = document.querySelector('.products-grid');
+    const loadMoreBtn = document.getElementById('load-more-products');
+    
+    // 模拟加载延迟
+    loadMoreBtn.textContent = '正在加载...';
+    loadMoreBtn.disabled = true;
+    
+    // 模拟API请求延迟
+    setTimeout(() => {
+        // 模拟新加载的商品数据
+        const newProducts = [
+            {
+                title: 'R&B风格采样包',
+                seller: '节奏大师',
+                rating: 4.6,
+                reviews: 78,
+                price: '¥119',
+                category: '采样包',
+                image: '../src/assets/placeholder-product.jpg'
+            },
+            {
+                title: 'Lo-Fi嘻哈鼓组',
+                seller: '复古音乐工作室',
+                rating: 4.8,
+                reviews: 92,
+                price: '¥99',
+                originalPrice: '¥159',
+                category: '鼓组',
+                image: '../src/assets/placeholder-product.jpg'
+            }
+        ];
+        
+        // 为每个新商品创建HTML元素
+        newProducts.forEach(product => {
+            const productCard = document.createElement('div');
+            productCard.className = 'product-card';
+            productCard.setAttribute('data-id', Math.floor(Math.random() * 1000)); // 模拟产品ID
+            
+            const hasDiscount = product.originalPrice ? true : false;
+            
+            productCard.innerHTML = `
+                <div class="product-image">
+                    <img src="${product.image}" alt="${product.title}">
+                    <div class="product-category">${product.category}</div>
+                    <div class="product-actions">
+                        <button class="preview-btn"><i class="play-icon"></i> 预览</button>
+                        <button class="wishlist-btn"><i class="heart-icon"></i></button>
+                    </div>
+                </div>
+                <div class="product-content">
+                    <h3>${product.title}</h3>
+                    <p class="product-seller">由 ${product.seller} 出品</p>
+                    <div class="product-meta">
+                        <div class="product-rating">
+                            <i class="star-filled"></i>
+                            <i class="star-filled"></i>
+                            <i class="star-filled"></i>
+                            <i class="star-filled"></i>
+                            <i class="${product.rating >= 4.5 ? 'star-filled' : 'star-half'}"></i>
+                            <span>${product.rating} (${product.reviews})</span>
+                        </div>
+                        <div class="product-price">
+                            ${hasDiscount ? `<span class="original-price">${product.originalPrice}</span>` : ''}
+                            <span class="price">${product.price}</span>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-full">添加到购物车</button>
+                </div>
+            `;
+            
+            // 添加到商品列表
+            productsGrid.appendChild(productCard);
+        });
+        
+        // 重新初始化商品交互
+        initProductInteractions();
+        
+        // 恢复按钮状态
+        loadMoreBtn.textContent = '显示更多商品';
+        loadMoreBtn.disabled = false;
+    }, 1000);
+  }
+
+  // 模拟API调用：搜索商品
+  function searchProducts(term) {
+    console.log(`正在搜索: ${term}`);
+    // 实际开发中，这里应该调用后端API
+    
+    alert(`正在搜索: ${term}`);
+  }
+
   return (
     <div className="container mx-auto px-4 py-6">
       <div className="flex justify-between items-center mb-6">

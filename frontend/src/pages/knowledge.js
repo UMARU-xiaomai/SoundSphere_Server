@@ -614,6 +614,420 @@ const KnowledgePage = () => {
     setSelectedTags([]);
   };
 
+  // 页面加载完成后执行
+  document.addEventListener('DOMContentLoaded', () => {
+    // 初始化模态框
+    initModals();
+    
+    // 初始化文章选项卡
+    initBlogTabs();
+    
+    // 初始化分类筛选
+    initCategoryTabs();
+    
+    // 初始化排序和标签筛选
+    initFilters();
+    
+    // 初始化加载更多按钮
+    initLoadMore();
+    
+    // 初始化搜索功能
+    initSearch();
+  });
+
+  // 初始化模态框
+  function initModals() {
+    // 登录模态框
+    const loginModal = document.getElementById('login-modal');
+    const loginBtn = document.getElementById('login-btn');
+    const loginToBlog = document.getElementById('login-to-blog');
+    const loginToBookmark = document.getElementById('login-to-bookmark');
+    const loginToFollow = document.getElementById('login-to-follow');
+    
+    // 注册模态框
+    const signupModal = document.getElementById('signup-modal');
+    const signupBtn = document.getElementById('signup-btn');
+    
+    // 博客创建模态框
+    const newPostBtn = document.getElementById('new-post-btn');
+    const newPostModal = document.getElementById('new-post-modal');
+    
+    // 所有关闭按钮
+    const closeButtons = document.querySelectorAll('.close-btn');
+    
+    // 点击登录按钮打开登录模态框
+    if (loginBtn) {
+        loginBtn.addEventListener('click', () => {
+            openModal(loginModal);
+        });
+    }
+    
+    // 各个登录跳转按钮
+    [loginToBlog, loginToBookmark, loginToFollow].forEach(btn => {
+        if (btn) {
+            btn.addEventListener('click', () => {
+                openModal(loginModal);
+            });
+        }
+    });
+    
+    // 点击注册按钮打开注册模态框
+    if (signupBtn) {
+        signupBtn.addEventListener('click', () => {
+            openModal(signupModal);
+        });
+    }
+    
+    // 点击新建博客按钮
+    if (newPostBtn) {
+        newPostBtn.addEventListener('click', () => {
+            // 检查用户是否已登录
+            const isLoggedIn = checkUserLogin();
+            
+            if (isLoggedIn) {
+                openModal(newPostModal);
+            } else {
+                openModal(loginModal);
+            }
+        });
+    }
+    
+    // 关闭按钮事件
+    closeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const modal = button.closest('.modal');
+            closeModal(modal);
+        });
+    });
+    
+    // 点击模态框背景关闭
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('modal')) {
+            closeModal(e.target);
+        }
+    });
+  }
+
+  // 打开模态框
+  function openModal(modal) {
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // 防止背景滚动
+    }
+  }
+
+  // 关闭模态框
+  function closeModal(modal) {
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = ''; // 恢复背景滚动
+    }
+  }
+
+  // 检查用户是否已登录
+  function checkUserLogin() {
+    // 这里应该检查用户是否已登录
+    // 返回 true 表示已登录，false 表示未登录
+    // 这里暂时返回 false 用于测试
+    return localStorage.getItem('user') !== null;
+  }
+
+  // 初始化博客选项卡
+  function initBlogTabs() {
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const blogSections = document.querySelectorAll('.blog-posts');
+    
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // 移除所有按钮的active类
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            // 给当前按钮添加active类
+            button.classList.add('active');
+            
+            // 切换显示的内容
+            const tabTarget = button.getAttribute('data-tab');
+            
+            // 隐藏所有内容
+            blogSections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // 显示选中的内容
+            const targetSection = document.getElementById(`${tabTarget}-section`);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+            
+            // 如果是"我的博客"标签，检查是否已登录
+            if (tabTarget === 'my-posts') {
+                const isLoggedIn = checkUserLogin();
+                const loginRequired = document.getElementById('login-required');
+                const myPosts = document.getElementById('my-posts');
+                
+                if (isLoggedIn) {
+                    if (loginRequired) loginRequired.classList.add('hidden');
+                    if (myPosts) myPosts.classList.remove('hidden');
+                    // 加载用户的博客文章
+                    loadUserPosts();
+                } else {
+                    if (loginRequired) loginRequired.classList.remove('hidden');
+                    if (myPosts) myPosts.classList.add('hidden');
+                }
+            }
+            
+            // 收藏文章标签
+            if (tabTarget === 'bookmarks') {
+                const isLoggedIn = checkUserLogin();
+                const loginRequired = document.getElementById('bookmarks-login-required');
+                const bookmarkedPosts = document.getElementById('bookmarked-posts');
+                
+                if (isLoggedIn) {
+                    if (loginRequired) loginRequired.classList.add('hidden');
+                    if (bookmarkedPosts) bookmarkedPosts.classList.remove('hidden');
+                    // 加载用户收藏的文章
+                    loadBookmarkedPosts();
+                } else {
+                    if (loginRequired) loginRequired.classList.remove('hidden');
+                    if (bookmarkedPosts) bookmarkedPosts.classList.add('hidden');
+                }
+            }
+            
+            // 关注作者标签
+            if (tabTarget === 'following') {
+                const isLoggedIn = checkUserLogin();
+                const loginRequired = document.getElementById('following-login-required');
+                const followedAuthors = document.getElementById('followed-authors');
+                const followedPosts = document.getElementById('followed-posts');
+                
+                if (isLoggedIn) {
+                    if (loginRequired) loginRequired.classList.add('hidden');
+                    if (followedAuthors) followedAuthors.classList.remove('hidden');
+                    if (followedPosts) followedPosts.classList.remove('hidden');
+                    // 加载用户关注的作者
+                    loadFollowedAuthors();
+                } else {
+                    if (loginRequired) loginRequired.classList.remove('hidden');
+                    if (followedAuthors) followedAuthors.classList.add('hidden');
+                    if (followedPosts) followedPosts.classList.add('hidden');
+                }
+            }
+        });
+    });
+  }
+
+  // 初始化分类标签
+  function initCategoryTabs() {
+    const categoryTabs = document.querySelectorAll('.category-tab');
+    
+    categoryTabs.forEach(tab => {
+        tab.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // 移除所有标签的active类
+            categoryTabs.forEach(t => t.classList.remove('active'));
+            // 给当前标签添加active类
+            tab.classList.add('active');
+            
+            // 这里应该根据选择的分类筛选文章
+            // 暂时只做UI交互
+            const category = tab.textContent;
+            console.log(`选择了分类: ${category}`);
+            
+            // 可以在这里调用加载文章的函数，传入分类参数
+            loadPostsByCategory(category);
+        });
+    });
+  }
+
+  // 初始化排序和标签筛选
+  function initFilters() {
+    const tagSelect = document.getElementById('tag-select');
+    const sortSelect = document.getElementById('sort-select');
+    
+    if (tagSelect) {
+        tagSelect.addEventListener('change', () => {
+            const selectedTag = tagSelect.value;
+            // 根据选择的标签筛选文章
+            filterPostsByTag(selectedTag);
+        });
+    }
+    
+    if (sortSelect) {
+        sortSelect.addEventListener('change', () => {
+            const sortOption = sortSelect.value;
+            // 根据选择的排序选项排序文章
+            sortPosts(sortOption);
+        });
+    }
+  }
+
+  // 初始化加载更多按钮
+  function initLoadMore() {
+    const loadMoreBtn = document.getElementById('load-more-posts');
+    
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', () => {
+            // 加载更多文章
+            loadMorePosts();
+        });
+    }
+  }
+
+  // 初始化搜索功能
+  function initSearch() {
+    const searchInput = document.getElementById('search-input');
+    const searchBtn = document.getElementById('search-btn');
+    
+    if (searchBtn && searchInput) {
+        searchBtn.addEventListener('click', () => {
+            const searchTerm = searchInput.value.trim();
+            if (searchTerm) {
+                // 执行搜索
+                searchPosts(searchTerm);
+            }
+        });
+        
+        // 回车键搜索
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const searchTerm = searchInput.value.trim();
+                if (searchTerm) {
+                    // 执行搜索
+                    searchPosts(searchTerm);
+                }
+            }
+        });
+    }
+  }
+
+  // 模拟API调用：加载更多文章
+  function loadMorePosts() {
+    // 这里是模拟加载更多文章的代码
+    // 实际开发中，应该调用后端API获取更多文章
+    
+    // 获取文章列表容器
+    const postList = document.getElementById('featured-posts');
+    const loadMoreBtn = document.getElementById('load-more-posts');
+    
+    // 模拟加载延迟
+    loadMoreBtn.textContent = '加载中...';
+    loadMoreBtn.disabled = true;
+    
+    // 模拟API请求延迟
+    setTimeout(() => {
+        // 模拟新加载的文章数据
+        const newPosts = [
+            {
+                title: '高效音频编辑工作流程分享',
+                author: '音频专家',
+                authorAvatar: '../src/assets/placeholder-avatar.jpg',
+                date: '2023-05-28',
+                excerpt: '多年音频编辑经验总结，分享几种能大幅提高工作效率的编辑工作流程和快捷键设置...',
+                cover: '../src/assets/placeholder-article.jpg',
+                category: '音频处理',
+                tags: ['音频编辑', '工作流', '效率提升'],
+                views: '1.8k',
+                likes: '95',
+                comments: '37'
+            },
+            {
+                title: '音乐制作中情感表达的秘诀',
+                author: '情感大师',
+                authorAvatar: '../src/assets/placeholder-avatar.jpg',
+                date: '2023-05-25',
+                excerpt: '音乐不仅是声音的组合，更是情感的载体。本文深入探讨如何在音乐作品中注入真实情感...',
+                cover: '../src/assets/placeholder-article.jpg',
+                category: '作曲技巧',
+                tags: ['情感表达', '作曲', '音乐理论'],
+                views: '2.2k',
+                likes: '118',
+                comments: '54'
+            }
+        ];
+        
+        // 为每个新文章创建HTML元素
+        newPosts.forEach(post => {
+            const postCard = document.createElement('article');
+            postCard.className = 'post-card';
+            
+            postCard.innerHTML = `
+                <div class="post-image">
+                    <img src="${post.cover}" alt="${post.title}">
+                    <div class="post-category">${post.category}</div>
+                </div>
+                <div class="post-content">
+                    <h3><a href="#" class="post-title">${post.title}</a></h3>
+                    <div class="post-meta">
+                        <div class="author">
+                            <img src="${post.authorAvatar}" alt="${post.author}">
+                            <span>${post.author}</span>
+                        </div>
+                        <span class="post-date">${post.date}</span>
+                    </div>
+                    <p class="post-excerpt">${post.excerpt}</p>
+                    <div class="post-tags">
+                        ${post.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                    <div class="post-stats">
+                        <span class="views"><i class="views-icon"></i> ${post.views}</span>
+                        <span class="likes"><i class="likes-icon"></i> ${post.likes}</span>
+                        <span class="comments"><i class="comments-icon"></i> ${post.comments}</span>
+                    </div>
+                </div>
+            `;
+            
+            // 添加到文章列表
+            postList.appendChild(postCard);
+        });
+        
+        // 恢复按钮状态
+        loadMoreBtn.textContent = '加载更多';
+        loadMoreBtn.disabled = false;
+    }, 1000);
+  }
+
+  // 模拟API调用：按分类加载文章
+  function loadPostsByCategory(category) {
+    console.log(`正在加载分类 ${category} 的文章...`);
+    // 实际开发中，这里应该调用后端API
+  }
+
+  // 模拟API调用：按标签筛选文章
+  function filterPostsByTag(tag) {
+    console.log(`正在筛选标签 ${tag} 的文章...`);
+    // 实际开发中，这里应该调用后端API
+  }
+
+  // 模拟API调用：排序文章
+  function sortPosts(sortOption) {
+    console.log(`正在按 ${sortOption} 排序文章...`);
+    // 实际开发中，这里应该调用后端API
+  }
+
+  // 模拟API调用：搜索文章
+  function searchPosts(term) {
+    console.log(`正在搜索: ${term}`);
+    // 实际开发中，这里应该调用后端API
+  }
+
+  // 模拟API调用：加载用户的博客文章
+  function loadUserPosts() {
+    console.log('正在加载用户的博客文章...');
+    // 实际开发中，这里应该调用后端API
+  }
+
+  // 模拟API调用：加载用户收藏的文章
+  function loadBookmarkedPosts() {
+    console.log('正在加载用户收藏的文章...');
+    // 实际开发中，这里应该调用后端API
+  }
+
+  // 模拟API调用：加载用户关注的作者
+  function loadFollowedAuthors() {
+    console.log('正在加载用户关注的作者...');
+    // 实际开发中，这里应该调用后端API
+  }
+
   return (
     <div className="container mx-auto px-4 py-6">
       <div className="flex justify-between items-center mb-6">

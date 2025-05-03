@@ -936,3 +936,360 @@ const CollaborationPage = () => {
 };
 
 export default CollaborationPage;
+
+// 页面加载完成后执行
+document.addEventListener('DOMContentLoaded', () => {
+    // 初始化模态框
+    initModals();
+    
+    // 初始化协作室筛选
+    initRoomFilters();
+    
+    // 初始化演示视频
+    initDemoVideo();
+    
+    // 初始化轮播图
+    initTestimonialSlider();
+    
+    // 初始化加载更多按钮
+    initLoadMore();
+});
+
+// 初始化模态框
+function initModals() {
+    // 登录模态框
+    const loginModal = document.getElementById('login-modal');
+    const loginBtn = document.getElementById('login-btn');
+    
+    // 注册模态框
+    const signupModal = document.getElementById('signup-modal');
+    const signupBtn = document.getElementById('signup-btn');
+    
+    // 创建协作室模态框
+    const createRoomModal = document.getElementById('create-room-modal');
+    const createRoomBtn = document.querySelector('.hero-actions .btn-primary');
+    
+    // 加入协作室模态框
+    const joinRoomModal = document.getElementById('join-room-modal');
+    const joinRoomBtn = document.querySelector('.hero-actions .btn-secondary');
+    
+    // 所有关闭按钮
+    const closeButtons = document.querySelectorAll('.close-btn');
+    
+    // 点击登录按钮打开登录模态框
+    if (loginBtn) {
+        loginBtn.addEventListener('click', () => {
+            openModal(loginModal);
+        });
+    }
+    
+    // 点击注册按钮打开注册模态框
+    if (signupBtn) {
+        signupBtn.addEventListener('click', () => {
+            openModal(signupModal);
+        });
+    }
+    
+    // 点击创建协作室按钮
+    if (createRoomBtn) {
+        createRoomBtn.addEventListener('click', () => {
+            // 检查用户是否已登录
+            const isLoggedIn = checkUserLogin();
+            
+            if (isLoggedIn) {
+                if (createRoomModal) {
+                    openModal(createRoomModal);
+                } else {
+                    createRoom();
+                }
+            } else {
+                openModal(loginModal);
+            }
+        });
+    }
+    
+    // 点击加入项目按钮
+    if (joinRoomBtn) {
+        joinRoomBtn.addEventListener('click', () => {
+            if (joinRoomModal) {
+                openModal(joinRoomModal);
+            } else {
+                // 显示所有可加入的项目
+                showAvailableRooms();
+            }
+        });
+    }
+    
+    // 关闭按钮事件
+    closeButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const modal = button.closest('.modal');
+            closeModal(modal);
+        });
+    });
+    
+    // 点击模态框背景关闭
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('modal')) {
+            closeModal(e.target);
+        }
+    });
+}
+
+// 打开模态框
+function openModal(modal) {
+    if (modal) {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // 防止背景滚动
+    }
+}
+
+// 关闭模态框
+function closeModal(modal) {
+    if (modal) {
+        modal.classList.remove('active');
+        document.body.style.overflow = ''; // 恢复背景滚动
+    }
+}
+
+// 检查用户是否已登录
+function checkUserLogin() {
+    // 这里应该检查用户是否已登录
+    // 返回 true 表示已登录，false 表示未登录
+    // 这里暂时返回 false 用于测试
+    return localStorage.getItem('user') !== null;
+}
+
+// 初始化协作室筛选
+function initRoomFilters() {
+    const roomFilter = document.getElementById('room-filter');
+    
+    if (roomFilter) {
+        roomFilter.addEventListener('change', () => {
+            const filterType = roomFilter.value;
+            filterRooms(filterType);
+        });
+    }
+}
+
+// 初始化演示视频
+function initDemoVideo() {
+    const demoVideo = document.querySelector('.demo-video');
+    const playOverlay = document.querySelector('.play-overlay');
+    
+    if (demoVideo && playOverlay) {
+        playOverlay.addEventListener('click', () => {
+            playDemoVideo();
+        });
+    }
+}
+
+// 初始化轮播图
+function initTestimonialSlider() {
+    const slider = document.querySelector('.testimonial-slider');
+    const prevBtn = document.querySelector('.slider-prev');
+    const nextBtn = document.querySelector('.slider-next');
+    const dots = document.querySelectorAll('.dot');
+    
+    if (slider && prevBtn && nextBtn) {
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.testimonial-card');
+        const slideCount = slides.length;
+        
+        // 隐藏所有幻灯片，只显示当前的
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                if (i === index) {
+                    slide.style.display = 'block';
+                } else {
+                    slide.style.display = 'none';
+                }
+            });
+            
+            // 更新指示点
+            if (dots.length > 0) {
+                dots.forEach((dot, i) => {
+                    if (i === index) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+            }
+        }
+        
+        // 初始显示第一张幻灯片
+        showSlide(currentSlide);
+        
+        // 上一张
+        prevBtn.addEventListener('click', () => {
+            currentSlide = (currentSlide - 1 + slideCount) % slideCount;
+            showSlide(currentSlide);
+        });
+        
+        // 下一张
+        nextBtn.addEventListener('click', () => {
+            currentSlide = (currentSlide + 1) % slideCount;
+            showSlide(currentSlide);
+        });
+        
+        // 点击指示点切换
+        if (dots.length > 0) {
+            dots.forEach((dot, i) => {
+                dot.addEventListener('click', () => {
+                    currentSlide = i;
+                    showSlide(currentSlide);
+                });
+            });
+        }
+    }
+}
+
+// 初始化加载更多按钮
+function initLoadMore() {
+    const loadMoreBtn = document.getElementById('load-more-rooms');
+    
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', () => {
+            loadMoreRooms();
+        });
+    }
+}
+
+// 模拟API调用：筛选协作室
+function filterRooms(type) {
+    console.log(`正在按类型 ${type} 筛选协作室...`);
+    // 实际开发中，这里应该调用后端API
+    
+    // 模拟筛选视觉效果
+    const roomCards = document.querySelector('.room-cards');
+    
+    // 模拟加载状态
+    roomCards.style.opacity = '0.6';
+    
+    // 模拟API请求延迟
+    setTimeout(() => {
+        // 恢复默认状态
+        roomCards.style.opacity = '1';
+        
+        // 显示筛选结果的消息
+        if (type === 'all') {
+            alert('已显示所有协作室');
+        } else {
+            alert(`已显示${type}类型的协作室`);
+        }
+    }, 500);
+}
+
+// 模拟API调用：播放演示视频
+function playDemoVideo() {
+    console.log('正在播放演示视频...');
+    // 实际开发中，这里应该嵌入真实的视频播放器
+    
+    alert('正在播放演示视频');
+}
+
+// 模拟API调用：加载更多协作室
+function loadMoreRooms() {
+    console.log('正在加载更多协作室...');
+    // 实际开发中，这里应该调用后端API
+    
+    // 获取协作室列表容器
+    const roomCards = document.querySelector('.room-cards');
+    const loadMoreBtn = document.getElementById('load-more-rooms');
+    
+    // 模拟加载延迟
+    loadMoreBtn.textContent = '正在加载...';
+    loadMoreBtn.disabled = true;
+    
+    // 模拟API请求延迟
+    setTimeout(() => {
+        // 模拟新加载的协作室数据
+        const newRooms = [
+            {
+                title: '古典钢琴协奏曲',
+                description: '正在创作一首钢琴协奏曲，需要弦乐和管乐演奏者',
+                meta: '2人在线 · 进行中 · 由 钢琴家 创建',
+                tags: ['古典', '钢琴', '协奏曲']
+            },
+            {
+                title: '电子编曲协作',
+                description: '合作创作一首电子音乐，需要擅长合成器和编曲的制作人',
+                meta: '4人在线 · 进行中 · 由 电子音乐人 创建',
+                tags: ['电子', '编曲', '合成器']
+            }
+        ];
+        
+        // 为每个新协作室创建HTML元素
+        newRooms.forEach(room => {
+            const roomCard = document.createElement('div');
+            roomCard.className = 'room-card';
+            
+            roomCard.innerHTML = `
+                <div class="room-info">
+                    <h3>${room.title}</h3>
+                    <p class="room-description">${room.description}</p>
+                    <p class="room-meta">${room.meta}</p>
+                    <div class="room-tags">
+                        ${room.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                </div>
+                <button class="btn btn-secondary">加入</button>
+            `;
+            
+            // 添加加入按钮事件
+            const joinBtn = roomCard.querySelector('button');
+            joinBtn.addEventListener('click', () => {
+                joinRoom(room.title);
+            });
+            
+            // 添加到协作室列表
+            roomCards.appendChild(roomCard);
+        });
+        
+        // 恢复按钮状态
+        loadMoreBtn.textContent = '显示更多';
+        loadMoreBtn.disabled = false;
+    }, 1000);
+}
+
+// 模拟API调用：创建协作室
+function createRoom() {
+    console.log('正在创建协作室...');
+    // 实际开发中，这里应该调用后端API
+    
+    alert('正在创建新的协作室...');
+}
+
+// 模拟API调用：加入协作室
+function joinRoom(roomName) {
+    console.log(`正在加入协作室: ${roomName}`);
+    // 实际开发中，这里应该调用后端API
+    
+    // 检查用户登录状态
+    const isLoggedIn = checkUserLogin();
+    
+    if (isLoggedIn) {
+        alert(`正在加入 ${roomName} 协作室`);
+    } else {
+        // 未登录，显示登录对话框
+        const loginModal = document.getElementById('login-modal');
+        if (loginModal) {
+            openModal(loginModal);
+        } else {
+            alert('请先登录再加入协作室');
+        }
+    }
+}
+
+// 模拟API调用：显示可用协作室
+function showAvailableRooms() {
+    console.log('显示所有可加入的项目');
+    // 实际开发中，这里应该展示一个包含所有可加入项目的列表或模态框
+    
+    // 滚动到协作室列表部分
+    const roomsSection = document.querySelector('.active-rooms');
+    if (roomsSection) {
+        roomsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+}
