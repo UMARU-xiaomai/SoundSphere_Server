@@ -10,10 +10,6 @@
     <link rel="stylesheet" href="/src/styles/music.css">
     <link rel="icon" type="image/png" href="/src/assets/favicon.png">
     <meta name="description" content="在SoundSphere上浏览和发现音乐，找到你喜欢的音乐创作者和作品">
-    <meta name="theme-color" content="#6200ea">
-    <meta name="color-scheme" content="light dark">
-    <link rel="preload" href="/src/assets/placeholder-cover.jpg" as="image">
-    <script>document.documentElement.classList.remove('no-js');</script>
 </head>
 <body class="auto-dark-mode">
     
@@ -38,12 +34,6 @@
                 <button class="btn btn-primary" id="signup-btn">注册</button>
                 
             </div>
-            
-            <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="切换菜单">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
         </div>
 
     </header>
@@ -52,15 +42,17 @@
         <div class="main-content">
             <section class="music-hero">
                 <div class="container">
-                    <h1>发现优质音乐</h1>
-                    <p>浏览最新、最热门的音乐作品，发现你的下一个最爱</p>
-                    <div class="search-bar" role="search">
+                    <div class="hero-content">
+                        <h1>发现优质音乐</h1>
+                        <p>浏览最新、最热门的音乐作品，发现你的下一个最爱</p>
+                        <div class="search-bar" role="search">
                         <label for="music-search" class="sr-only">搜索音乐、创作者或标签</label>
                         <input type="text" id="music-search" placeholder="搜索音乐、创作者或标签...">
                         <button class="btn btn-primary" aria-label="搜索">
                             <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                             <span class="btn-text">搜索</span>
-                        </button>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </section>

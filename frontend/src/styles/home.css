@@ -14,22 +14,6 @@
     gap: var(--spacing-xl);
 }
 
-.hero-content {
-    max-width: 600px;
-}
-
-.hero-content h1 {
-    font-size: clamp(var(--font-size-xxl), 5vw, var(--font-size-xxxl));
-    margin-bottom: var(--spacing-md);
-    color: var(--text-on-primary);
-}
-
-.hero-content p {
-    font-size: var(--font-size-lg);
-    margin-bottom: var(--spacing-xl);
-    opacity: 0.9;
-}
-
 .cta-buttons {
     display: flex;
     gap: var(--spacing-md);
@@ -497,10 +481,6 @@
     .hero .container {
         flex-direction: row;
         align-items: center;
-    }
-
-    .hero-content {
-        flex: 1;
     }
 
     .hero-image {
