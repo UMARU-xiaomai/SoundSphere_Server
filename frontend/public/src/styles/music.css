@@ -159,13 +159,10 @@
     opacity: 1;
 }
 
-.play-icon {
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 10px 0 10px 18px;
+/* 使用icons.css中的.play-icon类 */
+.play-btn .play-icon {
+    margin-left: 4px;
     border-color: transparent transparent transparent var(--music-primary);
-    margin-left: 5px;
 }
 
 .music-info {
