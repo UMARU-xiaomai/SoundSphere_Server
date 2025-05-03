@@ -174,21 +174,8 @@ img {
     grid-template-columns: repeat(1, 1fr);
 }
 
-/* 首页内容 */
-.hero-content {
-    max-width: 600px;
-}
-
-.hero-content h1 {
-    font-size: clamp(var(--font-size-xxl), 5vw, var(--font-size-xxxl));
-    margin-bottom: var(--spacing-md);
+.hero-content h1{
     color: var(--text-on-primary);
-}
-
-.hero-content p {
-    font-size: var(--font-size-lg);
-    margin-bottom: var(--spacing-xl);
-    opacity: 0.9;
 }
 
 @media (min-width: 768px) {
