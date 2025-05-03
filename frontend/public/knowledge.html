@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>知识库 - SoundSphere</title>
+    <link rel="stylesheet" href="/src/styles/main.css">
+    <link rel="stylesheet" href="/src/styles/knowledge.css">
+    <link rel="icon" type="image/png" href="/src/assets/favicon.png">
+    <meta name="description" content="SoundSphere知识库 - 学习音乐制作、混音、编曲等专业知识，提升音乐创作技能">
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="/src/assets/logo.png" alt="SoundSphere Logo">
+                    <span>SoundSphere</span>
+                </a>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="music.html" class="nav-link">浏览音乐</a></li>
+                    <li><a href="collaboration.html" class="nav-link">创作室</a></li>
+                    <li><a href="knowledge.html" class="nav-link active">知识库</a></li>
+                    <li><a href="marketplace.html" class="nav-link">市场</a></li>
+                </ul>
+            </nav>
+            <div class="user-actions">
+                <button class="btn btn-secondary" id="login-btn">登录</button>
+                <button class="btn btn-primary" id="signup-btn">注册</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="knowledge-hero">
+            <div class="container">
+                <h1>音乐知识库</h1>
+                <p>探索社区维护的音乐制作知识与教程，提升你的创作能力</p>
+                <div class="search-bar">
+                    <input type="text" placeholder="搜索文章、教程或标签...">
+                    <button class="btn btn-primary">搜索</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="knowledge-categories">
+            <div class="container">
+                <h2 class="section-title">知识分类</h2>
+                <div class="category-grid">
+                    <div class="category-card">
+                        <div class="category-icon">
+                            <img src="/src/assets/icons/theory.svg" alt="音乐理论">
+                        </div>
+                        <h3>音乐理论</h3>
+                        <p>和声学、作曲技巧、调式与调性等基础音乐理论知识</p>
+                        <a href="#" class="category-link">浏览全部</a>
+                    </div>
+                    
+                    <div class="category-card">
+                        <div class="category-icon">
+                            <img src="/src/assets/icons/production.svg" alt="音乐制作">
+                        </div>
+                        <h3>音乐制作</h3>
+                        <p>录音技巧、混音、母带处理等音乐制作相关知识</p>
+                        <a href="#" class="category-link">浏览全部</a>
+                    </div>
+                    
+                    <div class="category-card">
+                        <div class="category-icon">
+                            <img src="/src/assets/icons/software.svg" alt="软件教程">
+                        </div>
+                        <h3>软件教程</h3>
+                        <p>常用DAW软件、插件使用教程和实用技巧分享</p>
+                        <a href="#" class="category-link">浏览全部</a>
+                    </div>
+                    
+                    <div class="category-card">
+                        <div class="category-icon">
+                            <img src="/src/assets/icons/business.svg" alt="音乐商业">
+                        </div>
+                        <h3>音乐商业</h3>
+                        <p>版权知识、音乐发行、推广与变现相关内容</p>
+                        <a href="#" class="category-link">浏览全部</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="featured-articles">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">精选文章</h2>
+                    <div class="section-actions">
+                        <select id="article-filter">
+                            <option value="trending">热门</option>
+                            <option value="latest">最新</option>
+                            <option value="recommended">推荐</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="article-grid">
+                    <div class="article-card">
+                        <div class="article-image">
+                            <img src="/src/assets/placeholder-article.jpg" alt="文章封面">
+                            <div class="article-category">音乐理论</div>
+                        </div>
+                        <div class="article-content">
+                            <h3>和声学基础：如何构建吸引人的和弦进行</h3>
+                            <p class="article-excerpt">本文将介绍和声学的基本概念，以及如何创建引人入胜的和弦进行，增强你的作曲能力...</p>
+                            <div class="article-meta">
+                                <div class="author">
+                                    <img src="/src/assets/placeholder-avatar.jpg" alt="作者头像">
+                                    <span>李教授</span>
+                                </div>
+                                <div class="stats">
+                                    <span><i class="views-icon"></i> 3.2k</span>
+                                    <span><i class="likes-icon"></i> 156</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="article-card">
+                        <div class="article-image">
+                            <img src="/src/assets/placeholder-article.jpg" alt="文章封面">
+                            <div class="article-category">音乐制作</div>
+                        </div>
+                        <div class="article-content">
+                            <h3>混音中的均衡器（EQ）使用技巧详解</h3>
+                            <p class="article-excerpt">均衡器是混音过程中最重要的工具之一，本文将深入讲解EQ的使用方法和实用技巧...</p>
+                            <div class="article-meta">
+                                <div class="author">
+                                    <img src="/src/assets/placeholder-avatar.jpg" alt="作者头像">
+                                    <span>张工程师</span>
+                                </div>
+                                <div class="stats">
+                                    <span><i class="views-icon"></i> 5.7k</span>
+                                    <span><i class="likes-icon"></i> 215</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="article-card">
+                        <div class="article-image">
+                            <img src="/src/assets/placeholder-article.jpg" alt="文章封面">
+                            <div class="article-category">软件教程</div>
+                        </div>
+                        <div class="article-content">
+                            <h3>FL Studio 完全入门指南</h3>
+                            <p class="article-excerpt">这篇指南将帮助初学者快速掌握FL Studio的基本操作，从界面介绍到简单编曲全面覆盖...</p>
+                            <div class="article-meta">
+                                <div class="author">
+                                    <img src="/src/assets/placeholder-avatar.jpg" alt="作者头像">
+                                    <span>王老师</span>
+                                </div>
+                                <div class="stats">
+                                    <span><i class="views-icon"></i> 8.3k</span>
+                                    <span><i class="likes-icon"></i> 342</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="article-card">
+                        <div class="article-image">
+                            <img src="/src/assets/placeholder-article.jpg" alt="文章封面">
+                            <div class="article-category">音乐商业</div>
+                        </div>
+                        <div class="article-content">
+                            <h3>如何通过流媒体平台有效变现你的音乐</h3>
+                            <p class="article-excerpt">本文讲解如何通过Spotify、网易云音乐等流媒体平台发布和推广你的音乐作品，实现收益最大化...</p>
+                            <div class="article-meta">
+                                <div class="author">
+                                    <img src="/src/assets/placeholder-avatar.jpg" alt="作者头像">
+                                    <span>陈经理</span>
+                                </div>
+                                <div class="stats">
+                                    <span><i class="views-icon"></i> 4.1k</span>
+                                    <span><i class="likes-icon"></i> 189</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn btn-secondary btn-large" id="load-more-articles">加载更多</button>
+            </div>
+        </section>
+
+        <section class="latest-tutorials">
+            <div class="container">
+                <h2 class="section-title">最新视频教程</h2>
+                <div class="tutorials-grid">
+                    <div class="tutorial-card">
+                        <div class="tutorial-video">
+                            <img src="/src/assets/placeholder-tutorial.jpg" alt="教程封面">
+                            <div class="play-overlay">
+                                <button class="play-button">
+                                    <img src="/src/assets/icons/play.svg" alt="播放">
+                                </button>
+                            </div>
+                            <span class="tutorial-duration">15:42</span>
+                        </div>
+                        <div class="tutorial-content">
+                            <h3>从零开始学习编曲</h3>
+                            <p class="tutorial-description">本系列教程第一集，适合没有任何基础的音乐爱好者</p>
+                            <div class="tutorial-meta">
+                                <div class="tutor">
+                                    <img src="/src/assets/placeholder-avatar.jpg" alt="讲师头像">
+                                    <span>音乐学院</span>
+                                </div>
+                                <div class="tutorial-stats">
+                                    <span><i class="views-icon"></i> 12.4k</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tutorial-card">
+                        <div class="tutorial-video">
+                            <img src="/src/assets/placeholder-tutorial.jpg" alt="教程封面">
+                            <div class="play-overlay">
+                                <button class="play-button">
+                                    <img src="/src/assets/icons/play.svg" alt="播放">
+                                </button>
+                            </div>
+                            <span class="tutorial-duration">23:17</span>
+                        </div>
+                        <div class="tutorial-content">
+                            <h3>高级混音技巧</h3>
+                            <p class="tutorial-description">适合已有基础的制作人，掌握专业混音师的秘密武器</p>
+                            <div class="tutorial-meta">
+                                <div class="tutor">
+                                    <img src="/src/assets/placeholder-avatar.jpg" alt="讲师头像">
+                                    <span>混音大师</span>
+                                </div>
+                                <div class="tutorial-stats">
+                                    <span><i class="views-icon"></i> 8.7k</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tutorial-card">
+                        <div class="tutorial-video">
+                            <img src="/src/assets/placeholder-tutorial.jpg" alt="教程封面">
+                            <div class="play-overlay">
+                                <button class="play-button">
+                                    <img src="/src/assets/icons/play.svg" alt="播放">
+                                </button>
+                            </div>
+                            <span class="tutorial-duration">18:05</span>
+                        </div>
+                        <div class="tutorial-content">
+                            <h3>电子音乐制作全流程</h3>
+                            <p class="tutorial-description">从构思到完成，全面展示一首电子舞曲的制作过程</p>
+                            <div class="tutorial-meta">
+                                <div class="tutor">
+                                    <img src="/src/assets/placeholder-avatar.jpg" alt="讲师头像">
+                                    <span>电音达人</span>
+                                </div>
+                                <div class="tutorial-stats">
+                                    <span><i class="views-icon"></i> 15.2k</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <a href="#" class="btn btn-secondary btn-large">查看更多教程</a>
+            </div>
+        </section>
+
+        <section class="contribute">
+            <div class="container">
+                <div class="contribute-content">
+                    <h2>分享你的知识</h2>
+                    <p>加入我们的知识库贡献者社区，分享你的专业知识和经验，帮助更多音乐创作者成长</p>
+                    <button class="btn btn-primary btn-large">开始撰写</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="/src/assets/sub_logo.png" alt="SoundSphere Logo">
+                    <p>SoundSphere - 音乐创作与分享平台</p>
+                </div>
+                <div class="footer-links">
+                    <div class="link-group">
+                        <h4>关于</h4>
+                        <ul>
+                            <li><a href="#">关于我们</a></li>
+                            <li><a href="#">使用条款</a></li>
+                            <li><a href="#">隐私政策</a></li>
+                            <li><a href="#">版权信息</a></li>
+                        </ul>
+                    </div>
+                    <div class="link-group">
+                        <h4>功能</h4>
+                        <ul>
+                            <li><a href="music.html">音乐上传</a></li>
+                            <li><a href="collaboration.html">实时协作</a></li>
+                            <li><a href="knowledge.html">知识库</a></li>
+                            <li><a href="marketplace.html">商城</a></li>
+                        </ul>
+                    </div>
+                    <div class="link-group">
+                        <h4>支持</h4>
+                        <ul>
+                            <li><a href="#">帮助中心</a></li>
+                            <li><a href="#">常见问题</a></li>
+                            <li><a href="#">联系我们</a></li>
+                            <li><a href="#">反馈建议</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-newsletter">
+                    <h4>订阅最新动态</h4>
+                    <p>获取最新的音乐资讯与平台更新</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="输入你的邮箱" required>
+                        <button type="submit" class="btn btn-primary">订阅</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 SoundSphere. 保留所有权利。</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><img src="/src/assets/icons/facebook.svg" alt="Facebook"></a>
+                    <a href="#" class="social-link"><img src="/src/assets/icons/twitter.svg" alt="Twitter"></a>
+                    <a href="#" class="social-link"><img src="/src/assets/icons/instagram.svg" alt="Instagram"></a>
+                    <a href="#" class="social-link"><img src="/src/assets/icons/youtube.svg" alt="YouTube"></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 登录模态框 -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>登录到 SoundSphere</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-email">邮箱</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">密码</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary btn-full">登录</button>
+                    </div>
+                </form>
+                <div class="modal-footer">
+                    <p>还没有账号？<a href="#" id="show-signup">注册</a></p>
+                    <p><a href="#" id="forgot-password">忘记密码？</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 注册模态框 -->
+    <div class="modal" id="signup-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>注册 SoundSphere</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="signup-form">
+                    <div class="form-group">
+                        <label for="signup-username">用户名</label>
+                        <input type="text" id="signup-username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">邮箱</label>
+                        <input type="email" id="signup-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">密码</label>
+                        <input type="password" id="signup-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-confirm-password">确认密码</label>
+                        <input type="password" id="signup-confirm-password" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary btn-full">注册</button>
+                    </div>
+                </form>
+                <div class="modal-footer">
+                    <p>已有账号？<a href="#" id="show-login">登录</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/src/utils/api.js"></script>
+    <script src="/src/utils/auth.js"></script>
+    <script src="/src/utils/ui.js"></script>
+    <script src="/src/pages/knowledge.js"></script>
+</body>
+</html> 

@@ -1,0 +1,481 @@
+/* 市场页面样式 */
+
+/* 市场页面主题色 */
+:root {
+    --market-primary: #8e24aa;
+    --market-secondary: #5c007a;
+    --market-accent: #b63ddb;
+    --market-bg-light: #f3e5f5;
+}
+
+/* 英雄区域 */
+.marketplace-hero {
+    background: linear-gradient(135deg, var(--market-primary), var(--market-secondary));
+    color: white;
+    padding: 5rem 0 3rem;
+    text-align: center;
+}
+
+.marketplace-hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.marketplace-hero p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.search-bar {
+    display: flex;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 0.8rem 1rem;
+    border: none;
+    border-radius: 4px 0 0 4px;
+    font-size: 1rem;
+}
+
+.search-bar button {
+    border-radius: 0 4px 4px 0;
+    padding: 0.8rem 1.5rem;
+}
+
+.quick-links {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.quick-link {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    background-color: rgba(255, 255, 255, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+.quick-link:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* 商品分类区域 */
+.product-categories {
+    padding: 4rem 0;
+    background-color: #fff;
+}
+
+.categories-slider {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.category-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 120px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.category-item:hover {
+    transform: translateY(-5px);
+}
+
+.category-item.active .category-icon {
+    background-color: var(--market-primary);
+}
+
+.category-item.active h3 {
+    color: var(--market-primary);
+}
+
+.category-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: var(--market-bg-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.category-icon img {
+    width: 40px;
+    height: 40px;
+}
+
+.category-item h3 {
+    font-size: 1rem;
+    text-align: center;
+    margin: 0;
+    color: #333;
+}
+
+/* 精选商品区域 */
+.featured-products {
+    padding: 5rem 0;
+    background-color: var(--market-bg-light);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+}
+
+.section-actions select {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.product-card {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.product-image {
+    position: relative;
+    height: 200px;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.product-category {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background-color: var(--market-primary);
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+}
+
+.product-actions {
+    position: absolute;
+    bottom: 1rem;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.product-image:hover .product-actions {
+    opacity: 1;
+}
+
+.preview-btn,
+.wishlist-btn {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.preview-btn:hover,
+.wishlist-btn:hover {
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.play-icon,
+.heart-icon {
+    margin-right: 0.5rem;
+}
+
+.product-content {
+    padding: 1.5rem;
+}
+
+.product-content h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.1rem;
+}
+
+.product-seller {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.product-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.product-rating {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.star-filled,
+.star-half,
+.star-outline {
+    color: #ffc107;
+    margin-right: 0.2rem;
+}
+
+.product-rating span {
+    margin-left: 0.5rem;
+}
+
+.product-price {
+    font-weight: bold;
+}
+
+.price {
+    color: var(--market-primary);
+    font-size: 1.2rem;
+}
+
+.original-price {
+    color: #999;
+    text-decoration: line-through;
+    margin-right: 0.5rem;
+    font-size: 0.9rem;
+}
+
+/* 免费资源区域 */
+.free-resources {
+    padding: 5rem 0;
+    background-color: #fff;
+    text-align: center;
+}
+
+.section-subtitle {
+    color: #666;
+    max-width: 800px;
+    margin: 0 auto 3rem;
+}
+
+.resources-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.resource-card {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    text-align: left;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.resource-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.resource-image {
+    position: relative;
+}
+
+.resource-image img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.resource-category {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background-color: var(--market-primary);
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+}
+
+.resource-content {
+    padding: 1.5rem;
+}
+
+.resource-content h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.1rem;
+}
+
+.resource-description {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 1.2rem;
+}
+
+.resource-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.resource-stats {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.download-icon {
+    margin-right: 0.3rem;
+}
+
+.btn-outline {
+    background: none;
+    border: 1px solid var(--market-primary);
+    color: var(--market-primary);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-outline:hover {
+    background-color: var(--market-primary);
+    color: white;
+}
+
+/* 销售资源区域 */
+.sell-resources {
+    padding: 5rem 0;
+    background: linear-gradient(135deg, var(--market-primary), var(--market-secondary));
+    color: white;
+}
+
+.sell-content {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.sell-content h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.sell-content p {
+    font-size: 1.1rem;
+    margin-bottom: 2.5rem;
+    opacity: 0.9;
+}
+
+.selling-features {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-bottom: 2.5rem;
+}
+
+.selling-feature {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 33.333%;
+}
+
+.feature-icon {
+    width: 70px;
+    height: 70px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.feature-icon img {
+    width: 35px;
+    height: 35px;
+    filter: brightness(0) invert(1);
+}
+
+.selling-feature p {
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .marketplace-hero,
+    .product-categories,
+    .featured-products,
+    .free-resources,
+    .sell-resources {
+        padding: 3rem 0;
+    }
+    
+    .marketplace-hero h1 {
+        font-size: 2rem;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .products-grid,
+    .resources-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .selling-features {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    
+    .selling-feature {
+        width: 100%;
+    }
+} 

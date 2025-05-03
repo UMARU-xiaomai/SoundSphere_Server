@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>音乐市场 - SoundSphere</title>
+    <link rel="stylesheet" href="/src/styles/main.css">
+    <link rel="stylesheet" href="/src/styles/marketplace.css">
+    <link rel="icon" type="image/png" href="/src/assets/favicon.png">
+    <meta name="description" content="SoundSphere音乐市场 - 购买高质量的音乐资源，或销售你的作品，支持创作者">
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <a href="index.html">
+                    <img src="/src/assets/logo.png" alt="SoundSphere Logo">
+                    <span>SoundSphere</span>
+                </a>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="music.html" class="nav-link">浏览音乐</a></li>
+                    <li><a href="collaboration.html" class="nav-link">创作室</a></li>
+                    <li><a href="knowledge.html" class="nav-link">知识库</a></li>
+                    <li><a href="marketplace.html" class="nav-link active">市场</a></li>
+                </ul>
+            </nav>
+            <div class="user-actions">
+                <button class="btn btn-secondary" id="login-btn">登录</button>
+                <button class="btn btn-primary" id="signup-btn">注册</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="marketplace-hero">
+            <div class="container">
+                <h1>音乐资源市场</h1>
+                <p>发现优质音乐资源，支持创作者，或销售你的作品获取收益</p>
+                <div class="search-bar">
+                    <input type="text" placeholder="搜索音乐资源、样本包、预设等...">
+                    <button class="btn btn-primary">搜索</button>
+                </div>
+                <div class="quick-links">
+                    <a href="#" class="quick-link">畅销资源</a>
+                    <a href="#" class="quick-link">新品上架</a>
+                    <a href="#" class="quick-link">免费资源</a>
+                    <a href="#" class="quick-link">特价促销</a>
+                    <a href="#" class="quick-link">我的收藏</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="product-categories">
+            <div class="container">
+                <h2 class="section-title">商品分类</h2>
+                <div class="categories-slider">
+                    <div class="category-item active">
+                        <div class="category-icon">
+                            <img src="/src/assets/icons/beat.svg" alt="伴奏">
+                        </div>
+                        <h3>伴奏</h3>
+                    </div>
+                    <div class="category-item">
+                        <div class="category-icon">
+                            <img src="/src/assets/icons/sample.svg" alt="采样包">
+                        </div>
+                        <h3>采样包</h3>
+                    </div>
+                    <div class="category-item">
+                        <div class="category-icon">
+                            <img src="/src/assets/icons/preset.svg" alt="预设">
+                        </div>
+                        <h3>预设</h3>
+                    </div>
+                    <div class="category-item">
+                        <div class="category-icon">
+                            <img src="/src/assets/icons/tutorial.svg" alt="教程">
+                        </div>
+                        <h3>教程</h3>
+                    </div>
+                    <div class="category-item">
+                        <div class="category-icon">
+                            <img src="/src/assets/icons/plugin.svg" alt="插件">
+                        </div>
+                        <h3>插件</h3>
+                    </div>
+                    <div class="category-item">
+                        <div class="category-icon">
+                            <img src="/src/assets/icons/stem.svg" alt="音轨">
+                        </div>
+                        <h3>音轨</h3>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="featured-products">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">精选商品</h2>
+                    <div class="section-actions">
+                        <select id="product-filter">
+                            <option value="trending">热门</option>
+                            <option value="newest">最新</option>
+                            <option value="price-low">价格从低到高</option>
+                            <option value="price-high">价格从高到低</option>
+                            <option value="rating">评分最高</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="products-grid">
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="/src/assets/placeholder-product.jpg" alt="产品图片">
+                            <div class="product-category">伴奏</div>
+                            <div class="product-actions">
+                                <button class="preview-btn"><i class="play-icon"></i> 预览</button>
+                                <button class="wishlist-btn"><i class="heart-icon"></i></button>
+                            </div>
+                        </div>
+                        <div class="product-content">
+                            <h3>未来贝斯风格伴奏包</h3>
+                            <p class="product-seller">由 未来音乐 出品</p>
+                            <div class="product-meta">
+                                <div class="product-rating">
+                                    <i class="star-filled"></i>
+                                    <i class="star-filled"></i>
+                                    <i class="star-filled"></i>
+                                    <i class="star-filled"></i>
+                                    <i class="star-half"></i>
+                                    <span>4.5 (120)</span>
+                                </div>
+                                <div class="product-price">
+                                    <span class="price">¥89</span>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary btn-full">添加到购物车</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="/src/assets/placeholder-product.jpg" alt="产品图片">
+                            <div class="product-category">采样包</div>
+                            <div class="product-actions">
+                                <button class="preview-btn"><i class="play-icon"></i> 预览</button>
+                                <button class="wishlist-btn"><i class="heart-icon"></i></button>
+                            </div>
+                        </div>
+                        <div class="product-content">
+                            <h3>复古鼓机采样合集</h3>
+                            <p class="product-seller">由 老式机器 出品</p>
+                            <div class="product-meta">
+                                <div class="product-rating">
+                                    <i class="star-filled"></i>
+                                    <i class="star-filled"></i>
+                                    <i class="star-filled"></i>
+                                    <i class="star-filled"></i>
+                                    <i class="star-outline"></i>
+                                    <span>4.0 (85)</span>
+                                </div>
+                                <div class="product-price">
+                                    <span class="price">¥129</span>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary btn-full">添加到购物车</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="/src/assets/placeholder-product.jpg" alt="产品图片">
+                            <div class="product-category">预设</div>
+                            <div class="product-actions">
+                                <button class="preview-btn"><i class="play-icon"></i> 预览</button>
+                                <button class="wishlist-btn"><i class="heart-icon"></i></button>
+                            </div>
+                        </div>
+                        <div class="product-content">
+                            <h3>现代流行音乐合成器预设库</h3>
+                            <p class="product-seller">由 声音设计师 出品</p>
+                            <div class="product-meta">
+                                <div class="product-rating">
+                                    <i class="star-filled"></i>
+                                    <i class="star-filled"></i>
+                                    <i class="star-filled"></i>
+                                    <i class="star-filled"></i>
+                                    <i class="star-filled"></i>
+                                    <span>5.0 (63)</span>
+                                </div>
+                                <div class="product-price">
+                                    <span class="original-price">¥199</span>
+                                    <span class="price">¥149</span>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary btn-full">添加到购物车</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-image">
+                            <img src="/src/assets/placeholder-product.jpg" alt="产品图片">
+                            <div class="product-category">教程</div>
+                            <div class="product-actions">
+                                <button class="preview-btn"><i class="play-icon"></i> 预览</button>
+                                <button class="wishlist-btn"><i class="heart-icon"></i></button>
+                            </div>
+                        </div>
+                        <div class="product-content">
+                            <h3>专业母带处理完全教程</h3>
+                            <p class="product-seller">由 混音专家 出品</p>
+                            <div class="product-meta">
+                                <div class="product-rating">
+                                    <i class="star-filled"></i>
+                                    <i class="star-filled"></i>
+                                    <i class="star-filled"></i>
+                                    <i class="star-filled"></i>
+                                    <i class="star-half"></i>
+                                    <span>4.7 (92)</span>
+                                </div>
+                                <div class="product-price">
+                                    <span class="price">¥259</span>
+                                </div>
+                            </div>
+                            <button class="btn btn-primary btn-full">添加到购物车</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn btn-secondary btn-large" id="load-more-products">显示更多商品</button>
+            </div>
+        </section>
+
+        <section class="free-resources">
+            <div class="container">
+                <h2 class="section-title">免费资源</h2>
+                <p class="section-subtitle">优质免费资源，开始你的音乐创作之旅</p>
+                
+                <div class="resources-grid">
+                    <div class="resource-card">
+                        <div class="resource-image">
+                            <img src="/src/assets/placeholder-resource.jpg" alt="资源图片">
+                            <div class="resource-category">采样包</div>
+                        </div>
+                        <div class="resource-content">
+                            <h3>入门打击乐采样包</h3>
+                            <p class="resource-description">50个高质量打击乐采样，适合初学者使用</p>
+                            <div class="resource-meta">
+                                <div class="resource-stats">
+                                    <span><i class="download-icon"></i> 5.2k</span>
+                                </div>
+                                <button class="btn btn-outline">下载</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <div class="resource-image">
+                            <img src="/src/assets/placeholder-resource.jpg" alt="资源图片">
+                            <div class="resource-category">预设</div>
+                        </div>
+                        <div class="resource-content">
+                            <h3>基础合成器预设</h3>
+                            <p class="resource-description">10个常用合成器基础音色预设</p>
+                            <div class="resource-meta">
+                                <div class="resource-stats">
+                                    <span><i class="download-icon"></i> 3.8k</span>
+                                </div>
+                                <button class="btn btn-outline">下载</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="resource-card">
+                        <div class="resource-image">
+                            <img src="/src/assets/placeholder-resource.jpg" alt="资源图片">
+                            <div class="resource-category">教程</div>
+                        </div>
+                        <div class="resource-content">
+                            <h3>音频编辑基础入门</h3>
+                            <p class="resource-description">免费视频教程，学习音频编辑的基本技巧</p>
+                            <div class="resource-meta">
+                                <div class="resource-stats">
+                                    <span><i class="views-icon"></i> 9.1k</span>
+                                </div>
+                                <button class="btn btn-outline">观看</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <a href="#" class="btn btn-secondary">查看全部免费资源</a>
+            </div>
+        </section>
+
+        <section class="sell-resources">
+            <div class="container">
+                <div class="sell-content">
+                    <h2>销售你的音乐资源</h2>
+                    <p>将你的原创音乐、采样包、预设或教程上架到SoundSphere市场，开始获取收益</p>
+                    <div class="selling-features">
+                        <div class="selling-feature">
+                            <div class="feature-icon">
+                                <img src="/src/assets/icons/money.svg" alt="收益">
+                            </div>
+                            <p>获得高达85%的销售收益</p>
+                        </div>
+                        <div class="selling-feature">
+                            <div class="feature-icon">
+                                <img src="/src/assets/icons/community.svg" alt="社区">
+                            </div>
+                            <p>接触全球音乐创作者社区</p>
+                        </div>
+                        <div class="selling-feature">
+                            <div class="feature-icon">
+                                <img src="/src/assets/icons/tools.svg" alt="工具">
+                            </div>
+                            <p>使用专业销售和分析工具</p>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary btn-large">开始销售</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="/src/assets/sub_logo.png" alt="SoundSphere Logo">
+                    <p>SoundSphere - 音乐创作与分享平台</p>
+                </div>
+                <div class="footer-links">
+                    <div class="link-group">
+                        <h4>关于</h4>
+                        <ul>
+                            <li><a href="#">关于我们</a></li>
+                            <li><a href="#">使用条款</a></li>
+                            <li><a href="#">隐私政策</a></li>
+                            <li><a href="#">版权信息</a></li>
+                        </ul>
+                    </div>
+                    <div class="link-group">
+                        <h4>功能</h4>
+                        <ul>
+                            <li><a href="music.html">音乐上传</a></li>
+                            <li><a href="collaboration.html">实时协作</a></li>
+                            <li><a href="knowledge.html">知识库</a></li>
+                            <li><a href="marketplace.html">商城</a></li>
+                        </ul>
+                    </div>
+                    <div class="link-group">
+                        <h4>支持</h4>
+                        <ul>
+                            <li><a href="#">帮助中心</a></li>
+                            <li><a href="#">常见问题</a></li>
+                            <li><a href="#">联系我们</a></li>
+                            <li><a href="#">反馈建议</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-newsletter">
+                    <h4>订阅最新动态</h4>
+                    <p>获取最新的音乐资讯与平台更新</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="输入你的邮箱" required>
+                        <button type="submit" class="btn btn-primary">订阅</button>
+                    </form>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 SoundSphere. 保留所有权利。</p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><img src="/src/assets/icons/facebook.svg" alt="Facebook"></a>
+                    <a href="#" class="social-link"><img src="/src/assets/icons/twitter.svg" alt="Twitter"></a>
+                    <a href="#" class="social-link"><img src="/src/assets/icons/instagram.svg" alt="Instagram"></a>
+                    <a href="#" class="social-link"><img src="/src/assets/icons/youtube.svg" alt="YouTube"></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 登录模态框 -->
+    <div class="modal" id="login-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>登录到 SoundSphere</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-email">邮箱</label>
+                        <input type="email" id="login-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">密码</label>
+                        <input type="password" id="login-password" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary btn-full">登录</button>
+                    </div>
+                </form>
+                <div class="modal-footer">
+                    <p>还没有账号？<a href="#" id="show-signup">注册</a></p>
+                    <p><a href="#" id="forgot-password">忘记密码？</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 注册模态框 -->
+    <div class="modal" id="signup-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>注册 SoundSphere</h3>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="signup-form">
+                    <div class="form-group">
+                        <label for="signup-username">用户名</label>
+                        <input type="text" id="signup-username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">邮箱</label>
+                        <input type="email" id="signup-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">密码</label>
+                        <input type="password" id="signup-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-confirm-password">确认密码</label>
+                        <input type="password" id="signup-confirm-password" required>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary btn-full">注册</button>
+                    </div>
+                </form>
+                <div class="modal-footer">
+                    <p>已有账号？<a href="#" id="show-login">登录</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/src/utils/api.js"></script>
+    <script src="/src/utils/auth.js"></script>
+    <script src="/src/utils/ui.js"></script>
+    <script src="/src/pages/marketplace.js"></script>
+</body>
+</html> 

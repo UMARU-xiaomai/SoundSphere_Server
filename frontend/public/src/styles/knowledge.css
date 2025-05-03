@@ -1,0 +1,418 @@
+/* 知识库页面样式 */
+
+/* 知识库页面主题色 */
+:root {
+    --knowledge-primary: #ff6d00;
+    --knowledge-secondary: #c43c00;
+    --knowledge-accent: #ff9e40;
+    --knowledge-bg-light: #fff3e0;
+}
+
+/* 英雄区域 */
+.knowledge-hero {
+    background: linear-gradient(135deg, var(--knowledge-primary), var(--knowledge-secondary));
+    color: white;
+    padding: 5rem 0 3rem;
+    text-align: center;
+}
+
+.knowledge-hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.knowledge-hero p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.search-bar {
+    display: flex;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 0.8rem 1rem;
+    border: none;
+    border-radius: 4px 0 0 4px;
+    font-size: 1rem;
+}
+
+.search-bar button {
+    border-radius: 0 4px 4px 0;
+    padding: 0.8rem 1.5rem;
+}
+
+/* 知识分类区域 */
+.knowledge-categories {
+    padding: 5rem 0;
+    background-color: #fff;
+}
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.category-card {
+    padding: 2rem;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.category-icon {
+    width: 70px;
+    height: 70px;
+    background-color: var(--knowledge-bg-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+}
+
+.category-icon img {
+    width: 40px;
+    height: 40px;
+}
+
+.category-card h3 {
+    color: var(--knowledge-primary);
+    margin-bottom: 0.8rem;
+}
+
+.category-card p {
+    color: #666;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.category-link {
+    color: var(--knowledge-primary);
+    text-decoration: none;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    transition: color 0.3s ease;
+}
+
+.category-link:hover {
+    color: var(--knowledge-secondary);
+}
+
+.category-link::after {
+    content: "→";
+    margin-left: 0.5rem;
+}
+
+/* 精选文章区域 */
+.featured-articles {
+    padding: 5rem 0;
+    background-color: var(--knowledge-bg-light);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2.5rem;
+}
+
+.section-actions select {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.article-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.article-card {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.article-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.article-image {
+    position: relative;
+}
+
+.article-image img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.article-category {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background-color: var(--knowledge-primary);
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+}
+
+.article-content {
+    padding: 1.5rem;
+}
+
+.article-content h3 {
+    margin: 0 0 0.8rem 0;
+    font-size: 1.1rem;
+    line-height: 1.4;
+}
+
+.article-excerpt {
+    color: #666;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+}
+
+.article-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.author {
+    display: flex;
+    align-items: center;
+}
+
+.author img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 0.8rem;
+}
+
+.author span {
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.stats {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.stats span {
+    display: flex;
+    align-items: center;
+}
+
+.views-icon,
+.likes-icon {
+    margin-right: 0.3rem;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+/* 最新视频教程区域 */
+.latest-tutorials {
+    padding: 5rem 0;
+    background-color: #fff;
+}
+
+.tutorials-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.tutorial-card {
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tutorial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.tutorial-video {
+    position: relative;
+}
+
+.tutorial-video img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+.play-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.play-button {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+.play-button:hover {
+    transform: scale(1.1);
+}
+
+.play-button img {
+    width: 20px;
+    height: 20px;
+}
+
+.tutorial-duration {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 0.3rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+}
+
+.tutorial-content {
+    padding: 1.5rem;
+}
+
+.tutorial-content h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.1rem;
+}
+
+.tutorial-description {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 1.2rem;
+}
+
+.tutorial-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tutor {
+    display: flex;
+    align-items: center;
+}
+
+.tutor img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 0.8rem;
+}
+
+.tutor span {
+    font-size: 0.9rem;
+    color: #333;
+}
+
+.tutorial-stats {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+/* 贡献区域 */
+.contribute {
+    background: linear-gradient(135deg, var(--knowledge-primary), var(--knowledge-secondary));
+    color: white;
+    padding: 4rem 0;
+    text-align: center;
+}
+
+.contribute-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.contribute-content h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.contribute-content p {
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+    .knowledge-hero,
+    .knowledge-categories,
+    .featured-articles,
+    .latest-tutorials,
+    .contribute {
+        padding: 3rem 0;
+    }
+    
+    .knowledge-hero h1 {
+        font-size: 2rem;
+    }
+    
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .article-grid,
+    .tutorials-grid {
+        grid-template-columns: 1fr;
+    }
+} 

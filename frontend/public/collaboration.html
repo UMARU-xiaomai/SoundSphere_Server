@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SoundSphere - 音乐创作与分享平台</title>
+    <title>创作室 - SoundSphere</title>
     <link rel="stylesheet" href="/src/styles/main.css">
-    <link rel="stylesheet" href="/src/styles/home.css">
+    <link rel="stylesheet" href="/src/styles/collaboration.css">
     <link rel="icon" type="image/png" href="/src/assets/favicon.png">
-    <meta name="description" content="SoundSphere - 基于Web2.0的在线音乐创作与分享平台，让音乐爱好者、制作人和播客主能够上传分享、协作创作和变现音乐作品">
+    <meta name="description" content="SoundSphere创作室 - 与全球音乐创作者实时协作，共同创作优质音乐作品">
 </head>
 <body>
     <header class="main-header">
@@ -21,7 +21,7 @@
             <nav class="main-nav">
                 <ul>
                     <li><a href="music.html" class="nav-link">浏览音乐</a></li>
-                    <li><a href="collaboration.html" class="nav-link">创作室</a></li>
+                    <li><a href="collaboration.html" class="nav-link active">创作室</a></li>
                     <li><a href="knowledge.html" class="nav-link">知识库</a></li>
                     <li><a href="marketplace.html" class="nav-link">市场</a></li>
                 </ul>
@@ -34,177 +34,198 @@
     </header>
 
     <main>
-        <section class="hero">
+        <section class="collaboration-hero">
             <div class="container">
-                <div class="hero-content">
-                    <h1>创作、协作、分享你的音乐</h1>
-                    <p>SoundSphere 是一个让音乐创作变得简单且充满乐趣的平台，无论你是音乐爱好者还是专业制作人。</p>
-                    <div class="cta-buttons">
-                        <a href="collaboration.html" class="btn btn-primary btn-large" id="get-started-btn">开始创作</a>
-                        <a href="music.html" class="btn btn-secondary btn-large" id="explore-btn">探索社区</a>
-                    </div>
-                </div>
-                <div class="hero-image">
-                    <img src="/src/assets/hero-image.png" alt="SoundSphere 创作界面">
+                <h1>实时音乐协作</h1>
+                <p>与来自世界各地的音乐人一起创作，共同打造精彩作品</p>
+                <div class="hero-actions">
+                    <button class="btn btn-primary btn-large">创建协作室</button>
+                    <button class="btn btn-secondary btn-large">加入已有项目</button>
                 </div>
             </div>
         </section>
 
-        <section class="features" id="features">
+        <section class="collaboration-features">
             <div class="container">
-                <h2 class="section-title">为什么选择 SoundSphere?</h2>
+                <h2 class="section-title">创作室功能</h2>
                 <div class="features-grid">
                     <div class="feature-card">
                         <div class="feature-icon">
-                            <img src="/src/assets/icons/upload.svg" alt="上传与分享">
+                            <img src="/src/assets/icons/realtime.svg" alt="实时协作">
                         </div>
-                        <h3>上传与分享</h3>
-                        <p>上传原创乐曲、伴奏、采样包，以及音乐相关的教程、播客。</p>
+                        <h3>实时协作</h3>
+                        <p>基于WebRTC的实时多人录音与混音，所有更改即时同步。</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">
-                            <img src="/src/assets/icons/edit.svg" alt="可读可写">
+                            <img src="/src/assets/icons/transfer.svg" alt="大文件传输">
                         </div>
-                        <h3>可读可写</h3>
-                        <p>社区维基化的"创作笔记"与"制作流程"文档，任何人都可编辑、补充与改进。</p>
+                        <h3>大文件传输</h3>
+                        <p>支持P2P方式进行大文件（多声道音轨）传输，高效且稳定。</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">
-                            <img src="/src/assets/icons/collaborate.svg" alt="多人协作">
+                            <img src="/src/assets/icons/chat.svg" alt="团队沟通">
                         </div>
-                        <h3>多人协作</h3>
-                        <p>基于 WebRTC 的实时多人录音与混音房间，也支持 P2P 方式进行大文件（多声道音轨）传输。</p>
+                        <h3>团队沟通</h3>
+                        <p>内置音频/视频通话和文字聊天，让团队沟通无障碍。</p>
                     </div>
                     <div class="feature-card">
                         <div class="feature-icon">
-                            <img src="/src/assets/icons/marketplace.svg" alt="社交与电商">
+                            <img src="/src/assets/icons/version.svg" alt="版本控制">
                         </div>
-                        <h3>社交与电商</h3>
-                        <p>在平台内建立关注体系、评论、打赏机制，还可将作品上架为付费授权，平台抽取一定佣金。</p>
+                        <h3>版本控制</h3>
+                        <p>自动保存项目历史版本，随时回退或比较不同版本。</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section class="browse-music" id="browse">
+        <section class="active-rooms">
             <div class="container">
-                <h2 class="section-title">发现音乐</h2>
-                <div class="category-filters">
-                    <button class="filter-btn active" data-filter="all">全部</button>
-                    <button class="filter-btn" data-filter="tracks">乐曲</button>
-                    <button class="filter-btn" data-filter="beats">伴奏</button>
-                    <button class="filter-btn" data-filter="samples">采样</button>
-                    <button class="filter-btn" data-filter="podcasts">播客</button>
-                </div>
-                <div class="music-grid" id="music-grid">
-                    <!-- 音乐卡片将通过 JavaScript 动态插入 -->
-                </div>
-                <button class="btn btn-secondary btn-large" id="load-more-btn">加载更多</button>
-            </div>
-        </section>
-
-        <section class="collaboration" id="collaborate">
-            <div class="container">
-                <h2 class="section-title">实时协作</h2>
-                <p class="section-subtitle">与世界各地的音乐人一起创作，共同打造精彩作品。</p>
-                <div class="collaboration-demo">
-                    <img src="/src/assets/collaboration-demo.png" alt="协作界面演示">
-                    <div class="demo-overlay">
-                        <a href="collaboration.html" class="btn btn-primary btn-large" id="try-collaboration-btn">尝试协作</a>
+                <div class="section-header">
+                    <h2 class="section-title">活跃协作室</h2>
+                    <div class="section-actions">
+                        <select id="room-filter">
+                            <option value="all">所有类型</option>
+                            <option value="electronic">电子</option>
+                            <option value="pop">流行</option>
+                            <option value="rock">摇滚</option>
+                            <option value="hiphop">嘻哈</option>
+                            <option value="classical">古典</option>
+                        </select>
                     </div>
                 </div>
+                
                 <div class="room-cards">
                     <div class="room-card">
                         <div class="room-info">
                             <h3>电子舞曲协作室</h3>
-                            <p>3人在线 · 进行中</p>
+                            <p class="room-description">正在制作一首未来贝斯风格的EDM作品，需要合成器和打击乐手</p>
+                            <p class="room-meta">3人在线 · 进行中 · 由 DJ电子 创建</p>
+                            <div class="room-tags">
+                                <span class="tag">电子</span>
+                                <span class="tag">EDM</span>
+                                <span class="tag">Bass</span>
+                            </div>
                         </div>
                         <button class="btn btn-secondary">加入</button>
                     </div>
+
                     <div class="room-card">
                         <div class="room-info">
                             <h3>流行歌曲混音</h3>
-                            <p>2人在线 · 进行中</p>
+                            <p class="room-description">已完成录制的流行歌曲，需要混音工程师进行最终处理</p>
+                            <p class="room-meta">2人在线 · 进行中 · 由 混音大师 创建</p>
+                            <div class="room-tags">
+                                <span class="tag">流行</span>
+                                <span class="tag">混音</span>
+                                <span class="tag">母带</span>
+                            </div>
                         </div>
                         <button class="btn btn-secondary">加入</button>
                     </div>
+
                     <div class="room-card">
                         <div class="room-info">
                             <h3>说唱制作室</h3>
-                            <p>5人在线 · 进行中</p>
+                            <p class="room-description">trap风格beat制作中，需要说唱歌手和制作人</p>
+                            <p class="room-meta">5人在线 · 进行中 · 由 说唱天王 创建</p>
+                            <div class="room-tags">
+                                <span class="tag">嘻哈</span>
+                                <span class="tag">Trap</span>
+                                <span class="tag">说唱</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-secondary">加入</button>
+                    </div>
+
+                    <div class="room-card">
+                        <div class="room-info">
+                            <h3>民谣吉他合奏</h3>
+                            <p class="room-description">寻找小提琴、钢琴伴奏，合作创作一首民谣风格歌曲</p>
+                            <p class="room-meta">1人在线 · 进行中 · 由 民谣歌手 创建</p>
+                            <div class="room-tags">
+                                <span class="tag">民谣</span>
+                                <span class="tag">吉他</span>
+                                <span class="tag">合奏</span>
+                            </div>
                         </div>
                         <button class="btn btn-secondary">加入</button>
                     </div>
                 </div>
+                
+                <button class="btn btn-secondary btn-large" id="load-more-rooms">显示更多</button>
             </div>
         </section>
 
-        <section class="knowledge-base" id="learn">
+        <section class="collaboration-demo">
             <div class="container">
-                <h2 class="section-title">知识库</h2>
-                <p class="section-subtitle">探索社区维护的音乐制作知识与教程</p>
-                <div class="knowledge-categories">
-                    <div class="knowledge-category">
-                        <h3>音乐理论</h3>
-                        <ul>
-                            <li><a href="#">和声学基础</a></li>
-                            <li><a href="#">节奏与拍号</a></li>
-                            <li><a href="#">旋律写作技巧</a></li>
-                        </ul>
-                    </div>
-                    <div class="knowledge-category">
-                        <h3>制作技巧</h3>
-                        <ul>
-                            <li><a href="#">混音基础</a></li>
-                            <li><a href="#">EQ与压缩</a></li>
-                            <li><a href="#">空间效果应用</a></li>
-                        </ul>
-                    </div>
-                    <div class="knowledge-category">
-                        <h3>软件教程</h3>
-                        <ul>
-                            <li><a href="#">FL Studio 入门</a></li>
-                            <li><a href="#">Ableton Live 技巧</a></li>
-                            <li><a href="#">常用VST插件指南</a></li>
-                        </ul>
-                    </div>
-                    <div class="knowledge-category">
-                        <h3>创作分享</h3>
-                        <ul>
-                            <li><a href="#">作曲灵感来源</a></li>
-                            <li><a href="#">制作流程分享</a></li>
-                            <li><a href="#">音乐人访谈</a></li>
-                        </ul>
+                <h2 class="section-title">协作演示</h2>
+                <p class="section-description">观看创作室功能演示视频，了解如何高效协作</p>
+                <div class="demo-video">
+                    <img src="/src/assets/collaboration-demo.png" alt="协作演示">
+                    <div class="play-overlay">
+                        <button class="play-button">
+                            <img src="/src/assets/icons/play-large.svg" alt="播放">
+                        </button>
                     </div>
                 </div>
-                <a href="knowledge.html" class="btn btn-secondary btn-large">浏览更多知识</a>
             </div>
         </section>
 
-        <section class="marketplace" id="marketplace">
+        <section class="testimonials">
             <div class="container">
-                <h2 class="section-title">音乐商城</h2>
-                <p class="section-subtitle">发现优质音乐资源，支持创作者</p>
-                <div class="product-categories">
-                    <button class="category-btn active" data-category="all">全部</button>
-                    <button class="category-btn" data-category="beats">伴奏</button>
-                    <button class="category-btn" data-category="samples">采样包</button>
-                    <button class="category-btn" data-category="tutorials">教程</button>
-                    <button class="category-btn" data-category="presets">预设</button>
+                <h2 class="section-title">创作者的评价</h2>
+                <div class="testimonial-slider">
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>"SoundSphere的创作室功能让我能够与远在国外的音乐人顺畅协作，这在以前是不可想象的！"</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <img src="/src/assets/placeholder-avatar.jpg" alt="用户头像">
+                            <div class="author-info">
+                                <h4>王小明</h4>
+                                <p>电子音乐制作人</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>"实时协作功能极大提高了我们乐队的工作效率，即使成员分布在不同城市也能一起创作。"</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <img src="/src/assets/placeholder-avatar.jpg" alt="用户头像">
+                            <div class="author-info">
+                                <h4>李小红</h4>
+                                <p>摇滚乐队主唱</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>"版本控制功能非常实用，让我能随时回到之前的创作版本，不用担心丢失灵感。"</p>
+                        </div>
+                        <div class="testimonial-author">
+                            <img src="/src/assets/placeholder-avatar.jpg" alt="用户头像">
+                            <div class="author-info">
+                                <h4>张小强</h4>
+                                <p>说唱音乐人</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="products-grid" id="products-grid">
-                    <!-- 产品卡片将通过 JavaScript 动态插入 -->
-                </div>
-                <a href="marketplace.html" class="btn btn-secondary btn-large">浏览商城</a>
-            </div>
-        </section>
-
-        <section class="cta">
-            <div class="container">
-                <div class="cta-content">
-                    <h2>准备好开始你的音乐之旅了吗？</h2>
-                    <p>加入 SoundSphere 社区，与音乐爱好者一起创作、学习和分享。</p>
-                    <button class="btn btn-primary btn-large" id="cta-signup-btn">免费注册</button>
+                
+                <div class="slider-controls">
+                    <button class="slider-prev">上一个</button>
+                    <div class="slider-dots">
+                        <span class="dot active"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                    <button class="slider-next">下一个</button>
                 </div>
             </div>
         </section>
@@ -230,10 +251,10 @@
                     <div class="link-group">
                         <h4>功能</h4>
                         <ul>
-                            <li><a href="#">音乐上传</a></li>
-                            <li><a href="#">实时协作</a></li>
-                            <li><a href="#">知识库</a></li>
-                            <li><a href="#">商城</a></li>
+                            <li><a href="music.html">音乐上传</a></li>
+                            <li><a href="collaboration.html">实时协作</a></li>
+                            <li><a href="knowledge.html">知识库</a></li>
+                            <li><a href="marketplace.html">商城</a></li>
                         </ul>
                     </div>
                     <div class="link-group">
@@ -335,6 +356,6 @@
     <script src="/src/utils/api.js"></script>
     <script src="/src/utils/auth.js"></script>
     <script src="/src/utils/ui.js"></script>
-    <script src="/src/pages/home.js"></script>
+    <script src="/src/pages/collaboration.js"></script>
 </body>
 </html> 
