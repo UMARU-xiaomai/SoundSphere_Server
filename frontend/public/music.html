@@ -10,27 +10,36 @@
     <link rel="stylesheet" href="/src/styles/music.css">
     <link rel="icon" type="image/png" href="/src/assets/favicon.png">
     <meta name="description" content="在SoundSphere上浏览和发现音乐，找到你喜欢的音乐创作者和作品">
+    <meta name="theme-color" content="#6200ea">
+    <!-- 添加预连接以提高性能 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- 添加可访问性支持 -->
+    <meta name="accessibility" content="WCAG2A,WCAG2AA,WCAG2AAA">
 </head>
 <body>
     <header class="main-header">
         <div class="container">
             <div class="logo">
-                <a href="index.html">
+                <a href="index.html" aria-label="SoundSphere首页">
                     <img src="/src/assets/logo.png" alt="SoundSphere Logo">
                     <span>SoundSphere</span>
                 </a>
             </div>
-            <nav class="main-nav">
+            <nav class="main-nav" aria-label="主导航">
+                <button class="mobile-menu-toggle" aria-label="菜单" aria-expanded="false">
+                    <span class="menu-icon"></span>
+                </button>
                 <ul>
-                    <li><a href="music.html" class="nav-link active">浏览音乐</a></li>
+                    <li><a href="music.html" class="nav-link active" aria-current="page">浏览音乐</a></li>
                     <li><a href="collaboration.html" class="nav-link">创作室</a></li>
                     <li><a href="knowledge.html" class="nav-link">知识库</a></li>
                     <li><a href="marketplace.html" class="nav-link">市场</a></li>
                 </ul>
             </nav>
             <div class="user-actions">
-                <button class="btn btn-secondary" id="login-btn">登录</button>
-                <button class="btn btn-primary" id="signup-btn">注册</button>
+                <button class="btn btn-secondary" id="login-btn" aria-label="登录">登录</button>
+                <button class="btn btn-primary" id="signup-btn" aria-label="注册">注册</button>
             </div>
         </div>
     </header>
@@ -40,142 +49,148 @@
             <div class="container">
                 <h1>发现优质音乐</h1>
                 <p>浏览最新、最热门的音乐作品，发现你的下一个最爱</p>
-                <div class="search-bar">
-                    <input type="text" placeholder="搜索音乐、创作者或标签...">
-                    <button class="btn btn-primary">搜索</button>
-                </div>
+                <form class="search-bar" role="search" aria-label="搜索音乐">
+                    <input type="text" placeholder="搜索音乐、创作者或标签..." aria-label="搜索词">
+                    <button class="btn btn-primary" type="submit" aria-label="搜索">
+                        <span class="search-icon"></span>
+                        <span class="btn-text">搜索</span>
+                    </button>
+                </form>
             </div>
         </section>
 
         <section class="browse-music">
             <div class="container">
-                <div class="category-filters">
-                    <button class="filter-btn active" data-filter="all">全部</button>
-                    <button class="filter-btn" data-filter="tracks">乐曲</button>
-                    <button class="filter-btn" data-filter="beats">伴奏</button>
-                    <button class="filter-btn" data-filter="samples">采样</button>
-                    <button class="filter-btn" data-filter="podcasts">播客</button>
-                </div>
-                
-                <div class="sort-options">
-                    <span>排序方式：</span>
-                    <select id="sort-music">
-                        <option value="trending">热门</option>
-                        <option value="newest">最新</option>
-                        <option value="most-played">播放最多</option>
-                        <option value="most-liked">赞最多</option>
-                    </select>
-                </div>
-                
-                <div class="music-grid" id="music-grid">
-                    <!-- 这里将通过JavaScript动态加载音乐卡片 -->
-                    <!-- 以下是占位样例 -->
-                    <div class="music-card">
-                        <div class="music-cover">
-                            <img src="/src/assets/placeholder-cover.jpg" alt="音乐封面">
-                            <button class="play-btn"><i class="play-icon"></i></button>
-                        </div>
-                        <div class="music-info">
-                            <h3>夏日旋律</h3>
-                            <p class="artist">李明</p>
-                            <div class="music-stats">
-                                <span><i class="play-count-icon"></i> 1.2万</span>
-                                <span><i class="like-icon"></i> 342</span>
-                            </div>
-                        </div>
+                <div class="controls-wrapper">
+                    <div class="category-filters" role="tablist" aria-label="音乐分类">
+                        <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true" id="tab-all">全部</button>
+                        <button class="filter-btn" data-filter="tracks" role="tab" aria-selected="false" id="tab-tracks">乐曲</button>
+                        <button class="filter-btn" data-filter="beats" role="tab" aria-selected="false" id="tab-beats">伴奏</button>
+                        <button class="filter-btn" data-filter="samples" role="tab" aria-selected="false" id="tab-samples">采样</button>
+                        <button class="filter-btn" data-filter="podcasts" role="tab" aria-selected="false" id="tab-podcasts">播客</button>
                     </div>
                     
-                    <div class="music-card">
-                        <div class="music-cover">
-                            <img src="/src/assets/placeholder-cover.jpg" alt="音乐封面">
-                            <button class="play-btn"><i class="play-icon"></i></button>
-                        </div>
-                        <div class="music-info">
-                            <h3>电子之梦</h3>
-                            <p class="artist">张伟</p>
-                            <div class="music-stats">
-                                <span><i class="play-count-icon"></i> 8.5千</span>
-                                <span><i class="like-icon"></i> 156</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="music-card">
-                        <div class="music-cover">
-                            <img src="/src/assets/placeholder-cover.jpg" alt="音乐封面">
-                            <button class="play-btn"><i class="play-icon"></i></button>
-                        </div>
-                        <div class="music-info">
-                            <h3>雨中漫步</h3>
-                            <p class="artist">王丽</p>
-                            <div class="music-stats">
-                                <span><i class="play-count-icon"></i> 6.7千</span>
-                                <span><i class="like-icon"></i> 214</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="music-card">
-                        <div class="music-cover">
-                            <img src="/src/assets/placeholder-cover.jpg" alt="音乐封面">
-                            <button class="play-btn"><i class="play-icon"></i></button>
-                        </div>
-                        <div class="music-info">
-                            <h3>星空下的钢琴曲</h3>
-                            <p class="artist">陈静</p>
-                            <div class="music-stats">
-                                <span><i class="play-count-icon"></i> 4.3千</span>
-                                <span><i class="like-icon"></i> 98</span>
-                            </div>
-                        </div>
+                    <div class="sort-options">
+                        <label for="sort-music">排序方式：</label>
+                        <select id="sort-music" aria-label="排序选项">
+                            <option value="trending">热门</option>
+                            <option value="newest">最新</option>
+                            <option value="most-played">播放最多</option>
+                            <option value="most-liked">赞最多</option>
+                        </select>
                     </div>
                 </div>
                 
-                <button class="btn btn-secondary btn-large" id="load-more-btn">加载更多</button>
+                <div class="music-grid" id="music-grid" role="tabpanel" aria-labelledby="tab-all">
+                    <!-- 音乐卡片将通过JavaScript动态加载 -->
+                    <!-- 优化的音乐卡片结构 -->
+                    <article class="music-card">
+                        <div class="music-cover">
+                            <img src="/src/assets/placeholder-cover.jpg" alt="夏日旋律封面">
+                            <button class="play-btn" aria-label="播放夏日旋律"><i class="play-icon"></i></button>
+                        </div>
+                        <div class="music-info">
+                            <h3><a href="#" class="music-title">夏日旋律</a></h3>
+                            <p class="artist"><a href="#" class="artist-link">李明</a></p>
+                            <div class="music-stats">
+                                <span><i class="play-count-icon" aria-hidden="true"></i> <span class="visually-hidden">播放次数</span> 1.2万</span>
+                                <span><i class="like-icon" aria-hidden="true"></i> <span class="visually-hidden">赞</span> 342</span>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <article class="music-card">
+                        <div class="music-cover">
+                            <img src="/src/assets/placeholder-cover.jpg" alt="电子之梦封面">
+                            <button class="play-btn" aria-label="播放电子之梦"><i class="play-icon"></i></button>
+                        </div>
+                        <div class="music-info">
+                            <h3><a href="#" class="music-title">电子之梦</a></h3>
+                            <p class="artist"><a href="#" class="artist-link">张伟</a></p>
+                            <div class="music-stats">
+                                <span><i class="play-count-icon" aria-hidden="true"></i> <span class="visually-hidden">播放次数</span> 8.5千</span>
+                                <span><i class="like-icon" aria-hidden="true"></i> <span class="visually-hidden">赞</span> 156</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="music-card">
+                        <div class="music-cover">
+                            <img src="/src/assets/placeholder-cover.jpg" alt="雨中漫步封面">
+                            <button class="play-btn" aria-label="播放雨中漫步"><i class="play-icon"></i></button>
+                        </div>
+                        <div class="music-info">
+                            <h3><a href="#" class="music-title">雨中漫步</a></h3>
+                            <p class="artist"><a href="#" class="artist-link">王丽</a></p>
+                            <div class="music-stats">
+                                <span><i class="play-count-icon" aria-hidden="true"></i> <span class="visually-hidden">播放次数</span> 6.7千</span>
+                                <span><i class="like-icon" aria-hidden="true"></i> <span class="visually-hidden">赞</span> 214</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="music-card">
+                        <div class="music-cover">
+                            <img src="/src/assets/placeholder-cover.jpg" alt="星空下的钢琴曲封面">
+                            <button class="play-btn" aria-label="播放星空下的钢琴曲"><i class="play-icon"></i></button>
+                        </div>
+                        <div class="music-info">
+                            <h3><a href="#" class="music-title">星空下的钢琴曲</a></h3>
+                            <p class="artist"><a href="#" class="artist-link">陈静</a></p>
+                            <div class="music-stats">
+                                <span><i class="play-count-icon" aria-hidden="true"></i> <span class="visually-hidden">播放次数</span> 4.3千</span>
+                                <span><i class="like-icon" aria-hidden="true"></i> <span class="visually-hidden">赞</span> 98</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                
+                <div class="load-more-container">
+                    <button class="btn btn-secondary btn-large" id="load-more-btn" aria-label="加载更多音乐">加载更多</button>
+                </div>
             </div>
         </section>
 
-        <section class="trending-artists">
+        <section class="trending-artists" aria-labelledby="trending-artists-title">
             <div class="container">
-                <h2 class="section-title">热门创作者</h2>
+                <h2 class="section-title" id="trending-artists-title">热门创作者</h2>
                 <div class="artists-grid">
-                    <!-- 这里将通过JavaScript动态加载创作者卡片 -->
-                    <!-- 以下是占位样例 -->
-                    <div class="artist-card">
+                    <!-- 创作者卡片将通过JavaScript动态加载 -->
+                    <article class="artist-card">
                         <div class="artist-avatar">
-                            <img src="/src/assets/placeholder-avatar.jpg" alt="创作者头像">
+                            <img src="/src/assets/placeholder-avatar.jpg" alt="李明的头像">
                         </div>
-                        <h3>李明</h3>
-                        <p>电子 / 流行</p>
-                        <button class="btn btn-outline">关注</button>
-                    </div>
+                        <h3><a href="#" class="artist-name">李明</a></h3>
+                        <p class="artist-genres">电子 / 流行</p>
+                        <button class="btn btn-outline" aria-label="关注李明">关注</button>
+                    </article>
                     
-                    <div class="artist-card">
+                    <article class="artist-card">
                         <div class="artist-avatar">
-                            <img src="/src/assets/placeholder-avatar.jpg" alt="创作者头像">
+                            <img src="/src/assets/placeholder-avatar.jpg" alt="张伟的头像">
                         </div>
-                        <h3>张伟</h3>
-                        <p>实验 / 氛围</p>
-                        <button class="btn btn-outline">关注</button>
-                    </div>
+                        <h3><a href="#" class="artist-name">张伟</a></h3>
+                        <p class="artist-genres">实验 / 氛围</p>
+                        <button class="btn btn-outline" aria-label="关注张伟">关注</button>
+                    </article>
                     
-                    <div class="artist-card">
+                    <article class="artist-card">
                         <div class="artist-avatar">
-                            <img src="/src/assets/placeholder-avatar.jpg" alt="创作者头像">
+                            <img src="/src/assets/placeholder-avatar.jpg" alt="王丽的头像">
                         </div>
-                        <h3>王丽</h3>
-                        <p>爵士 / 古典</p>
-                        <button class="btn btn-outline">关注</button>
-                    </div>
+                        <h3><a href="#" class="artist-name">王丽</a></h3>
+                        <p class="artist-genres">爵士 / 古典</p>
+                        <button class="btn btn-outline" aria-label="关注王丽">关注</button>
+                    </article>
                     
-                    <div class="artist-card">
+                    <article class="artist-card">
                         <div class="artist-avatar">
-                            <img src="/src/assets/placeholder-avatar.jpg" alt="创作者头像">
+                            <img src="/src/assets/placeholder-avatar.jpg" alt="陈静的头像">
                         </div>
-                        <h3>陈静</h3>
-                        <p>钢琴 / 轻音乐</p>
-                        <button class="btn btn-outline">关注</button>
-                    </div>
+                        <h3><a href="#" class="artist-name">陈静</a></h3>
+                        <p class="artist-genres">钢琴 / 轻音乐</p>
+                        <button class="btn btn-outline" aria-label="关注陈静">关注</button>
+                    </article>
                 </div>
             </div>
         </section>
@@ -220,30 +235,30 @@
                 <div class="footer-newsletter">
                     <h4>订阅最新动态</h4>
                     <p>获取最新的音乐资讯与平台更新</p>
-                    <form class="newsletter-form">
-                        <input type="email" placeholder="输入你的邮箱" required>
-                        <button type="submit" class="btn btn-primary">订阅</button>
+                    <form class="newsletter-form" aria-label="通讯订阅">
+                        <input type="email" placeholder="输入你的邮箱" required aria-label="邮箱">
+                        <button type="submit" class="btn btn-primary" aria-label="订阅">订阅</button>
                     </form>
                 </div>
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2023 SoundSphere. 保留所有权利。</p>
-                <div class="social-links">
-                    <a href="#" class="social-link"><img src="/src/assets/icons/facebook.svg" alt="Facebook"></a>
-                    <a href="#" class="social-link"><img src="/src/assets/icons/twitter.svg" alt="Twitter"></a>
-                    <a href="#" class="social-link"><img src="/src/assets/icons/instagram.svg" alt="Instagram"></a>
-                    <a href="#" class="social-link"><img src="/src/assets/icons/youtube.svg" alt="YouTube"></a>
+                <div class="social-links" aria-label="社交媒体链接">
+                    <a href="#" class="social-link" aria-label="Facebook"><img src="/src/assets/icons/facebook.svg" alt=""></a>
+                    <a href="#" class="social-link" aria-label="Twitter"><img src="/src/assets/icons/twitter.svg" alt=""></a>
+                    <a href="#" class="social-link" aria-label="Instagram"><img src="/src/assets/icons/instagram.svg" alt=""></a>
+                    <a href="#" class="social-link" aria-label="YouTube"><img src="/src/assets/icons/youtube.svg" alt=""></a>
                 </div>
             </div>
         </div>
     </footer>
 
     <!-- 登录模态框 -->
-    <div class="modal" id="login-modal">
-        <div class="modal-content">
+    <div class="modal" id="login-modal" role="dialog" aria-labelledby="login-title" aria-hidden="true">
+        <div class="modal-content" role="document">
             <div class="modal-header">
-                <h3>登录到 SoundSphere</h3>
-                <button class="close-btn">&times;</button>
+                <h3 id="login-title">登录到 SoundSphere</h3>
+                <button class="close-btn" aria-label="关闭">&times;</button>
             </div>
             <div class="modal-body">
                 <form id="login-form">
@@ -254,8 +269,9 @@
                     <div class="form-group">
                         <label for="login-password">密码</label>
                         <input type="password" id="login-password" required>
+                        <button type="button" class="password-toggle" aria-label="显示密码" data-show="false"></button>
                     </div>
-                    <div class="auth-error" style="display: none; color: #e74c3c; margin-bottom: 10px;"></div>
+                    <div class="auth-error" role="alert" style="display: none; color: #e74c3c; margin-bottom: 10px;"></div>
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary btn-full">登录</button>
                     </div>
@@ -269,17 +285,18 @@
     </div>
 
     <!-- 注册模态框 -->
-    <div class="modal" id="signup-modal">
-        <div class="modal-content">
+    <div class="modal" id="signup-modal" role="dialog" aria-labelledby="signup-title" aria-hidden="true">
+        <div class="modal-content" role="document">
             <div class="modal-header">
-                <h3>注册 SoundSphere</h3>
-                <button class="close-btn">&times;</button>
+                <h3 id="signup-title">注册 SoundSphere</h3>
+                <button class="close-btn" aria-label="关闭">&times;</button>
             </div>
             <div class="modal-body">
                 <form id="signup-form">
                     <div class="form-group">
                         <label for="signup-username">用户名</label>
                         <input type="text" id="signup-username" required>
+                        <small class="form-hint">用户名将公开显示在您的个人资料中</small>
                     </div>
                     <div class="form-group">
                         <label for="signup-email">邮箱</label>
@@ -288,12 +305,15 @@
                     <div class="form-group">
                         <label for="signup-password">密码</label>
                         <input type="password" id="signup-password" required>
+                        <small class="form-hint">密码至少包含8个字符，包括字母和数字</small>
+                        <button type="button" class="password-toggle" aria-label="显示密码" data-show="false"></button>
                     </div>
                     <div class="form-group">
                         <label for="signup-confirm-password">确认密码</label>
                         <input type="password" id="signup-confirm-password" required>
+                        <button type="button" class="password-toggle" aria-label="显示密码" data-show="false"></button>
                     </div>
-                    <div class="auth-error" style="display: none; color: #e74c3c; margin-bottom: 10px;"></div>
+                    <div class="auth-error" role="alert" style="display: none; color: #e74c3c; margin-bottom: 10px;"></div>
                     <div class="form-actions">
                         <button type="submit" class="btn btn-primary btn-full">注册</button>
                     </div>
@@ -304,6 +324,33 @@
             </div>
         </div>
     </div>
+
+    <!-- 浮动播放控制 -->
+    <div class="player-control" aria-hidden="true">
+        <div class="player-inner">
+            <div class="currently-playing">
+                <img src="/src/assets/placeholder-cover.jpg" alt="当前播放曲目封面" class="playing-cover">
+                <div class="playing-info">
+                    <p class="playing-title">未播放任何曲目</p>
+                    <p class="playing-artist">-</p>
+                </div>
+            </div>
+            <div class="player-controls">
+                <button class="control-btn" aria-label="上一曲"><i class="prev-icon"></i></button>
+                <button class="control-btn play-pause-btn" aria-label="播放"><i class="play-icon"></i></button>
+                <button class="control-btn" aria-label="下一曲"><i class="next-icon"></i></button>
+            </div>
+            <div class="volume-control">
+                <button class="volume-btn" aria-label="静音"><i class="volume-icon"></i></button>
+                <input type="range" min="0" max="100" value="80" class="volume-slider" aria-label="音量">
+            </div>
+        </div>
+    </div>
+
+    <!-- 添加返回顶部按钮 -->
+    <button class="back-to-top" aria-label="返回页面顶部" title="返回顶部">
+        <i class="arrow-up-icon"></i>
+    </button>
 
     <script src="/src/utils/api.js"></script>
     <script src="/src/utils/auth.js"></script>
