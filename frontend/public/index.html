@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="no-js">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,28 +8,17 @@
     <link rel="stylesheet" href="/src/styles/home.css">
     <link rel="icon" type="image/png" href="/src/assets/favicon.png">
     <meta name="description" content="SoundSphere - 基于Web2.0的在线音乐创作与分享平台，让音乐爱好者、制作人和播客主能够上传分享、协作创作和变现音乐作品">
-    <meta name="theme-color" content="#5c6bc0">
-    <!-- 辅助功能元标记 -->
-    <meta name="color-scheme" content="light dark">
-    <!-- 预加载关键资源 -->
-    <link rel="preload" href="/src/assets/logo.png" as="image">
-    <link rel="preload" href="/src/assets/hero-image.png" as="image">
-    <!-- 防止无样式内容闪烁 -->
-    <script>document.documentElement.classList.remove('no-js');</script>
 </head>
-<body class="auto-dark-mode">
-    <a href="#main-content" class="sr-only">跳转到主要内容</a>
-    
+<body>
     <header class="main-header">
         <div class="container">
             <div class="logo">
-                <a href="index.html" aria-label="SoundSphere首页">
+                <a href="index.html">
                     <img src="/src/assets/logo.png" alt="SoundSphere Logo">
                     <span>SoundSphere</span>
                 </a>
             </div>
-            
-            <nav class="main-nav" aria-label="主导航">
+            <nav class="main-nav">
                 <ul>
                     <li><a href="music.html" class="nav-link">浏览音乐</a></li>
                     <li><a href="collaboration.html" class="nav-link">创作室</a></li>
@@ -37,40 +26,14 @@
                     <li><a href="marketplace.html" class="nav-link">市场</a></li>
                 </ul>
             </nav>
-            
             <div class="user-actions">
                 <button class="btn btn-secondary" id="login-btn">登录</button>
                 <button class="btn btn-primary" id="signup-btn">注册</button>
-                
-                <!-- 暗黑模式切换 -->
-                <button class="theme-toggle" id="theme-toggle" aria-label="切换暗黑模式">
-                    <svg class="sun-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
-                    <svg class="moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
-                </button>
-            </div>
-            
-            <button class="mobile-menu-toggle" id="mobile-menu-toggle" aria-expanded="false" aria-controls="mobile-nav" aria-label="切换菜单">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-        
-        <div class="mobile-nav" id="mobile-nav">
-            <ul>
-                <li><a href="music.html" class="nav-link">浏览音乐</a></li>
-                <li><a href="collaboration.html" class="nav-link">创作室</a></li>
-                <li><a href="knowledge.html" class="nav-link">知识库</a></li>
-                <li><a href="marketplace.html" class="nav-link">市场</a></li>
-            </ul>
-            <div class="user-actions">
-                <button class="btn btn-secondary" id="mobile-login-btn">登录</button>
-                <button class="btn btn-primary" id="mobile-signup-btn">注册</button>
             </div>
         </div>
     </header>
 
-    <main id="main-content">
+    <main>
         <section class="hero">
             <div class="container">
                 <div class="hero-content">
