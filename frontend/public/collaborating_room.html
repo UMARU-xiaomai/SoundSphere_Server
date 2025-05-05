@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoundSphere - 实时音乐协作室</title>
+    <link rel="stylesheet" href="../src/styles/main.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* 音乐协作室特定样式 */
+        .collaboration-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            grid-template-rows: auto 1fr;
+            height: calc(100vh - 70px);
+            gap: 0;
+        }
+
+        .room-header {
+            grid-column: 1 / 3;
+            background-color: var(--surface-color);
+            padding: var(--spacing-md);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .room-title {
+            font-size: var(--font-size-lg);
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .room-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        .participants-panel {
+            background-color: var(--surface-color);
+            padding: var(--spacing-md);
+            border-right: 1px solid rgba(0, 0, 0, 0.1);
+            overflow-y: auto;
+        }
+
+        .participants-title {
+            font-size: var(--font-size-md);
+            font-weight: 700;
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .participant {
+            display: flex;
+            align-items: center;
+            padding: var(--spacing-sm);
+            border-radius: var(--border-radius-sm);
+            margin-bottom: var(--spacing-xs);
+            cursor: pointer;
+            transition: background-color var(--transition-fast) ease;
+        }
+
+        .participant:hover {
+            background-color: rgba(0, 0, 0, 0.05);
+        }
+
+        .participant.active {
+            background-color: rgba(98, 0, 238, 0.1);
+        }
+
+        .participant-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--border-radius-circle);
+            margin-right: var(--spacing-sm);
+            object-fit: cover;
+        }
+
+        .participant-info {
+            flex: 1;
+        }
+
+        .participant-name {
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .participant-status {
+            font-size: var(--font-size-xs);
+            color: var(--text-secondary);
+        }
+
+        .participant-controls {
+            display: flex;
+            gap: var(--spacing-xs);
+        }
+
+        .control-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: var(--border-radius-circle);
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all var(--transition-fast) ease;
+        }
+
+        .control-btn:hover {
+            background-color: rgba(0, 0, 0, 0.1);
+            color: var(--primary-color);
+        }
+
+        .main-workspace {
+            background-color: var(--background-color);
+            display: grid;
+            grid-template-rows: 1fr 200px;
+            overflow: hidden;
+        }
+
+        .shared-screen-area {
+            padding: var(--spacing-md);
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .screen-container {
+            flex-grow: 1;
+            background-color: var(--surface-color);
+            border-radius: var(--border-radius-md);
+            box-shadow: var(--box-shadow-sm);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .screen-placeholder {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .screen-controls {
+            position: absolute;
+            bottom: var(--spacing-md);
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--border-radius-md);
+            gap: var(--spacing-sm);
+        }
+
+        .screen-controls .control-btn {
+            color: white;
+        }
+
+        .screen-controls .control-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .files-panel {
+            background-color: var(--surface-color);
+            padding: var(--spacing-md);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            overflow: auto;
+        }
+
+        .files-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .files-title {
+            font-size: var(--font-size-md);
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .files-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: var(--spacing-sm);
+        }
+
+        .file-item {
+            background-color: rgba(0, 0, 0, 0.02);
+            border-radius: var(--border-radius-sm);
+            padding: var(--spacing-sm);
+            text-align: center;
+            cursor: pointer;
+            transition: all var(--transition-fast) ease;
+        }
+
+        .file-item:hover {
+            background-color: rgba(98, 0, 238, 0.05);
+        }
+
+        .file-item.active {
+            background-color: rgba(98, 0, 238, 0.1);
+        }
+
+        .file-icon {
+            font-size: 32px;
+            margin-bottom: var(--spacing-xs);
+            color: var(--primary-color);
+        }
+
+        .file-name {
+            font-size: var(--font-size-sm);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .chat-btn {
+            position: fixed;
+            bottom: var(--spacing-md);
+            right: var(--spacing-md);
+            width: 56px;
+            height: 56px;
+            border-radius: var(--border-radius-circle);
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: var(--box-shadow-md);
+            cursor: pointer;
+            z-index: 10;
+            transition: all var(--transition-medium) ease;
+        }
+
+        .chat-btn:hover {
+            background-color: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        /* 聊天面板 */
+        .chat-panel {
+            position: fixed;
+            bottom: var(--spacing-md);
+            right: var(--spacing-md);
+            width: 320px;
+            height: 450px;
+            background-color: var(--surface-color);
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--box-shadow-lg);
+            z-index: 11;
+            display: flex;
+            flex-direction: column;
+            transform: translateY(100%);
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-medium) ease;
+        }
+
+        .chat-panel.active {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .chat-header {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-title {
+            font-weight: 500;
+            margin: 0;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: var(--spacing-md);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
+        .message {
+            max-width: 80%;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--border-radius-md);
+            position: relative;
+        }
+
+        .message.incoming {
+            align-self: flex-start;
+            background-color: #f0f0f0;
+        }
+
+        .message.outgoing {
+            align-self: flex-end;
+            background-color: var(--primary-light);
+            color: white;
+        }
+
+        .message-sender {
+            font-size: var(--font-size-xs);
+            margin-bottom: 2px;
+            font-weight: 500;
+        }
+
+        .message-time {
+            font-size: var(--font-size-xs);
+            color: rgba(0, 0, 0, 0.5);
+            position: absolute;
+            bottom: 2px;
+            right: 8px;
+        }
+
+        .message.outgoing .message-time {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .chat-input {
+            padding: var(--spacing-sm);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: var(--spacing-sm);
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius-md);
+        }
+
+        .request-control-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .request-modal-content {
+            background-color: white;
+            padding: var(--spacing-lg);
+            border-radius: var(--border-radius-md);
+            width: 300px;
+            text-align: center;
+        }
+
+        .request-modal-title {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .request-modal-actions {
+            display: flex;
+            justify-content: center;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+
+        .mute-indicator {
+            color: var(--error-color);
+            margin-left: var(--spacing-xs);
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">
+                <a href="/">
+                    <img src="../assets/logo.png" alt="SoundSphere Logo">
+                    SoundSphere
+                </a>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="/" class="nav-link">首页</a></li>
+                    <li><a href="/projects" class="nav-link">项目</a></li>
+                    <li><a href="/discover" class="nav-link">发现</a></li>
+                    <li><a href="/collaborate" class="nav-link">协作</a></li>
+                    <li><a href="/learn" class="nav-link">学习</a></li>
+                </ul>
+            </nav>
+            <div class="user-actions">
+                <button class="btn btn-primary">退出房间</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="collaboration-container">
+        <div class="room-header">
+            <h2 class="room-title">电子舞曲协作工作室 #1284</h2>
+            <div class="room-actions">
+                <button class="btn">
+                    <i class="fas fa-copy"></i> 复制邀请链接
+                </button>
+                <button class="btn">
+                    <i class="fas fa-cog"></i> 设置
+                </button>
+            </div>
+        </div>
+
+        <div class="participants-panel">
+            <div class="participants-title">
+                <span>参与者 (4)</span>
+                <button class="control-btn">
+                    <i class="fas fa-plus"></i>
+                </button>
+            </div>
+            
+            <div class="participant active">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="用户头像" class="participant-avatar">
+                <div class="participant-info">
+                    <div class="participant-name">张小明 (你)</div>
+                    <div class="participant-status">主持人 · 正在分享</div>
+                </div>
+                <div class="participant-controls">
+                    <button class="control-btn">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="participant">
+                <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="用户头像" class="participant-avatar">
+                <div class="participant-info">
+                    <div class="participant-name">李华</div>
+                    <div class="participant-status">正在控制</div>
+                </div>
+                <div class="participant-controls">
+                    <button class="control-btn">
+                        <i class="fas fa-microphone-slash"></i>
+                        <span class="mute-indicator"></span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="participant">
+                <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="用户头像" class="participant-avatar">
+                <div class="participant-info">
+                    <div class="participant-name">王大力</div>
+                    <div class="participant-status">观看中</div>
+                </div>
+                <div class="participant-controls">
+                    <button class="control-btn">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="participant">
+                <img src="https://randomuser.me/api/portraits/women/22.jpg" alt="用户头像" class="participant-avatar">
+                <div class="participant-info">
+                    <div class="participant-name">陈小红</div>
+                    <div class="participant-status">观看中</div>
+                </div>
+                <div class="participant-controls">
+                    <button class="control-btn">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="main-workspace">
+            <div class="shared-screen-area">
+                <div class="screen-container">
+                    <img src="../assets/daw-screenshot.jpg" alt="DAW界面" class="screen-placeholder">
+                    <div class="screen-controls">
+                        <button class="control-btn" id="request-control-btn" title="申请控制">
+                            <i class="fas fa-mouse-pointer"></i>
+                        </button>
+                        <button class="control-btn" title="停止共享">
+                            <i class="fas fa-desktop"></i>
+                        </button>
+                        <button class="control-btn" title="静音">
+                            <i class="fas fa-volume-up"></i>
+                        </button>
+                        <button class="control-btn" title="全屏">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="files-panel">
+                <div class="files-header">
+                    <h3 class="files-title">共享文件</h3>
+                    <button class="btn btn-primary">
+                        <i class="fas fa-upload"></i> 上传
+                    </button>
+                </div>
+                
+                <div class="files-list">
+                    <div class="file-item active">
+                        <div class="file-icon">
+                            <i class="fas fa-music"></i>
+                        </div>
+                        <div class="file-name">主歌.mp3</div>
+                    </div>
+                    
+                    <div class="file-item">
+                        <div class="file-icon">
+                            <i class="fas fa-music"></i>
+                        </div>
+                        <div class="file-name">副歌.mp3</div>
+                    </div>
+                    
+                    <div class="file-item">
+                        <div class="file-icon">
+                            <i class="fas fa-music"></i>
+                        </div>
+                        <div class="file-name">鼓组.wav</div>
+                    </div>
+                    
+                    <div class="file-item">
+                        <div class="file-icon">
+                            <i class="fas fa-file-audio"></i>
+                        </div>
+                        <div class="file-name">贝斯线.midi</div>
+                    </div>
+                    
+                    <div class="file-item">
+                        <div class="file-icon">
+                            <i class="fas fa-file-audio"></i>
+                        </div>
+                        <div class="file-name">合成器.midi</div>
+                    </div>
+                    
+                    <div class="file-item">
+                        <div class="file-icon">
+                            <i class="fas fa-file-image"></i>
+                        </div>
+                        <div class="file-name">封面设计.png</div>
+                    </div>
+                    
+                    <div class="file-item">
+                        <div class="file-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="file-name">歌词.txt</div>
+                    </div>
+                    
+                    <div class="file-item">
+                        <div class="file-icon">
+                            <i class="fas fa-file-alt"></i>
+                        </div>
+                        <div class="file-name">项目说明.pdf</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="chat-btn">
+        <i class="fas fa-comments"></i>
+    </div>
+
+    <div class="chat-panel">
+        <div class="chat-header">
+            <h3 class="chat-title">聊天室</h3>
+            <button class="control-btn">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="chat-messages">
+            <div class="message incoming">
+                <div class="message-sender">王大力</div>
+                这个鼓点我感觉可以再紧凑一些
+                <div class="message-time">14:32</div>
+            </div>
+            
+            <div class="message outgoing">
+                <div class="message-sender">你</div>
+                好的，我现在调整一下
+                <div class="message-time">14:33</div>
+            </div>
+            
+            <div class="message incoming">
+                <div class="message-sender">李华</div>
+                副歌部分的贝斯线我已经更新了，你们看一下效果
+                <div class="message-time">14:35</div>
+            </div>
+            
+            <div class="message incoming">
+                <div class="message-sender">陈小红</div>
+                我感觉整体不错，就是合成器的音色可以再明亮一点
+                <div class="message-time">14:38</div>
+            </div>
+            
+            <div class="message outgoing">
+                <div class="message-sender">你</div>
+                @陈小红 好的，我试一下调整EQ
+                <div class="message-time">14:40</div>
+            </div>
+        </div>
+        
+        <div class="chat-input">
+            <input type="text" placeholder="输入消息...">
+            <button class="btn btn-primary">发送</button>
+        </div>
+    </div>
+
+    <div class="request-control-modal" id="request-control-modal">
+        <div class="request-modal-content">
+            <h3 class="request-modal-title">控制请求</h3>
+            <p>李华请求控制您的屏幕</p>
+            <div class="request-modal-actions">
+                <button class="btn">拒绝</button>
+                <button class="btn btn-primary">允许</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 简单的界面交互脚本
+        document.addEventListener('DOMContentLoaded', function() {
+            // 聊天面板切换
+            const chatBtn = document.querySelector('.chat-btn');
+            const chatPanel = document.querySelector('.chat-panel');
+            const chatCloseBtn = document.querySelector('.chat-header .control-btn');
+            
+            chatBtn.addEventListener('click', function() {
+                chatPanel.classList.add('active');
+            });
+            
+            chatCloseBtn.addEventListener('click', function() {
+                chatPanel.classList.remove('active');
+            });
+            
+            // 申请控制模态框
+            const requestControlBtn = document.getElementById('request-control-btn');
+            const requestControlModal = document.getElementById('request-control-modal');
+            const modalButtons = requestControlModal.querySelectorAll('.btn');
+            
+            requestControlBtn.addEventListener('click', function() {
+                requestControlModal.style.display = 'flex';
+            });
+            
+            modalButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    requestControlModal.style.display = 'none';
+                });
+            });
+            
+            // 文件点击事件
+            const fileItems = document.querySelectorAll('.file-item');
+            
+            fileItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    fileItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // 模拟WebRTC连接（仅演示用）
+            console.log('模拟WebRTC连接初始化...');
+            
+            // 模拟聊天发送功能
+            const chatInput = document.querySelector('.chat-input input');
+            const sendBtn = document.querySelector('.chat-input .btn');
+            const chatMessages = document.querySelector('.chat-messages');
+            
+            sendBtn.addEventListener('click', sendMessage);
+            chatInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+            
+            function sendMessage() {
+                const messageText = chatInput.value.trim();
+                if (messageText) {
+                    const now = new Date();
+                    const timeStr = `${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')}`;
+                    
+                    const messageEl = document.createElement('div');
+                    messageEl.className = 'message outgoing';
+                    messageEl.innerHTML = `
+                        <div class="message-sender">你</div>
+                        ${messageText}
+                        <div class="message-time">${timeStr}</div>
+                    `;
+                    
+                    chatMessages.appendChild(messageEl);
+                    chatInput.value = '';
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }
+            }
+            
+            // 模拟WebRTC音频状态
+            const micButtons = document.querySelectorAll('.participant-controls .control-btn');
+            
+            micButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const icon = this.querySelector('i');
+                    if (icon.classList.contains('fa-microphone')) {
+                        icon.classList.remove('fa-microphone');
+                        icon.classList.add('fa-microphone-slash');
+                    } else {
+                        icon.classList.remove('fa-microphone-slash');
+                        icon.classList.add('fa-microphone');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
