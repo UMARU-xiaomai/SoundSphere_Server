@@ -92,6 +92,9 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // 初始化播放功能
   initPlayFunctions();
+  
+  // 初始化底部播放器
+  initBottomPlayer();
 });
 
 // 加载音乐数据
@@ -252,15 +255,213 @@ function initPlayFunctions() {
 // 播放音乐
 function playMusic(trackId) {
   console.log(`播放音乐ID: ${trackId}`);
-  // 这里应该实现实际的播放功能
-  // 例如更新播放器界面，加载音频等
   
-  // 示例: 查找音乐数据
+  // 查找音乐数据
   const track = sampleMusicData.find(t => t.id == trackId);
   if (track) {
-    // 显示一个通知或更新播放器UI
-    alert(`正在播放: ${track.title} - ${track.artist}`);
+    // 更新播放器UI
+    updatePlayerUI(track);
+    
+    // 显示底部播放器
+    const playerSidebar = document.getElementById('music-player-sidebar');
+    playerSidebar.classList.remove('hidden');
+    
+    // 模拟播放状态
+    togglePlayState(true);
   }
+}
+
+// 更新播放器UI
+function updatePlayerUI(track) {
+  // 更新主播放器
+  document.getElementById('current-track-title').textContent = track.title;
+  document.getElementById('current-track-artist').textContent = track.artist;
+  
+  // 设置封面图
+  const coverUrl = track.coverUrl || 'assets/images/default-cover.jpg';
+  document.getElementById('current-track-cover').src = coverUrl;
+  
+  // 更新移动端播放器
+  document.getElementById('mobile-track-title').textContent = track.title;
+  document.getElementById('mobile-track-artist').textContent = track.artist;
+  document.getElementById('mobile-track-cover').src = coverUrl;
+  document.getElementById('mobile-expanded-title').textContent = track.title;
+  document.getElementById('mobile-expanded-artist').textContent = track.artist;
+  document.getElementById('mobile-expanded-cover').src = coverUrl;
+}
+
+// 初始化底部播放器
+function initBottomPlayer() {
+  // 播放/暂停按钮
+  const playPauseBtn = document.getElementById('play-pause-btn');
+  const mobilePlayPauseBtn = document.getElementById('mobile-play-pause-btn');
+  const mobileFullPlayPauseBtn = document.getElementById('mobile-full-play-pause-btn');
+  
+  // 音量控制
+  const volumeBtn = document.getElementById('volume-btn');
+  const volumeSlider = document.getElementById('volume-slider');
+  
+  // 进度条
+  const progressSlider = document.getElementById('progress-slider');
+  const progressBarInner = document.getElementById('progress-bar-inner');
+  
+  // 播放/暂停按钮点击事件
+  if (playPauseBtn) {
+    playPauseBtn.addEventListener('click', () => {
+      const isPlaying = playPauseBtn.parentElement.classList.contains('is-playing');
+      togglePlayState(!isPlaying);
+    });
+  }
+  
+  // 移动端播放/暂停按钮
+  if (mobilePlayPauseBtn) {
+    mobilePlayPauseBtn.addEventListener('click', () => {
+      const isPlaying = mobilePlayPauseBtn.classList.contains('is-playing');
+      togglePlayState(!isPlaying);
+    });
+  }
+  
+  if (mobileFullPlayPauseBtn) {
+    mobileFullPlayPauseBtn.addEventListener('click', () => {
+      const isPlaying = mobileFullPlayPauseBtn.classList.contains('is-playing');
+      togglePlayState(!isPlaying);
+    });
+  }
+  
+  // 音量控制
+  if (volumeBtn) {
+    volumeBtn.addEventListener('click', () => {
+      volumeBtn.classList.toggle('is-muted');
+      volumeSlider.value = volumeBtn.classList.contains('is-muted') ? 0 : 80;
+    });
+  }
+  
+  if (volumeSlider) {
+    volumeSlider.addEventListener('input', () => {
+      if (parseInt(volumeSlider.value) === 0) {
+        volumeBtn.classList.add('is-muted');
+      } else {
+        volumeBtn.classList.remove('is-muted');
+      }
+    });
+  }
+  
+  // 进度条更新 (模拟)
+  if (progressSlider) {
+    progressSlider.addEventListener('input', () => {
+      const value = progressSlider.value;
+      updateProgressBar(value);
+    });
+  }
+  
+  // 扩展移动端播放器
+  const expandBtn = document.getElementById('mobile-player-expand-btn');
+  const collapseBtn = document.getElementById('mobile-player-collapse-btn');
+  const mobilePlayer = document.getElementById('mobile-player');
+  
+  if (expandBtn) {
+    expandBtn.addEventListener('click', () => {
+      mobilePlayer.classList.add('expanded');
+    });
+  }
+  
+  if (collapseBtn) {
+    collapseBtn.addEventListener('click', () => {
+      mobilePlayer.classList.remove('expanded');
+    });
+  }
+  
+  // 模拟进度条更新
+  simulateProgressUpdate();
+}
+
+// 切换播放状态
+function togglePlayState(isPlaying) {
+  // 主播放器按钮
+  const playPauseBtn = document.getElementById('play-pause-btn');
+  if (playPauseBtn) {
+    playPauseBtn.parentElement.classList.toggle('is-playing', isPlaying);
+  }
+  
+  // 移动端播放按钮
+  const mobilePlayPauseBtn = document.getElementById('mobile-play-pause-btn');
+  if (mobilePlayPauseBtn) {
+    mobilePlayPauseBtn.classList.toggle('is-playing', isPlaying);
+  }
+  
+  const mobileFullPlayPauseBtn = document.getElementById('mobile-full-play-pause-btn');
+  if (mobileFullPlayPauseBtn) {
+    mobileFullPlayPauseBtn.classList.toggle('is-playing', isPlaying);
+  }
+  
+  // 切换播放/暂停状态
+  if (window.musicAudio) {
+    if (isPlaying) {
+      window.musicAudio.play();
+    } else {
+      window.musicAudio.pause();
+    }
+  }
+}
+
+// 更新进度条
+function updateProgressBar(value) {
+  const progressBarInner = document.getElementById('progress-bar-inner');
+  const mobileProgressInner = document.getElementById('mobile-progress-inner');
+  const currentTimeEl = document.getElementById('current-time');
+  const mobileCurrentTimeEl = document.getElementById('mobile-current-time');
+  
+  if (progressBarInner) {
+    progressBarInner.style.width = `${value}%`;
+  }
+  
+  if (mobileProgressInner) {
+    mobileProgressInner.style.width = `${value}%`;
+  }
+  
+  // 更新时间显示
+  if (currentTimeEl && window.musicAudio) {
+    const duration = window.musicAudio.duration || 100;
+    const currentTime = (value / 100) * duration;
+    currentTimeEl.textContent = formatTime(currentTime);
+    
+    if (mobileCurrentTimeEl) {
+      mobileCurrentTimeEl.textContent = formatTime(currentTime);
+    }
+  }
+}
+
+// 格式化时间
+function formatTime(seconds) {
+  const mins = Math.floor(seconds / 60);
+  const secs = Math.floor(seconds % 60);
+  return `${mins}:${secs.toString().padStart(2, '0')}`;
+}
+
+// 模拟进度条更新
+function simulateProgressUpdate() {
+  let progress = 0;
+  const updateInterval = setInterval(() => {
+    const playPauseBtn = document.getElementById('play-pause-btn');
+    const isPlaying = playPauseBtn && playPauseBtn.parentElement.classList.contains('is-playing');
+    
+    if (isPlaying) {
+      progress += 0.5;
+      if (progress > 100) {
+        progress = 0;
+        togglePlayState(false);
+      }
+      
+      // 更新所有进度条
+      const progressSlider = document.getElementById('progress-slider');
+      const mobileProgressSlider = document.getElementById('mobile-progress-slider');
+      
+      if (progressSlider) progressSlider.value = progress;
+      if (mobileProgressSlider) mobileProgressSlider.value = progress;
+      
+      updateProgressBar(progress);
+    }
+  }, 1000);
 }
 
 // 添加到播放列表
