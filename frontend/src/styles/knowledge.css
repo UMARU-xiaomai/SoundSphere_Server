@@ -320,4 +320,110 @@
     padding-bottom: 0.5rem;
     justify-content: flex-start;
   }
+}
+
+/* 维基特定样式 */
+.wiki-entry .wiki-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: #777;
+  margin-bottom: 1rem;
+}
+
+.wiki-stats {
+  display: flex;
+  gap: 1rem;
+  color: #777;
+  font-size: 0.9rem;
+}
+
+.wiki-stats .revisions, 
+.wiki-stats .rating {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.wiki-navigation {
+  list-style: none;
+  padding: 0;
+}
+
+.wiki-navigation li {
+  margin-bottom: 0.5rem;
+}
+
+.wiki-navigation a {
+  display: block;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.wiki-navigation a:hover {
+  background-color: rgba(52, 152, 219, 0.1);
+}
+
+.contributor-badge {
+  font-size: 0.75rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  background-color: #3498db;
+  color: white;
+  white-space: nowrap;
+}
+
+.category-list {
+  list-style: none;
+  padding: 0;
+}
+
+.category-list li {
+  margin-bottom: 0.5rem;
+}
+
+.category-list a {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.category-list a:hover {
+  background-color: rgba(52, 152, 219, 0.1);
+}
+
+.category-list .count {
+  font-size: 0.85rem;
+  color: #777;
+}
+
+.history-list {
+  margin-bottom: 1.5rem;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.history-time {
+  font-size: 0.85rem;
+  color: #777;
+  white-space: nowrap;
+}
+
+.history-action {
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.history-user {
+  font-size: 0.85rem;
+  color: #3498db;
 } 
